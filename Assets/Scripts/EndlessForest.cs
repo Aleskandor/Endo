@@ -33,7 +33,7 @@ public class EndlessForest : MonoBehaviour
 
         if (tempPosition != Vector3.zero)
         {
-            CharacterMovement cMove = player.GetComponent<CharacterMovement>();
+            HumanMovement cMove = player.GetComponent<HumanMovement>();
             cMove.Locked = true;
             player.transform.position += tempPosition;
         }

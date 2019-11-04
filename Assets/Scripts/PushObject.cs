@@ -9,9 +9,6 @@ public class PushObject : MonoBehaviour
 
     private int range;
 
-    private bool pushed;
-
-    public float currentSpeed;
     public float gravity;
 
     private Transform currentTransform;
@@ -25,9 +22,7 @@ public class PushObject : MonoBehaviour
     private void Start()
     {
         friction = 0.96f;
-        range = 10;
-        pushed = false;
-        currentSpeed = 5f;
+        range = 5;
         gravity = -9.8f;
 
         controller = GetComponent<CharacterController>();
@@ -44,18 +39,24 @@ public class PushObject : MonoBehaviour
             controller.Move(new Vector3(0, gravity * Time.deltaTime, 0));
         }
 
-        if (Input.GetKeyDown(KeyCode.E) && InRange())
+        if (Input.GetKey(KeyCode.E))
         {
-            if (CheckSide())
+            if (InRange())
             {
-                pushed = true;
+                if (CheckSide())
+                {
+                    Move();
+                }
             }
         }
-
-        if (pushed)
+        else
         {
-            Move();
+            if (TPV.GetCurrentTarget().name == "Human")
+                TPV.GetCurrentTarget().GetComponent<HumanMovement>().pushing = false;
+            else
+                TPV.GetCurrentTarget().GetComponent<DogMovement>().pushing = false;
         }
+            
     }
 
     bool InRange()
@@ -71,11 +72,6 @@ public class PushObject : MonoBehaviour
         velocity *= friction;
 
         controller.Move(velocity * Time.deltaTime);
-
-        if (velocity.magnitude < 0.3f)
-        {
-            pushed = false;
-        }
     }
 
     private bool CheckSide()
@@ -87,7 +83,19 @@ public class PushObject : MonoBehaviour
             if (hit.collider.name == "PushableObject")
             {
                 direction = -hit.normal;
-                velocity = direction * currentSpeed;
+                if (TPV.GetCurrentTarget().name == "Human")
+                {
+                    TPV.GetCurrentTarget().GetComponent<HumanMovement>().pushing = true;
+                    velocity = direction * TPV.GetCurrentTarget().GetComponent<HumanMovement>().pushSpeed;
+                    TPV.GetCurrentTarget().GetComponent<HumanMovement>().velocity = velocity;
+                }
+                else
+                {
+                    TPV.GetCurrentTarget().GetComponent<DogMovement>().pushing = true;
+                    velocity = direction * TPV.GetCurrentTarget().GetComponent<DogMovement>().pushSpeed;
+                    TPV.GetCurrentTarget().GetComponent<DogMovement>().velocity = velocity;
+                }
+
                 return true;
             }
         }

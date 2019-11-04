@@ -17,10 +17,17 @@ public class ThirdPersonView : MonoBehaviour
 
     private RaycastHit hit;
 
-    private CharacterMovement targetCM;
+    private HumanMovement humanMovement;
+    private DogMovement dogMovement;
+
     private CharacterController targetCC;
     private FollowerAI otherFAI;
     private NavMeshAgent otherNVA;
+
+    private Transform humanPivot;
+    private Transform dogPivot;
+    private Transform targetPivot;
+    private Transform otherPivot;
 
     public GameObject target;
     public GameObject Human;
@@ -70,7 +77,15 @@ public class ThirdPersonView : MonoBehaviour
         target = Human;
         other = Dog;
 
-        targetCM = target.GetComponent<CharacterMovement>();
+        humanPivot = GameObject.Find("HumanPivot").transform;
+        dogPivot = GameObject.Find("DogPivot").transform;
+
+        targetPivot = humanPivot;
+        otherPivot = dogPivot;
+
+        humanMovement = Human.GetComponent<HumanMovement>();
+        dogMovement = Dog.GetComponent<DogMovement>();
+
         targetCC = target.GetComponent<CharacterController>();
         otherFAI = other.GetComponent<FollowerAI>();
         otherNVA = other.GetComponent<NavMeshAgent>();
@@ -98,9 +113,9 @@ public class ThirdPersonView : MonoBehaviour
         if (!swappingTarget)
         {
             if (target == Human)
-                cameraPosition = GameObject.Find("HumanPivot").transform.position;
-            else
-                cameraPosition = GameObject.Find("DogPivot").transform.position;
+                cameraPosition = humanPivot.position;
+            else if (target == Dog)
+                cameraPosition = dogPivot.position;
 
             if (!justSwitched)
             {
@@ -138,9 +153,13 @@ public class ThirdPersonView : MonoBehaviour
 
     void SwapTarget()
     {
-        if (Vector3.Distance(target.transform.position, other.transform.position) < maxSwapDistance)
+        if (Vector3.Distance(target.transform.position, other.transform.position) <= maxSwapDistance)
         {
-            targetCM.enabled = false;
+            if (target == Human)
+                humanMovement.enabled = false;
+            else if (target == Dog)
+                dogMovement.enabled = false;
+
             targetCC.enabled = false;
             otherFAI.enabled = false;
             otherNVA.enabled = false;
@@ -166,7 +185,7 @@ public class ThirdPersonView : MonoBehaviour
 
             if (targetFacing < minAngleDiffForSwap && otherFacing < minAngleDiffForSwap)
             {
-                Vector3 newCamTargetPos = other.transform.position - other.transform.forward * dstFromTarget;
+                Vector3 newCamTargetPos = otherPivot.position - otherPivot.forward * dstFromTarget;
 
                 if (currentLerpTime >= 1)
                 {
@@ -174,19 +193,22 @@ public class ThirdPersonView : MonoBehaviour
                     {
                         target = Human;
                         other = Dog;
+                        targetPivot = humanPivot;
+                        otherPivot = dogPivot;
                     }
                     else
                     {
                         target = Dog;
                         other = Human;
+                        targetPivot = dogPivot;
+                        otherPivot = humanPivot;
                     }
 
-                    targetCM = target.GetComponent<CharacterMovement>();
                     targetCC = target.GetComponent<CharacterController>();
                     otherFAI = other.GetComponent<FollowerAI>();
                     otherNVA = other.GetComponent<NavMeshAgent>();
 
-                    Vector3 relativePos = target.transform.position - transform.position;
+                    Vector3 relativePos = targetPivot.position - transform.position;
                     Quaternion rotation = Quaternion.LookRotation(relativePos, Vector3.up);
 
                     pitch = rotation.eulerAngles.x;
@@ -195,7 +217,11 @@ public class ThirdPersonView : MonoBehaviour
                     targetRotation = rotation.eulerAngles;
                     currentRotation = rotation.eulerAngles;
 
-                    targetCM.enabled = true;
+                    if (target == Human)
+                        humanMovement.enabled = true;
+                    else if (target == Dog)
+                        dogMovement.enabled = true;
+
                     targetCC.enabled = true;
                     otherFAI.enabled = true;
                     otherNVA.enabled = true;
@@ -203,10 +229,9 @@ public class ThirdPersonView : MonoBehaviour
                     justSwitched = true;
                     currentLerpTime = 0;
                 }
-
                 else
                 {
-                    Vector3 tempCamTargetPos = target.transform.position + (target.transform.forward * (Vector3.Distance(target.transform.position, other.transform.position) / 2));
+                    Vector3 tempCamTargetPos = otherPivot.position + (otherPivot.forward * (Vector3.Distance(otherPivot.position, targetPivot.position) / 2));
                     currentLerpTime += Time.deltaTime;
                     transform.LookAt(tempCamTargetPos);
                     transform.position = Vector3.Lerp(transform.position, newCamTargetPos, currentLerpTime / lerpTime);

@@ -10,7 +10,7 @@ public class Teleport : MonoBehaviour
 
     public int code;
 
-    private CharacterMovement cMove;
+    private HumanMovement cMove;
     private Collider otherCollider;
 
     private void Update()
@@ -28,7 +28,7 @@ public class Teleport : MonoBehaviour
             if (Input.GetKey(KeyCode.B) && disabletimer <= 0)
             {
                 disabletimer = 2;
-                cMove = otherCollider.gameObject.GetComponent<CharacterMovement>();
+                cMove = otherCollider.gameObject.GetComponent<HumanMovement>();
                 cMove.Locked = true;
 
                 foreach (Teleport tp in FindObjectsOfType<Teleport>())
