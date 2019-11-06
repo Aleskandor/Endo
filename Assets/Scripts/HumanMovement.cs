@@ -13,7 +13,9 @@ public class HumanMovement : MonoBehaviour
     private delegate void Delegate();
 
     public Vector3 velocity;
-    private Animator animator;
+    private Vector3 direction;
+    public Animator animator;
+
     private float getOverLedgeTimer;
     private float distanceToClimb;
     private float distanceClimbed;
@@ -79,9 +81,10 @@ public class HumanMovement : MonoBehaviour
                 Move(inputDir);
 
             if (gameObject.name != "Dog" && Input.GetKeyDown(KeyCode.R))
-            {
                 CheckForClimb();
-            }
+
+            if (Input.GetKeyDown(KeyCode.F))
+                CheckForPush();
 
             CheckforDrop();
         }
@@ -91,33 +94,28 @@ public class HumanMovement : MonoBehaviour
 
     private void Move(Vector2 inputDir)
     {
-        if (!pushing)
+        animator.SetBool("Running", true);
+
+        if (inputDir != Vector2.zero)
         {
-            animator.SetBool("Running", true);
-
-            if (inputDir != Vector2.zero)
-            {
-                float targetRotation = Mathf.Atan2(inputDir.x, inputDir.y) * Mathf.Rad2Deg + camTransform.eulerAngles.y;
-                transform.eulerAngles = Vector3.up * Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref turnSmoothVelocity, turnSmoothTime);
-                animator.SetBool("Running", false);
-            }
-
-            float targetSpeed = currentWalkSpeed * inputDir.magnitude;
-            currentSpeed = Mathf.SmoothDamp(currentSpeed, targetSpeed, ref speedSmoothVelocity, speedSmoothTime);
-
-            velocityY += Time.deltaTime * gravity;
-            velocity = transform.forward * currentSpeed + Vector3.up * velocityY;
-
-            charController.Move(velocity * Time.deltaTime);
-            currentSpeed = new Vector2(charController.velocity.x, charController.velocity.z).magnitude;
-
-            if (charController.isGrounded)
-            {
-                velocityY = 0;
-            }
+            float targetRotation = Mathf.Atan2(inputDir.x, inputDir.y) * Mathf.Rad2Deg + camTransform.eulerAngles.y;
+            transform.eulerAngles = Vector3.up * Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref turnSmoothVelocity, turnSmoothTime);
+            animator.SetBool("Running", false);
         }
-        else
-            charController.Move(velocity * Time.deltaTime);
+
+        float targetSpeed = currentWalkSpeed * inputDir.magnitude;
+        currentSpeed = Mathf.SmoothDamp(currentSpeed, targetSpeed, ref speedSmoothVelocity, speedSmoothTime);
+
+        velocityY += Time.deltaTime * gravity;
+        velocity = transform.forward * currentSpeed + Vector3.up * velocityY;
+
+        charController.Move(velocity * Time.deltaTime);
+        currentSpeed = new Vector2(charController.velocity.x, charController.velocity.z).magnitude;
+
+        if (charController.isGrounded)
+        {
+            velocityY = 0;
+        }
     }
 
     private void CheckForClimb()
@@ -161,7 +159,7 @@ public class HumanMovement : MonoBehaviour
                             delegateList.Add(tempDelegate);
                             tempDelegate = new Delegate(ClimbUp);
                             delegateList.Add(tempDelegate);
-                            tempDelegate = new Delegate(WalkForwardsABit);
+                            tempDelegate = new Delegate(WalkForwards);
                             delegateList.Add(tempDelegate);
                         }
                     }
@@ -195,9 +193,9 @@ public class HumanMovement : MonoBehaviour
                         {
                             distanceToBackUp = Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(hit.point.x, hit.point.z)) + charController.radius;
 
-                            tempDelegate = new Delegate(TurnTowardsWall);
+                            tempDelegate = new Delegate(TurnAwayFromWall);
                             delegateList.Add(tempDelegate);
-                            tempDelegate = new Delegate(WalkBackwardsABit);
+                            tempDelegate = new Delegate(WalkForwards);
                             delegateList.Add(tempDelegate);
                             tempDelegate = new Delegate(ClimbDown);
                             delegateList.Add(tempDelegate);
@@ -237,6 +235,21 @@ public class HumanMovement : MonoBehaviour
         }
     }
 
+    private void TurnAwayFromWall()
+    {
+        if (Vector3.Angle(transform.forward, hit.normal) > 2)
+        {
+            Quaternion lookRotation = Quaternion.LookRotation(hit.normal);
+
+            // Rotate us over time according to speed until we are in the required rotation
+            transform.rotation = Quaternion.Lerp(transform.rotation, lookRotation, Time.deltaTime * 10);
+        }
+        else
+        {
+            delegateList.RemoveAt(0);
+        }
+    }
+
     private void ClimbDown()
     {
         if (!charController.isGrounded)
@@ -263,28 +276,64 @@ public class HumanMovement : MonoBehaviour
         }
     }
 
-    private void WalkForwardsABit()
-    {
-        getOverLedgeTimer += Time.deltaTime;
-        charController.Move(transform.forward * Time.deltaTime);
-
-        if (getOverLedgeTimer > 1)
-        {
-            getOverLedgeTimer = 0;
-            delegateList.RemoveAt(0);
-        }
-    }
-
-    private void WalkBackwardsABit()
+    private void WalkForwards()
     {
         if (distanceBackedUp < distanceToBackUp)
         {
             distanceBackedUp += transform.forward.magnitude * Time.deltaTime;
-            charController.Move(-transform.forward * Time.deltaTime);
+            charController.Move(transform.forward * Time.deltaTime);
         }
         else
         {
             distanceBackedUp = 0;
+            delegateList.RemoveAt(0);
+        }
+    }
+
+    private void CheckForPush()
+    {
+        if (delegateList.Count == 0)
+        {
+            RaycastHit straightHit;
+
+            int lookDist = 10;
+
+            // The acceptable distance we can be away from the wall in our forward plane when we raycast to detect a wall
+            float acceptableDist = 2f;
+
+            if (Physics.Raycast(transform.position + (Vector3.up * charController.height / 2), transform.forward, out straightHit, lookDist))
+            {
+                if (straightHit.collider.tag == "Pushable")
+                {
+                    direction = -straightHit.normal;
+
+                    if (straightHit.distance < acceptableDist)
+                    {
+                        hit = straightHit;
+
+                        // Add the order of events that will comprise this action
+                        tempDelegate = new Delegate(TurnTowardsWall);
+                        delegateList.Add(tempDelegate);
+                        tempDelegate = new Delegate(Push);
+                        delegateList.Add(tempDelegate);
+                    }
+                }
+            }
+        }
+    }
+
+    private void Push()
+    {
+        if (Input.GetKey(KeyCode.F))
+        {
+            animator.SetBool("Pushing", true);
+            velocity = direction * pushSpeed;
+            charController.Move(velocity * Time.deltaTime);
+            hit.collider.gameObject.GetComponent<PushObject>().Move(velocity);
+        }
+        else
+        {
+            animator.SetBool("Pushing", false);
             delegateList.RemoveAt(0);
         }
     }

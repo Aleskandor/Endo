@@ -20,8 +20,10 @@ public class ThirdPersonView : MonoBehaviour
     private HumanMovement humanMovement;
     private DogMovement dogMovement;
 
+    private HumanAI humanAI;
+    private DogAI dogAI;
+
     private CharacterController targetCC;
-    private FollowerAI otherFAI;
     private NavMeshAgent otherNVA;
 
     private Transform humanPivot;
@@ -86,8 +88,10 @@ public class ThirdPersonView : MonoBehaviour
         humanMovement = Human.GetComponent<HumanMovement>();
         dogMovement = Dog.GetComponent<DogMovement>();
 
+        humanAI = Human.GetComponent<HumanAI>();
+        dogAI = Dog.GetComponent<DogAI>();
+
         targetCC = target.GetComponent<CharacterController>();
-        otherFAI = other.GetComponent<FollowerAI>();
         otherNVA = other.GetComponent<NavMeshAgent>();
 
         if (lockCursor)
@@ -156,12 +160,17 @@ public class ThirdPersonView : MonoBehaviour
         if (Vector3.Distance(target.transform.position, other.transform.position) <= maxSwapDistance)
         {
             if (target == Human)
+            {
                 humanMovement.enabled = false;
+                dogAI.enabled = false;
+            }
             else if (target == Dog)
+            {
                 dogMovement.enabled = false;
+                humanAI.enabled = false;
+            }
 
             targetCC.enabled = false;
-            otherFAI.enabled = false;
             otherNVA.enabled = false;
 
             float targetFacing = Vector3.Angle((other.transform.position - target.transform.position), target.transform.forward);
@@ -205,7 +214,6 @@ public class ThirdPersonView : MonoBehaviour
                     }
 
                     targetCC = target.GetComponent<CharacterController>();
-                    otherFAI = other.GetComponent<FollowerAI>();
                     otherNVA = other.GetComponent<NavMeshAgent>();
 
                     Vector3 relativePos = targetPivot.position - transform.position;
@@ -218,12 +226,18 @@ public class ThirdPersonView : MonoBehaviour
                     currentRotation = rotation.eulerAngles;
 
                     if (target == Human)
+                    {
                         humanMovement.enabled = true;
+                        dogAI.enabled = true;
+                    }
+                        
                     else if (target == Dog)
+                    {
                         dogMovement.enabled = true;
+                        humanAI.enabled = true;
+                    }
 
                     targetCC.enabled = true;
-                    otherFAI.enabled = true;
                     otherNVA.enabled = true;
                     swappingTarget = false;
                     justSwitched = true;

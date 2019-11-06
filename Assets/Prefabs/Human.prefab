@@ -963,8 +963,8 @@ GameObject:
   - component: {fileID: 6247489061957279210}
   - component: {fileID: 6247489061957279211}
   - component: {fileID: 6247489061957279189}
-  - component: {fileID: 6247489061957279188}
   - component: {fileID: 4994073306732599181}
+  - component: {fileID: 6201990801770059271}
   m_Layer: 2
   m_Name: Human
   m_TagString: Untagged
@@ -1066,19 +1066,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &6247489061957279188
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2707339737151535203}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e656a532cd096044b8b81777afeda897, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetTransform: {fileID: 0}
 --- !u!136 &4994073306732599181
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1093,6 +1080,19 @@ CapsuleCollider:
   m_Height: 4.5
   m_Direction: 1
   m_Center: {x: 0, y: 2.25, z: 0}
+--- !u!114 &6201990801770059271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2707339737151535203}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2f43a3740469994ebd4d6f29fbac024, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetTransform: {fileID: 0}
 --- !u!1 &2739986405940822897
 GameObject:
   m_ObjectHideFlags: 0

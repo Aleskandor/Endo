@@ -12,7 +12,10 @@ public class DogMovement : MonoBehaviour
     private List<Delegate> delegateList;
     private delegate void Delegate();
 
+    private Vector3 direction;
+    
     public Vector3 velocity;
+
     private float getOverLedgeTimer;
     private float distanceToClimb;
     private float distanceClimbed;
@@ -50,8 +53,8 @@ public class DogMovement : MonoBehaviour
         distanceToBackUp = 0;
         distanceBackedUp = 0;
 
-        currentWalkSpeed = 6;
-        originalWalkSpeed = 6;
+        currentWalkSpeed = 10;
+        originalWalkSpeed = 10;
         pushSpeed = originalWalkSpeed / 2;
 
         climbSpeed = 4;
@@ -76,10 +79,8 @@ public class DogMovement : MonoBehaviour
             else
                 Move(inputDir);
 
-            if (gameObject.name != "Dog" && Input.GetKeyDown(KeyCode.R))
-            {
-                CheckForClimb();
-            }
+            if (Input.GetKeyDown(KeyCode.F))
+                CheckForPush();
 
             CheckforDrop();
         }
@@ -89,79 +90,24 @@ public class DogMovement : MonoBehaviour
 
     private void Move(Vector2 inputDir)
     {
-        if (!pushing)
+        if (inputDir != Vector2.zero)
         {
-            if (inputDir != Vector2.zero)
-            {
-                float targetRotation = Mathf.Atan2(inputDir.x, inputDir.y) * Mathf.Rad2Deg + camTransform.eulerAngles.y;
-                transform.eulerAngles = Vector3.up * Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref turnSmoothVelocity, turnSmoothTime);
-            }
-
-            float targetSpeed = currentWalkSpeed * inputDir.magnitude;
-            currentSpeed = Mathf.SmoothDamp(currentSpeed, targetSpeed, ref speedSmoothVelocity, speedSmoothTime);
-
-            velocityY += Time.deltaTime * gravity;
-            velocity = transform.forward * currentSpeed + Vector3.up * velocityY;
-
-            charController.Move(velocity * Time.deltaTime);
-            currentSpeed = new Vector2(charController.velocity.x, charController.velocity.z).magnitude;
-
-            if (charController.isGrounded)
-            {
-                velocityY = 0;
-            }
+            float targetRotation = Mathf.Atan2(inputDir.x, inputDir.y) * Mathf.Rad2Deg + camTransform.eulerAngles.y;
+            transform.eulerAngles = Vector3.up * Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref turnSmoothVelocity, turnSmoothTime);
         }
-        else
-            charController.Move(velocity * Time.deltaTime);
-    }
 
-    private void CheckForClimb()
-    {
-        if (delegateList.Count == 0)
+        float targetSpeed = currentWalkSpeed * inputDir.magnitude;
+        currentSpeed = Mathf.SmoothDamp(currentSpeed, targetSpeed, ref speedSmoothVelocity, speedSmoothTime);
+
+        velocityY += Time.deltaTime * gravity;
+        velocity = transform.forward * currentSpeed + Vector3.up * velocityY;
+
+        charController.Move(velocity * Time.deltaTime);
+        currentSpeed = new Vector2(charController.velocity.x, charController.velocity.z).magnitude;
+
+        if (charController.isGrounded)
         {
-            RaycastHit straightHit;
-            RaycastHit overLedgeHit;
-
-            int layerMask = 1 << 8;
-            int lookDist = 100;
-
-            // The acceptable distance we can be away from the wall in our forward plane when we raycast to detect a wall
-            float acceptableDist = 2f;
-
-            // We cannot climb up over objects shorter than this value from where we shoot our ray
-            float minClimbHeight = 19f;
-
-            // We can only climb on objects taller than this (it's a smaller value than minClimbHeight seeing as we
-            // are shooting a ray from above and it will collide earlier on a higher object
-            float maxClimbHeight = 18f;
-
-            if (Physics.Raycast(transform.position + (Vector3.up * charController.height / 2), transform.forward, out straightHit, lookDist, layerMask))
-            {
-                if (straightHit.distance < acceptableDist)
-                {
-                    if (Physics.Raycast(transform.position + (transform.forward * 1.1f) + (transform.up * charController.height * 5),
-                        -transform.up, out overLedgeHit, lookDist, layerMask))
-                    {
-                        Debug.Log(overLedgeHit.distance);
-
-                        // We are not able to climb up over anything which is closer from our raycast start than maxClimbHeight
-                        // And we are not able to climb anything farther away from our raycast start than minClimbHeight
-                        if (overLedgeHit.distance > maxClimbHeight && overLedgeHit.distance < minClimbHeight)
-                        {
-                            hit = straightHit;
-                            distanceToClimb = /*charController.height / 2 + */overLedgeHit.point.y - transform.position.y;
-                            
-                            // Add the order of events that will comprise this action
-                            tempDelegate = new Delegate(TurnTowardsWall);
-                            delegateList.Add(tempDelegate);
-                            tempDelegate = new Delegate(ClimbUp);
-                            delegateList.Add(tempDelegate);
-                            tempDelegate = new Delegate(WalkForwardsABit);
-                            delegateList.Add(tempDelegate);
-                        }
-                    }
-                }
-            }
+            velocityY = 0;
         }
     }
 
@@ -171,7 +117,6 @@ public class DogMovement : MonoBehaviour
         {
             RaycastHit groundHit;
 
-            int layerMask = 1 << 8;
             int lookDist = 100;
 
             float minDistToGround = 4;
@@ -180,25 +125,7 @@ public class DogMovement : MonoBehaviour
             if (Physics.Raycast(transform.position + (Vector3.up * charController.height / 2) + (transform.forward * 1.1f), Vector3.down, out groundHit, lookDist))
             {
                 if (minDistToGround < groundHit.distance && groundHit.distance < maxDistToGround)
-                {
-                    currentWalkSpeed = 0;
-
-                    if (gameObject.name != "Dog")
-                    {
-                        if (Input.GetKeyDown(KeyCode.R) && Physics.Raycast(transform.position + (transform.forward * 1f) + (-transform.up * 1),
-                            -transform.forward, out hit, lookDist, layerMask))
-                        {
-                            distanceToBackUp = Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(hit.point.x, hit.point.z)) + charController.radius;
-
-                            tempDelegate = new Delegate(TurnTowardsWall);
-                            delegateList.Add(tempDelegate);
-                            tempDelegate = new Delegate(WalkBackwardsABit);
-                            delegateList.Add(tempDelegate);
-                            tempDelegate = new Delegate(ClimbDown);
-                            delegateList.Add(tempDelegate);
-                        }
-                    }                 
-                }
+                    currentWalkSpeed = 0;               
                 else if (minDistToGround < groundHit.distance && groundHit.distance > maxDistToGround)
                     currentWalkSpeed = 0;
                 else
@@ -232,54 +159,48 @@ public class DogMovement : MonoBehaviour
         }
     }
 
-    private void ClimbDown()
+    private void CheckForPush()
     {
-        if (!charController.isGrounded)
+        if (delegateList.Count == 0)
         {
-            Vector3 velocity = -transform.up * climbSpeed;
+            RaycastHit straightHit;
+
+            int lookDist = 10;
+
+            // The acceptable distance we can be away from the wall in our forward plane when we raycast to detect a wall
+            float acceptableDist = 4f;
+
+            if (Physics.Raycast(transform.position + (Vector3.up * charController.height / 2), transform.forward, out straightHit, lookDist))
+            {
+                if (straightHit.collider.tag == "Pushable")
+                {
+                    direction = -straightHit.normal;
+
+                    if (straightHit.distance < acceptableDist)
+                    {
+                        hit = straightHit;
+
+                        // Add the order of events that will comprise this action
+                        tempDelegate = new Delegate(TurnTowardsWall);
+                        delegateList.Add(tempDelegate);
+                        tempDelegate = new Delegate(Push);
+                        delegateList.Add(tempDelegate);
+                    }
+                }
+            }
+        }
+    }
+
+    private void Push()
+    {
+        if (Input.GetKey(KeyCode.F))
+        {
+            velocity = direction * pushSpeed;
             charController.Move(velocity * Time.deltaTime);
-        }
-        else
-            delegateList.RemoveAt(0);
-    }
-
-    private void ClimbUp()
-    {
-        if (distanceClimbed < distanceToClimb)
-        {
-            Vector3 velocity = transform.up * climbSpeed;
-            charController.Move(velocity * Time.deltaTime);
-            distanceClimbed += velocity.y * Time.deltaTime;
+            hit.collider.gameObject.GetComponent<PushObject>().Move(velocity);
         }
         else
         {
-            distanceClimbed = 0;
-            delegateList.RemoveAt(0);
-        }
-    }
-
-    private void WalkForwardsABit()
-    {
-        getOverLedgeTimer += Time.deltaTime;
-        charController.Move(transform.forward * Time.deltaTime);
-
-        if (getOverLedgeTimer > 1)
-        {
-            getOverLedgeTimer = 0;
-            delegateList.RemoveAt(0);
-        }
-    }
-
-    private void WalkBackwardsABit()
-    {
-        if (distanceBackedUp < distanceToBackUp)
-        {
-            distanceBackedUp += transform.forward.magnitude * Time.deltaTime;
-            charController.Move(-transform.forward * Time.deltaTime);
-        }
-        else
-        {
-            distanceBackedUp = 0;
             delegateList.RemoveAt(0);
         }
     }

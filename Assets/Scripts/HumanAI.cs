@@ -3,18 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class FollowerAI : MonoBehaviour
+public class HumanAI : MonoBehaviour
 {
+    private Animator animator;
     private NavMeshAgent nav;
 
     public Transform targetTransform;
 
-    private void Start()
+    // Start is called before the first frame update
+    void Start()
     {
+        animator = GetComponent<Animator>();
         nav = GetComponent<NavMeshAgent>();
     }
 
-    private void Update()
+    // Update is called once per frame
+    void Update()
     {
         nav.SetDestination(targetTransform.position);
     }
