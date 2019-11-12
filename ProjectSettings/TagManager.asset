@@ -6,6 +6,7 @@ TagManager:
   tags:
   - boundry
   - Pushable
+  - Teleporter
   layers:
   - Default
   - TransparentFX

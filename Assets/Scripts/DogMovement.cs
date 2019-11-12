@@ -7,64 +7,53 @@ public class DogMovement : MonoBehaviour
     [Range(0, 1)]
     private Delegate tempDelegate;
     private RaycastHit hit;
-    private Transform camTransform;
-    private CharacterController charController;
     private List<Delegate> delegateList;
     private delegate void Delegate();
 
+    private Transform camTransform;
+    private CharacterController charController;
     private Vector3 direction;
-    
-    public Vector3 velocity;
-
-    private float getOverLedgeTimer;
-    private float distanceToClimb;
-    private float distanceClimbed;
-    private float distanceToBackUp;
-    private float distanceBackedUp;
+    private Vector3 velocity;
+    private Animator animator;
+    private GameObject teleport;
 
     private float currentWalkSpeed;
     private float originalWalkSpeed;
     private float currentSpeed;
 
-    private float climbSpeed;
     private float gravity;
 
     private float turnSmoothTime;
     private float turnSmoothVelocity;
     private float speedSmoothVelocity;
     private float speedSmoothTime;
+
     private float velocityY;
+    private float pushSpeed;
+    private bool canTeleport;
 
     public bool Locked;
-    public bool pushing;
-
-    public float pushSpeed;
 
     private void Start()
     {
+        animator = GetComponent<Animator>();
         hit = new RaycastHit();
         delegateList = new List<Delegate>();
         camTransform = Camera.main.transform;
         charController = GetComponent<CharacterController>();
 
-        getOverLedgeTimer = 0;
-        distanceToClimb = 0;
-        distanceClimbed = 0;
-        distanceToBackUp = 0;
-        distanceBackedUp = 0;
-
         currentWalkSpeed = 10;
         originalWalkSpeed = 10;
         pushSpeed = originalWalkSpeed / 2;
 
-        climbSpeed = 4;
         gravity = -12;
 
         turnSmoothTime = 0.2f;
         speedSmoothTime = 0.1f;
 
+        canTeleport = false;
+
         Locked = false;
-        pushing = false;
     }
 
     private void Update()
@@ -82,18 +71,55 @@ public class DogMovement : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.F))
                 CheckForPush();
 
+            if (Input.GetKeyDown(KeyCode.B) && canTeleport)
+                TryToTeleport();
+
             CheckforDrop();
         }
         else
             Locked = false;
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Teleporter")
+        {
+            teleport = other.gameObject;
+            canTeleport = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Teleporter")
+        {
+            canTeleport = false;
+        }
+    }
+
+    private void TryToTeleport()
+    {
+        Locked = true;
+
+        foreach (Teleport tp in FindObjectsOfType<Teleport>())
+        {
+            if (tp.code == teleport.GetComponent<Teleport>().code && tp != teleport)
+            {
+                transform.position = tp.transform.position + Vector3.up;
+                return;
+            }
+        }
+    }
+
     private void Move(Vector2 inputDir)
     {
+        animator.SetBool("Running", true);
+
         if (inputDir != Vector2.zero)
         {
             float targetRotation = Mathf.Atan2(inputDir.x, inputDir.y) * Mathf.Rad2Deg + camTransform.eulerAngles.y;
             transform.eulerAngles = Vector3.up * Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref turnSmoothVelocity, turnSmoothTime);
+            animator.SetBool("Running", false);
         }
 
         float targetSpeed = currentWalkSpeed * inputDir.magnitude;
@@ -134,31 +160,6 @@ public class DogMovement : MonoBehaviour
         }
     }
 
-    private void PlayerMovement()
-    {
-        float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
-
-        Vector3 playerMovement = new Vector3(horizontal, 0f, vertical) * currentWalkSpeed * Time.deltaTime;
-
-        transform.Translate(playerMovement, Space.Self);
-    }
-
-    private void TurnTowardsWall()
-    {
-        if (Vector3.Angle(transform.forward, -hit.normal) > 2)
-        {
-            Quaternion lookRotation = Quaternion.LookRotation(-hit.normal);
-
-            // Rotate us over time according to speed until we are in the required rotation
-            transform.rotation = Quaternion.Lerp(transform.rotation, lookRotation, Time.deltaTime * 10);
-        }
-        else
-        {
-            delegateList.RemoveAt(0);
-        }
-    }
-
     private void CheckForPush()
     {
         if (delegateList.Count == 0)
@@ -191,16 +192,33 @@ public class DogMovement : MonoBehaviour
         }
     }
 
+    private void TurnTowardsWall()
+    {
+        if (Vector3.Angle(transform.forward, -hit.normal) > 2)
+        {
+            Quaternion lookRotation = Quaternion.LookRotation(-hit.normal);
+
+            // Rotate us over time according to speed until we are in the required rotation
+            transform.rotation = Quaternion.Lerp(transform.rotation, lookRotation, Time.deltaTime * 10);
+        }
+        else
+        {
+            delegateList.RemoveAt(0);
+        }
+    }
+
     private void Push()
     {
         if (Input.GetKey(KeyCode.F))
         {
+            animator.SetBool("Pushing", true);
             velocity = direction * pushSpeed;
             charController.Move(velocity * Time.deltaTime);
             hit.collider.gameObject.GetComponent<PushObject>().Move(velocity);
         }
         else
         {
+            animator.SetBool("Pushing", false);
             delegateList.RemoveAt(0);
         }
     }

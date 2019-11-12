@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: 9974c20f5f81a794187581d52d4028bd
+guid: cab186a0b8672184fae8af5e4ded3bc1
 ModelImporter:
   serializedVersion: 25
   internalIDToNameTable:
   - first:
       74: 1827226128182048838
-    second: DogWalk
+    second: DogIdle
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -35,7 +35,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: DogWalk
+      name: DogIdle
       takeName: Take 001
       internalID: 1827226128182048838
       firstFrame: 1
@@ -112,7 +112,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 50
+    globalScale: 0.5
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

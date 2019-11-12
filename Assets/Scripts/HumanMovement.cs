@@ -7,20 +7,19 @@ public class HumanMovement : MonoBehaviour
     [Range(0, 1)]
     private Delegate tempDelegate;
     private RaycastHit hit;
-    private Transform camTransform;
-    private CharacterController charController;
     private List<Delegate> delegateList;
     private delegate void Delegate();
 
-    public Vector3 velocity;
+    private CharacterController charController;
+    private Transform camTransform;
+    private Vector3 velocity;
     private Vector3 direction;
-    public Animator animator;
+    private Animator animator;
 
-    private float getOverLedgeTimer;
     private float distanceToClimb;
     private float distanceClimbed;
-    private float distanceToBackUp;
-    private float distanceBackedUp;
+    private float distanceToWalk;
+    private float distanceWalked;
 
     private float currentWalkSpeed;
     private float originalWalkSpeed;
@@ -33,12 +32,11 @@ public class HumanMovement : MonoBehaviour
     private float turnSmoothVelocity;
     private float speedSmoothVelocity;
     private float speedSmoothTime;
+
     private float velocityY;
+    private float pushSpeed;
 
     public bool Locked;
-    public bool pushing;
-
-    public float pushSpeed;
 
     private void Start()
     {
@@ -48,11 +46,10 @@ public class HumanMovement : MonoBehaviour
         camTransform = Camera.main.transform;
         charController = GetComponent<CharacterController>();
 
-        getOverLedgeTimer = 0;
         distanceToClimb = 0;
         distanceClimbed = 0;
-        distanceToBackUp = 0;
-        distanceBackedUp = 0;
+        distanceToWalk = 0;
+        distanceWalked = 0;
 
         currentWalkSpeed = 6;
         originalWalkSpeed = 6;
@@ -65,7 +62,6 @@ public class HumanMovement : MonoBehaviour
         speedSmoothTime = 0.1f;
 
         Locked = false;
-        pushing = false;
     }
 
     private void Update()
@@ -80,7 +76,7 @@ public class HumanMovement : MonoBehaviour
             else
                 Move(inputDir);
 
-            if (gameObject.name != "Dog" && Input.GetKeyDown(KeyCode.R))
+            if (Input.GetKeyDown(KeyCode.R))
                 CheckForClimb();
 
             if (Input.GetKeyDown(KeyCode.F))
@@ -145,21 +141,20 @@ public class HumanMovement : MonoBehaviour
                     if (Physics.Raycast(transform.position + (transform.forward * 1.1f) + (transform.up * charController.height * 5),
                         -transform.up, out overLedgeHit, lookDist, layerMask))
                     {
-                        Debug.Log(overLedgeHit.distance);
-
                         // We are not able to climb up over anything which is closer from our raycast start than maxClimbHeight
                         // And we are not able to climb anything farther away from our raycast start than minClimbHeight
                         if (overLedgeHit.distance > maxClimbHeight && overLedgeHit.distance < minClimbHeight)
                         {
                             hit = straightHit;
-                            distanceToClimb = /*charController.height / 2 + */overLedgeHit.point.y - transform.position.y;
-                            
+                            distanceToClimb = 0.25f + overLedgeHit.point.y - transform.position.y;
+                            distanceToWalk = Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(hit.point.x, hit.point.z)) + charController.radius;
+
                             // Add the order of events that will comprise this action
                             tempDelegate = new Delegate(TurnTowardsWall);
                             delegateList.Add(tempDelegate);
-                            tempDelegate = new Delegate(ClimbUp);
+                            tempDelegate = new Delegate(TriggerClimbUpAnimation);
                             delegateList.Add(tempDelegate);
-                            tempDelegate = new Delegate(WalkForwards);
+                            tempDelegate = new Delegate(ClimbUp);
                             delegateList.Add(tempDelegate);
                         }
                     }
@@ -186,21 +181,18 @@ public class HumanMovement : MonoBehaviour
                 {
                     currentWalkSpeed = 0;
 
-                    if (gameObject.name != "Dog")
+                    if (Input.GetKeyDown(KeyCode.R) && Physics.Raycast(transform.position + (transform.forward * 1f) + (-transform.up * 1),
+                        -transform.forward, out hit, lookDist, layerMask))
                     {
-                        if (Input.GetKeyDown(KeyCode.R) && Physics.Raycast(transform.position + (transform.forward * 1f) + (-transform.up * 1),
-                            -transform.forward, out hit, lookDist, layerMask))
-                        {
-                            distanceToBackUp = Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(hit.point.x, hit.point.z)) + charController.radius;
+                        distanceToWalk = Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(hit.point.x, hit.point.z)) + charController.radius;
 
-                            tempDelegate = new Delegate(TurnAwayFromWall);
-                            delegateList.Add(tempDelegate);
-                            tempDelegate = new Delegate(WalkForwards);
-                            delegateList.Add(tempDelegate);
-                            tempDelegate = new Delegate(ClimbDown);
-                            delegateList.Add(tempDelegate);
-                        }
-                    }                 
+                        tempDelegate = new Delegate(TurnAwayFromWall);
+                        delegateList.Add(tempDelegate);
+                        tempDelegate = new Delegate(WalkForwards);
+                        delegateList.Add(tempDelegate);
+                        tempDelegate = new Delegate(ClimbDown);
+                        delegateList.Add(tempDelegate);
+                    }
                 }
                 else if (minDistToGround < groundHit.distance && groundHit.distance > maxDistToGround)
                     currentWalkSpeed = 0;
@@ -210,14 +202,36 @@ public class HumanMovement : MonoBehaviour
         }
     }
 
-    private void PlayerMovement()
+    private void CheckForPush()
     {
-        float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
+        if (delegateList.Count == 0)
+        {
+            RaycastHit straightHit;
 
-        Vector3 playerMovement = new Vector3(horizontal, 0f, vertical) * currentWalkSpeed * Time.deltaTime;
+            int lookDist = 10;
 
-        transform.Translate(playerMovement, Space.Self);
+            // The acceptable distance we can be away from the wall in our forward plane when we raycast to detect a wall
+            float acceptableDist = 2f;
+
+            if (Physics.Raycast(transform.position + (Vector3.up * charController.height / 2), transform.forward, out straightHit, lookDist))
+            {
+                if (straightHit.collider.tag == "Pushable")
+                {
+                    direction = -straightHit.normal;
+
+                    if (straightHit.distance < acceptableDist)
+                    {
+                        hit = straightHit;
+
+                        // Add the order of events that will comprise this action
+                        tempDelegate = new Delegate(TurnTowardsWall);
+                        delegateList.Add(tempDelegate);
+                        tempDelegate = new Delegate(Push);
+                        delegateList.Add(tempDelegate);
+                    }
+                }
+            }
+        }
     }
 
     private void TurnTowardsWall()
@@ -261,64 +275,34 @@ public class HumanMovement : MonoBehaviour
             delegateList.RemoveAt(0);
     }
 
+    private void TriggerClimbUpAnimation()
+    {
+        animator.SetBool("Climbing", true);
+    }
+
+    private void RemoveDelegate()
+    {
+        delegateList.RemoveAt(0);
+    }
+
     private void ClimbUp()
     {
-        if (distanceClimbed < distanceToClimb)
-        {
-            Vector3 velocity = transform.up * climbSpeed;
-            charController.Move(velocity * Time.deltaTime);
-            distanceClimbed += velocity.y * Time.deltaTime;
-        }
-        else
-        {
-            distanceClimbed = 0;
-            delegateList.RemoveAt(0);
-        }
+        animator.SetBool("Climbing", false);
+        transform.position += Vector3.up * distanceToClimb + transform.forward * distanceToWalk;
+        delegateList.RemoveAt(0);
     }
 
     private void WalkForwards()
     {
-        if (distanceBackedUp < distanceToBackUp)
+        if (distanceWalked < distanceToWalk)
         {
-            distanceBackedUp += transform.forward.magnitude * Time.deltaTime;
+            distanceWalked += transform.forward.magnitude * Time.deltaTime;
             charController.Move(transform.forward * Time.deltaTime);
         }
         else
         {
-            distanceBackedUp = 0;
+            distanceWalked = 0;
             delegateList.RemoveAt(0);
-        }
-    }
-
-    private void CheckForPush()
-    {
-        if (delegateList.Count == 0)
-        {
-            RaycastHit straightHit;
-
-            int lookDist = 10;
-
-            // The acceptable distance we can be away from the wall in our forward plane when we raycast to detect a wall
-            float acceptableDist = 2f;
-
-            if (Physics.Raycast(transform.position + (Vector3.up * charController.height / 2), transform.forward, out straightHit, lookDist))
-            {
-                if (straightHit.collider.tag == "Pushable")
-                {
-                    direction = -straightHit.normal;
-
-                    if (straightHit.distance < acceptableDist)
-                    {
-                        hit = straightHit;
-
-                        // Add the order of events that will comprise this action
-                        tempDelegate = new Delegate(TurnTowardsWall);
-                        delegateList.Add(tempDelegate);
-                        tempDelegate = new Delegate(Push);
-                        delegateList.Add(tempDelegate);
-                    }
-                }
-            }
         }
     }
 
