@@ -15,6 +15,7 @@ public class HumanMovement : MonoBehaviour
     private Vector3 velocity;
     private Vector3 direction;
     private Animator animator;
+    private GameObject teleport;
 
     private float distanceToClimb;
     private float distanceClimbed;
@@ -35,6 +36,7 @@ public class HumanMovement : MonoBehaviour
 
     private float velocityY;
     private float pushSpeed;
+    private bool canTeleport;
 
     public bool Locked;
 
@@ -61,6 +63,8 @@ public class HumanMovement : MonoBehaviour
         turnSmoothTime = 0.2f;
         speedSmoothTime = 0.1f;
 
+        canTeleport = false;
+
         Locked = false;
     }
 
@@ -82,21 +86,54 @@ public class HumanMovement : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.F))
                 CheckForPush();
 
+            if (Input.GetKeyDown(KeyCode.B) && canTeleport)
+                TryToTeleport();
+
             CheckforDrop();
         }
         else
             Locked = false;
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Teleporter")
+        {
+            teleport = other.gameObject;
+            canTeleport = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Teleporter")
+        {
+            canTeleport = false;
+        }
+    }
+
+    private void TryToTeleport()
+    {
+        Locked = true;
+
+        foreach (Teleport tp in FindObjectsOfType<Teleport>())
+        {
+            if (tp.code == teleport.GetComponent<Teleport>().code && tp != teleport.GetComponent<Teleport>())
+            {
+                transform.position = tp.transform.position + Vector3.up;
+            }
+        }
+    }
+
     private void Move(Vector2 inputDir)
     {
-        animator.SetBool("Running", true);
+        animator.SetBool("Running", false);
 
         if (inputDir != Vector2.zero)
         {
             float targetRotation = Mathf.Atan2(inputDir.x, inputDir.y) * Mathf.Rad2Deg + camTransform.eulerAngles.y;
             transform.eulerAngles = Vector3.up * Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref turnSmoothVelocity, turnSmoothTime);
-            animator.SetBool("Running", false);
+            animator.SetBool("Running", true);
         }
 
         float targetSpeed = currentWalkSpeed * inputDir.magnitude;
@@ -125,7 +162,7 @@ public class HumanMovement : MonoBehaviour
             int lookDist = 100;
 
             // The acceptable distance we can be away from the wall in our forward plane when we raycast to detect a wall
-            float acceptableDist = 2f;
+            float acceptableDist = 3f;
 
             // We cannot climb up over objects shorter than this value from where we shoot our ray
             float minClimbHeight = 19f;
@@ -138,7 +175,7 @@ public class HumanMovement : MonoBehaviour
             {
                 if (straightHit.distance < acceptableDist)
                 {
-                    if (Physics.Raycast(transform.position + (transform.forward * 1.1f) + (transform.up * charController.height * 5),
+                    if (Physics.Raycast(transform.position + (transform.forward * 1.5f) + (transform.up * charController.height * 5),
                         -transform.up, out overLedgeHit, lookDist, layerMask))
                     {
                         // We are not able to climb up over anything which is closer from our raycast start than maxClimbHeight
@@ -147,10 +184,12 @@ public class HumanMovement : MonoBehaviour
                         {
                             hit = straightHit;
                             distanceToClimb = 0.25f + overLedgeHit.point.y - transform.position.y;
-                            distanceToWalk = Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(hit.point.x, hit.point.z)) + charController.radius;
+                            distanceToWalk = Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(overLedgeHit.point.x, overLedgeHit.point.z)) + charController.radius;
 
                             // Add the order of events that will comprise this action
                             tempDelegate = new Delegate(TurnTowardsWall);
+                            delegateList.Add(tempDelegate);
+                            tempDelegate = new Delegate(MoveAwayFromWall);
                             delegateList.Add(tempDelegate);
                             tempDelegate = new Delegate(TriggerClimbUpAnimation);
                             delegateList.Add(tempDelegate);
@@ -264,6 +303,26 @@ public class HumanMovement : MonoBehaviour
         }
     }
 
+    private void MoveAwayFromWall()
+    {
+        RaycastHit hit;
+        Physics.Raycast(transform.position, transform.forward, out hit);
+
+        if (hit.distance < 1.5)
+        {
+            transform.position += -transform.forward * Time.deltaTime;
+        }
+        else
+            delegateList.RemoveAt(0);
+    }
+
+    private void ClimbUp()
+    {
+        animator.SetBool("Climbing", false);
+        transform.position += Vector3.up * distanceToClimb + transform.forward * distanceToWalk;
+        delegateList.RemoveAt(0);
+    }
+
     private void ClimbDown()
     {
         if (!charController.isGrounded)
@@ -273,23 +332,6 @@ public class HumanMovement : MonoBehaviour
         }
         else
             delegateList.RemoveAt(0);
-    }
-
-    private void TriggerClimbUpAnimation()
-    {
-        animator.SetBool("Climbing", true);
-    }
-
-    private void RemoveDelegate()
-    {
-        delegateList.RemoveAt(0);
-    }
-
-    private void ClimbUp()
-    {
-        animator.SetBool("Climbing", false);
-        transform.position += Vector3.up * distanceToClimb + transform.forward * distanceToWalk;
-        delegateList.RemoveAt(0);
     }
 
     private void WalkForwards()
@@ -320,5 +362,15 @@ public class HumanMovement : MonoBehaviour
             animator.SetBool("Pushing", false);
             delegateList.RemoveAt(0);
         }
+    }
+
+    private void TriggerClimbUpAnimation()
+    {
+        animator.SetBool("Climbing", true);
+    }
+
+    private void RemoveDelegate()
+    {
+        delegateList.RemoveAt(0);
     }
 }

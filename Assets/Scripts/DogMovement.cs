@@ -16,6 +16,7 @@ public class DogMovement : MonoBehaviour
     private Vector3 velocity;
     private Animator animator;
     private GameObject teleport;
+    private CapsuleCollider capsuleCollider;
 
     private float currentWalkSpeed;
     private float originalWalkSpeed;
@@ -41,6 +42,7 @@ public class DogMovement : MonoBehaviour
         delegateList = new List<Delegate>();
         camTransform = Camera.main.transform;
         charController = GetComponent<CharacterController>();
+        capsuleCollider = GetComponent<CapsuleCollider>();
 
         currentWalkSpeed = 10;
         originalWalkSpeed = 10;
@@ -103,23 +105,22 @@ public class DogMovement : MonoBehaviour
 
         foreach (Teleport tp in FindObjectsOfType<Teleport>())
         {
-            if (tp.code == teleport.GetComponent<Teleport>().code && tp != teleport)
+            if (tp.code == teleport.GetComponent<Teleport>().code && tp != teleport.GetComponent<Teleport>())
             {
                 transform.position = tp.transform.position + Vector3.up;
-                return;
             }
         }
     }
 
     private void Move(Vector2 inputDir)
     {
-        animator.SetBool("Running", true);
+        animator.SetBool("Running", false);
 
         if (inputDir != Vector2.zero)
         {
             float targetRotation = Mathf.Atan2(inputDir.x, inputDir.y) * Mathf.Rad2Deg + camTransform.eulerAngles.y;
             transform.eulerAngles = Vector3.up * Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref turnSmoothVelocity, turnSmoothTime);
-            animator.SetBool("Running", false);
+            animator.SetBool("Running", true);
         }
 
         float targetSpeed = currentWalkSpeed * inputDir.magnitude;
@@ -184,6 +185,10 @@ public class DogMovement : MonoBehaviour
                         // Add the order of events that will comprise this action
                         tempDelegate = new Delegate(TurnTowardsWall);
                         delegateList.Add(tempDelegate);
+                        tempDelegate = new Delegate(MoveAwayFromWall);
+                        delegateList.Add(tempDelegate);
+                        tempDelegate = new Delegate(TriggerDogPushingTransitionAnimation);
+                        delegateList.Add(tempDelegate);
                         tempDelegate = new Delegate(Push);
                         delegateList.Add(tempDelegate);
                     }
@@ -207,6 +212,19 @@ public class DogMovement : MonoBehaviour
         }
     }
 
+    private void MoveAwayFromWall()
+    {
+        RaycastHit hit;
+        Physics.Raycast(transform.position, transform.forward, out hit);
+
+        if (hit.distance < 2)
+        {
+            transform.position += -transform.forward * Time.deltaTime;
+        }
+        else
+            delegateList.RemoveAt(0);
+    }
+
     private void Push()
     {
         if (Input.GetKey(KeyCode.F))
@@ -221,5 +239,17 @@ public class DogMovement : MonoBehaviour
             animator.SetBool("Pushing", false);
             delegateList.RemoveAt(0);
         }
+    }
+
+    private void RemoveDelegate()
+    {
+        delegateList.RemoveAt(0);
+        animator.SetBool("PushTransition", false);
+    }
+
+    private void TriggerDogPushingTransitionAnimation()
+    {
+        if (!animator.GetBool("PushTransition"))
+            animator.SetBool("PushTransition", true);
     }
 }
