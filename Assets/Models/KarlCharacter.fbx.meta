@@ -1,11 +1,61 @@
 fileFormatVersion: 2
 guid: 0d3f6a8ddcfe995438887783c0451abe
 ModelImporter:
-  serializedVersion: 25
+  serializedVersion: 28
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: black_shoes
+    second: {fileID: 2100000, guid: 202c885ed3bbf464d9bbba6cc14ec08c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: brown_trousers
+    second: {fileID: 2100000, guid: b2c078c25d9ab65439d389767782e905, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: cream_skintone
+    second: {fileID: 2100000, guid: 7318450cb62f775469b4ffd8fc284177, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: doit_initialShadingGroup1
+    second: {fileID: 2100000, guid: f2f80d4ba12fab945ae041b975db00df, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: gold_button
+    second: {fileID: 2100000, guid: aab3036932fe56e4bb485161798b64ac, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: green_bright_shirt
+    second: {fileID: 2100000, guid: 56d409cd0c84ee34eaf8addeecb3ab13, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: green_dark_shirt
+    second: {fileID: 2100000, guid: 9e14cc7caab56604eb8fec41e81e5ec0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: grey_bright_beard
+    second: {fileID: 2100000, guid: d7299dc96c2eb52408f7b2bafb8a2f17, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: red_hat
+    second: {fileID: 2100000, guid: a858c799b52553c42b0d9b8fe324c9c8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: white_shoelace
+    second: {fileID: 2100000, guid: bed97bc2f81377041ac7d83949b33baa, type: 2}
   materials:
-    importMaterials: 1
+    materialImportMode: 1
     materialName: 0
     materialSearch: 1
     materialLocation: 1
@@ -38,6 +88,7 @@ ModelImporter:
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
@@ -68,7 +119,6 @@ ModelImporter:
     normalSmoothingSource: 0
   referencedClips: []
   importAnimation: 1
-  copyAvatar: 0
   humanDescription:
     serializedVersion: 3
     human: []
@@ -86,8 +136,10 @@ ModelImporter:
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
+  avatarSetup: 1
   additionalBone: 0
   userData: 
   assetBundleName: 
