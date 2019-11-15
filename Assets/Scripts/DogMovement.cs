@@ -15,7 +15,7 @@ public class DogMovement : MonoBehaviour
     private Vector3 direction;
     private Vector3 velocity;
     private Animator animator;
-    private GameObject teleport;
+    private GameObject teleporterPad;
     private CapsuleCollider capsuleCollider;
 
     private float currentWalkSpeed;
@@ -67,14 +67,15 @@ public class DogMovement : MonoBehaviour
 
             if (delegateList.Count != 0)
                 delegateList[0].Method.Invoke(this, null);
-            else
-                Move(inputDir);
 
-            if (Input.GetKeyDown(KeyCode.F))
+            else if (Input.GetKeyDown(KeyCode.F))
                 CheckForPush();
 
-            if (Input.GetKeyDown(KeyCode.B) && canTeleport)
+            else if (Input.GetKeyDown(KeyCode.B) && canTeleport)
                 TryToTeleport();
+
+            else
+                Move(inputDir);
 
             CheckforDrop();
         }
@@ -86,7 +87,7 @@ public class DogMovement : MonoBehaviour
     {
         if (other.tag == "Teleporter")
         {
-            teleport = other.gameObject;
+            teleporterPad = other.gameObject;
             canTeleport = true;
         }
     }
@@ -103,13 +104,17 @@ public class DogMovement : MonoBehaviour
     {
         Locked = true;
 
-        foreach (Teleport tp in FindObjectsOfType<Teleport>())
+        GameObject parent = teleporterPad.transform.parent.gameObject;
+        Transform[] childTransforms = parent.GetComponentsInChildren<Transform>();
+        GameObject otherTeleporterPad = teleporterPad; // Sätter det till "teleporterPad" för att den inte får vara null samt om det sker ett misstag så händer inget
+
+        for (int i = 1; i < childTransforms.Length; i++)
         {
-            if (tp.code == teleport.GetComponent<Teleport>().code && tp != teleport.GetComponent<Teleport>())
-            {
-                transform.position = tp.transform.position + Vector3.up;
-            }
+            if (childTransforms[i] != teleporterPad.transform)
+                otherTeleporterPad = childTransforms[i].gameObject;
         }
+
+        transform.position = otherTeleporterPad.transform.position + Vector3.up;
     }
 
     private void Move(Vector2 inputDir)
