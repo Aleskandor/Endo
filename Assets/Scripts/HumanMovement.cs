@@ -15,19 +15,16 @@ public class HumanMovement : MonoBehaviour
     private Vector3 velocity;
     private Vector3 direction;
     private Animator animator;
-    private GameObject teleport;
+    private GameObject teleporterPad;
 
     private float distanceToClimb;
-    private float distanceClimbed;
     private float distanceToWalk;
     private float distanceWalked;
 
     private float currentWalkSpeed;
     private float originalWalkSpeed;
+    private float pushSpeed;
     private float currentSpeed;
-
-    private float climbSpeed;
-    private float gravity;
 
     private float turnSmoothTime;
     private float turnSmoothVelocity;
@@ -35,7 +32,8 @@ public class HumanMovement : MonoBehaviour
     private float speedSmoothTime;
 
     private float velocityY;
-    private float pushSpeed;
+    private float gravity;
+
     private bool canTeleport;
 
     public bool Locked;
@@ -48,16 +46,10 @@ public class HumanMovement : MonoBehaviour
         camTransform = Camera.main.transform;
         charController = GetComponent<CharacterController>();
 
-        distanceToClimb = 0;
-        distanceClimbed = 0;
-        distanceToWalk = 0;
-        distanceWalked = 0;
-
-        currentWalkSpeed = 6;
-        originalWalkSpeed = 6;
+        currentWalkSpeed = 5;
+        originalWalkSpeed = 5;
         pushSpeed = originalWalkSpeed / 2;
 
-        climbSpeed = 4;
         gravity = -12;
 
         turnSmoothTime = 0.2f;
@@ -75,21 +67,21 @@ public class HumanMovement : MonoBehaviour
             Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
             Vector2 inputDir = input.normalized;
 
+            CheckforLedges();
+
             if (delegateList.Count != 0)
                 delegateList[0].Method.Invoke(this, null);
+            else if (Input.GetKeyDown(KeyCode.R))
+            {
+                CheckForClimb();
+                CheckforDrop();
+            }
+            else if (Input.GetKeyDown(KeyCode.F))
+                CheckForPush();
+            else if (Input.GetKeyDown(KeyCode.B) && canTeleport)
+                TryToTeleport();
             else
                 Move(inputDir);
-
-            if (Input.GetKeyDown(KeyCode.R))
-                CheckForClimb();
-
-            if (Input.GetKeyDown(KeyCode.F))
-                CheckForPush();
-
-            if (Input.GetKeyDown(KeyCode.B) && canTeleport)
-                TryToTeleport();
-
-            CheckforDrop();
         }
         else
             Locked = false;
@@ -99,7 +91,7 @@ public class HumanMovement : MonoBehaviour
     {
         if (other.tag == "Teleporter")
         {
-            teleport = other.gameObject;
+            teleporterPad = other.gameObject;
             canTeleport = true;
         }
     }
@@ -116,13 +108,18 @@ public class HumanMovement : MonoBehaviour
     {
         Locked = true;
 
-        foreach (Teleport tp in FindObjectsOfType<Teleport>())
+        GameObject parent = teleporterPad.transform.parent.gameObject;
+        Transform[] childTransforms = parent.GetComponentsInChildren<Transform>();
+        GameObject otherTeleporterPad = teleporterPad; // Sätter det till "teleporterPad" för att den inte får vara null samt om det sker ett misstag så händer inget
+
+        for (int i = 1; i < childTransforms.Length; i++)
         {
-            if (tp.code == teleport.GetComponent<Teleport>().code && tp != teleport.GetComponent<Teleport>())
-            {
-                transform.position = tp.transform.position + Vector3.up;
-            }
+            if (childTransforms[i] != teleporterPad.transform)
+                otherTeleporterPad = childTransforms[i].gameObject;
         }
+
+        charController.Move(otherTeleporterPad.transform.position + Vector3.up);
+        //transform.position = otherTeleporterPad.transform.position + Vector3.up;
     }
 
     private void Move(Vector2 inputDir)
@@ -153,49 +150,45 @@ public class HumanMovement : MonoBehaviour
 
     private void CheckForClimb()
     {
-        if (delegateList.Count == 0)
+        RaycastHit straightHit;
+        RaycastHit overLedgeHit;
+
+        int layerMask = 1 << 8;
+        int lookDist = 100;
+
+        // The acceptable distance we can be away from the wall in our forward plane when we raycast to detect a wall
+        float acceptableDist = 3f;
+
+        // We cannot climb up over objects shorter than this value from where we shoot our ray
+        float minClimbHeight = 19f;
+
+        // We can only climb on objects taller than this (it's a smaller value than minClimbHeight seeing as we
+        // are shooting a ray from above and it will collide earlier on a higher object
+        float maxClimbHeight = 18f;
+
+        if (Physics.Raycast(transform.position + (Vector3.up * charController.height / 2), transform.forward, out straightHit, lookDist, layerMask))
         {
-            RaycastHit straightHit;
-            RaycastHit overLedgeHit;
-
-            int layerMask = 1 << 8;
-            int lookDist = 100;
-
-            // The acceptable distance we can be away from the wall in our forward plane when we raycast to detect a wall
-            float acceptableDist = 3f;
-
-            // We cannot climb up over objects shorter than this value from where we shoot our ray
-            float minClimbHeight = 19f;
-
-            // We can only climb on objects taller than this (it's a smaller value than minClimbHeight seeing as we
-            // are shooting a ray from above and it will collide earlier on a higher object
-            float maxClimbHeight = 18f;
-
-            if (Physics.Raycast(transform.position + (Vector3.up * charController.height / 2), transform.forward, out straightHit, lookDist, layerMask))
+            if (straightHit.distance < acceptableDist)
             {
-                if (straightHit.distance < acceptableDist)
+                if (Physics.Raycast(transform.position + (transform.forward * 1.5f) + (transform.up * charController.height * 5), -transform.up, out overLedgeHit, lookDist, layerMask))
                 {
-                    if (Physics.Raycast(transform.position + (transform.forward * 1.5f) + (transform.up * charController.height * 5),
-                        -transform.up, out overLedgeHit, lookDist, layerMask))
+                    // We are not able to climb up over anything which is closer from our raycast start than maxClimbHeight
+                    // And we are not able to climb anything farther away from our raycast start than minClimbHeight
+                    if (overLedgeHit.distance > maxClimbHeight && overLedgeHit.distance < minClimbHeight)
                     {
-                        // We are not able to climb up over anything which is closer from our raycast start than maxClimbHeight
-                        // And we are not able to climb anything farther away from our raycast start than minClimbHeight
-                        if (overLedgeHit.distance > maxClimbHeight && overLedgeHit.distance < minClimbHeight)
-                        {
-                            hit = straightHit;
-                            distanceToClimb = 0.25f + overLedgeHit.point.y - transform.position.y;
-                            distanceToWalk = Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(overLedgeHit.point.x, overLedgeHit.point.z)) + charController.radius;
+                        hit = straightHit;
+                        distanceToClimb = overLedgeHit.point.y - transform.position.y;
+                        distanceToWalk = Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(overLedgeHit.point.x, overLedgeHit.point.z)) + charController.radius;
 
-                            // Add the order of events that will comprise this action
-                            tempDelegate = new Delegate(TurnTowardsWall);
-                            delegateList.Add(tempDelegate);
-                            tempDelegate = new Delegate(MoveAwayFromWall);
-                            delegateList.Add(tempDelegate);
-                            tempDelegate = new Delegate(TriggerClimbUpAnimation);
-                            delegateList.Add(tempDelegate);
-                            tempDelegate = new Delegate(ClimbUp);
-                            delegateList.Add(tempDelegate);
-                        }
+                        // Add the order of events that will comprise this action
+                        tempDelegate = new Delegate(TurnTowardsWall);
+                        delegateList.Add(tempDelegate);
+                        tempDelegate = new Delegate(MoveAwayFromWall);
+                        delegateList.Add(tempDelegate);
+                        tempDelegate = new Delegate(TriggerClimbUpAnimation);
+                        delegateList.Add(tempDelegate);
+                        tempDelegate = new Delegate(ClimbUp);
+                        delegateList.Add(tempDelegate);
                     }
                 }
             }
@@ -218,26 +211,38 @@ public class HumanMovement : MonoBehaviour
             {
                 if (minDistToGround < groundHit.distance && groundHit.distance < maxDistToGround)
                 {
-                    currentWalkSpeed = 0;
+                    distanceToClimb = groundHit.point.y - transform.position.y;
 
-                    if (Input.GetKeyDown(KeyCode.R) && Physics.Raycast(transform.position + (transform.forward * 1f) + (-transform.up * 1),
-                        -transform.forward, out hit, lookDist, layerMask))
+                    if (Physics.Raycast(transform.position + (transform.forward * 1f) + (-transform.up * 1), -transform.forward, out hit, lookDist, layerMask))
                     {
-                        distanceToWalk = Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(hit.point.x, hit.point.z)) + charController.radius;
+                        float animationOffset = 1.5f;
+                        distanceToWalk = Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(hit.point.x, hit.point.z)) + charController.radius + animationOffset;
 
                         tempDelegate = new Delegate(TurnAwayFromWall);
                         delegateList.Add(tempDelegate);
-                        tempDelegate = new Delegate(WalkForwards);
+                        tempDelegate = new Delegate(TriggerClimbDownAnimation);
                         delegateList.Add(tempDelegate);
                         tempDelegate = new Delegate(ClimbDown);
                         delegateList.Add(tempDelegate);
                     }
                 }
-                else if (minDistToGround < groundHit.distance && groundHit.distance > maxDistToGround)
-                    currentWalkSpeed = 0;
-                else
-                    currentWalkSpeed = originalWalkSpeed;
             }
+        }
+    }
+
+    private void CheckforLedges()
+    {
+        RaycastHit groundHit;
+
+        int lookDist = 100;
+        float minDistToGround = 4;
+
+        if (Physics.Raycast(transform.position + (Vector3.up * charController.height / 2) + (transform.forward), Vector3.down, out groundHit, lookDist))
+        {
+            if (minDistToGround < groundHit.distance)
+                currentWalkSpeed = 0;
+            else
+                currentWalkSpeed = originalWalkSpeed;
         }
     }
 
@@ -310,7 +315,8 @@ public class HumanMovement : MonoBehaviour
 
         if (hit.distance < 1.5)
         {
-            transform.position += -transform.forward * Time.deltaTime;
+            charController.Move(-transform.forward * Time.deltaTime);
+            //transform.position += -transform.forward * Time.deltaTime;
         }
         else
             delegateList.RemoveAt(0);
@@ -318,20 +324,18 @@ public class HumanMovement : MonoBehaviour
 
     private void ClimbUp()
     {
-        animator.SetBool("Climbing", false);
-        transform.position += Vector3.up * distanceToClimb + transform.forward * distanceToWalk;
+        animator.SetBool("ClimbUp", false);
+        //transform.position += Vector3.up * distanceToClimb + transform.forward * distanceToWalk;
+        charController.Move(Vector3.up * distanceToClimb + transform.forward * distanceToWalk);
         delegateList.RemoveAt(0);
     }
 
     private void ClimbDown()
     {
-        if (!charController.isGrounded)
-        {
-            Vector3 velocity = -transform.up * climbSpeed;
-            charController.Move(velocity * Time.deltaTime);
-        }
-        else
-            delegateList.RemoveAt(0);
+        animator.SetBool("ClimbDown", false);
+        //transform.position += Vector3.up * distanceToClimb + transform.forward * distanceToWalk;
+        charController.Move(Vector3.up * distanceToClimb + transform.forward * distanceToWalk);
+        delegateList.RemoveAt(0);
     }
 
     private void WalkForwards()
@@ -366,7 +370,12 @@ public class HumanMovement : MonoBehaviour
 
     private void TriggerClimbUpAnimation()
     {
-        animator.SetBool("Climbing", true);
+        animator.SetBool("ClimbUp", true);
+    }
+
+    private void TriggerClimbDownAnimation()
+    {
+        animator.SetBool("ClimbDown", true);
     }
 
     private void RemoveDelegate()

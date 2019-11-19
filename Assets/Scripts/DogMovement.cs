@@ -14,6 +14,7 @@ public class DogMovement : MonoBehaviour
     private CharacterController charController;
     private Vector3 direction;
     private Vector3 velocity;
+    private Vector3 tempPosition;
     private Animator animator;
     private GameObject teleporterPad;
     private CapsuleCollider capsuleCollider;
@@ -65,22 +66,24 @@ public class DogMovement : MonoBehaviour
             Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
             Vector2 inputDir = input.normalized;
 
+            CheckforDrop();
+
             if (delegateList.Count != 0)
                 delegateList[0].Method.Invoke(this, null);
-
             else if (Input.GetKeyDown(KeyCode.F))
                 CheckForPush();
-
             else if (Input.GetKeyDown(KeyCode.B) && canTeleport)
                 TryToTeleport();
-
             else
                 Move(inputDir);
-
-            CheckforDrop();
         }
         else
             Locked = false;
+    }
+
+    private void LateUpdate()
+    {
+        transform.position = tempPosition;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -114,7 +117,7 @@ public class DogMovement : MonoBehaviour
                 otherTeleporterPad = childTransforms[i].gameObject;
         }
 
-        transform.position = otherTeleporterPad.transform.position + Vector3.up;
+        tempPosition = otherTeleporterPad.transform.position + Vector3.up;
     }
 
     private void Move(Vector2 inputDir)
@@ -224,7 +227,7 @@ public class DogMovement : MonoBehaviour
 
         if (hit.distance < 2)
         {
-            transform.position += -transform.forward * Time.deltaTime;
+            tempPosition += -transform.forward * Time.deltaTime;
         }
         else
             delegateList.RemoveAt(0);
