@@ -10,11 +10,10 @@ public class DogMovement : MonoBehaviour
     private List<Delegate> delegateList;
     private delegate void Delegate();
 
-    private Transform camTransform;
     private CharacterController charController;
+    private Transform camTransform;
     private Vector3 direction;
     private Vector3 velocity;
-    private Vector3 tempPosition;
     private Animator animator;
     private GameObject teleporterPad;
     private CapsuleCollider capsuleCollider;
@@ -66,7 +65,7 @@ public class DogMovement : MonoBehaviour
             Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
             Vector2 inputDir = input.normalized;
 
-            CheckforDrop();
+            CheckForLedges();
 
             if (delegateList.Count != 0)
                 delegateList[0].Method.Invoke(this, null);
@@ -79,11 +78,6 @@ public class DogMovement : MonoBehaviour
         }
         else
             Locked = false;
-    }
-
-    private void LateUpdate()
-    {
-        transform.position = tempPosition;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -109,7 +103,7 @@ public class DogMovement : MonoBehaviour
 
         GameObject parent = teleporterPad.transform.parent.gameObject;
         Transform[] childTransforms = parent.GetComponentsInChildren<Transform>();
-        GameObject otherTeleporterPad = teleporterPad; // Sätter det till "teleporterPad" för att den inte får vara null samt om det sker ett misstag så händer inget
+        GameObject otherTeleporterPad = teleporterPad;
 
         for (int i = 1; i < childTransforms.Length; i++)
         {
@@ -117,7 +111,9 @@ public class DogMovement : MonoBehaviour
                 otherTeleporterPad = childTransforms[i].gameObject;
         }
 
-        tempPosition = otherTeleporterPad.transform.position + Vector3.up;
+        Vector3 distance = otherTeleporterPad.transform.position - transform.position;
+
+        charController.Move(distance);
     }
 
     private void Move(Vector2 inputDir)
@@ -146,26 +142,19 @@ public class DogMovement : MonoBehaviour
         }
     }
 
-    private void CheckforDrop()
+    private void CheckForLedges()
     {
-        if (delegateList.Count == 0)
+        RaycastHit groundHit;
+
+        int lookDist = 100;
+        float minDistToGround = 4;
+
+        if (Physics.Raycast(transform.position + (Vector3.up * charController.height / 2) + (transform.forward * 1.1f), Vector3.down, out groundHit, lookDist))
         {
-            RaycastHit groundHit;
-
-            int lookDist = 100;
-
-            float minDistToGround = 4;
-            float maxDistToGround = 7;
-
-            if (Physics.Raycast(transform.position + (Vector3.up * charController.height / 2) + (transform.forward * 1.1f), Vector3.down, out groundHit, lookDist))
-            {
-                if (minDistToGround < groundHit.distance && groundHit.distance < maxDistToGround)
-                    currentWalkSpeed = 0;               
-                else if (minDistToGround < groundHit.distance && groundHit.distance > maxDistToGround)
-                    currentWalkSpeed = 0;
-                else
-                    currentWalkSpeed = originalWalkSpeed;
-            }
+            if (groundHit.distance > minDistToGround)
+                currentWalkSpeed = 0;
+            else
+                currentWalkSpeed = originalWalkSpeed;
         }
     }
 
@@ -176,8 +165,6 @@ public class DogMovement : MonoBehaviour
             RaycastHit straightHit;
 
             int lookDist = 10;
-
-            // The acceptable distance we can be away from the wall in our forward plane when we raycast to detect a wall
             float acceptableDist = 4f;
 
             if (Physics.Raycast(transform.position + (Vector3.up * charController.height / 2), transform.forward, out straightHit, lookDist))
@@ -190,7 +177,6 @@ public class DogMovement : MonoBehaviour
                     {
                         hit = straightHit;
 
-                        // Add the order of events that will comprise this action
                         tempDelegate = new Delegate(TurnTowardsWall);
                         delegateList.Add(tempDelegate);
                         tempDelegate = new Delegate(MoveAwayFromWall);
@@ -210,8 +196,7 @@ public class DogMovement : MonoBehaviour
         if (Vector3.Angle(transform.forward, -hit.normal) > 2)
         {
             Quaternion lookRotation = Quaternion.LookRotation(-hit.normal);
-
-            // Rotate us over time according to speed until we are in the required rotation
+        
             transform.rotation = Quaternion.Lerp(transform.rotation, lookRotation, Time.deltaTime * 10);
         }
         else
@@ -225,9 +210,9 @@ public class DogMovement : MonoBehaviour
         RaycastHit hit;
         Physics.Raycast(transform.position, transform.forward, out hit);
 
-        if (hit.distance < 2)
+        if (hit.distance < 1.75)
         {
-            tempPosition += -transform.forward * Time.deltaTime;
+            charController.Move(-transform.forward * Time.deltaTime);
         }
         else
             delegateList.RemoveAt(0);
@@ -249,15 +234,15 @@ public class DogMovement : MonoBehaviour
         }
     }
 
-    private void RemoveDelegate()
-    {
-        delegateList.RemoveAt(0);
-        animator.SetBool("PushTransition", false);
-    }
-
     private void TriggerDogPushingTransitionAnimation()
     {
         if (!animator.GetBool("PushTransition"))
             animator.SetBool("PushTransition", true);
+    }
+
+    private void RemoveDelegate()
+    {
+        delegateList.RemoveAt(0);
+        animator.SetBool("PushTransition", false);
     }
 }

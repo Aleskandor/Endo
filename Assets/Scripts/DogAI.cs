@@ -5,19 +5,40 @@ using UnityEngine.AI;
 
 public class DogAI : MonoBehaviour
 {
+    private Animator animator;
     private NavMeshAgent nav;
 
     public Transform targetTransform;
 
-    // Start is called before the first frame update
+    [HideInInspector]
+    public bool pathAvailable;
+    public NavMeshPath navMeshPath;
+
     void Start()
     {
+        animator = GetComponent<Animator>();
         nav = GetComponent<NavMeshAgent>();
+        navMeshPath = new NavMeshPath();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        nav.SetDestination(targetTransform.position);
+        if(CalculateNewPath())
+            nav.SetDestination(targetTransform.position);
+
+        if (nav.velocity.magnitude > 0 && !animator.GetBool("Running"))
+            animator.SetBool("Running", true);
+        else if (nav.velocity.magnitude == 0 && animator.GetBool("Running"))
+            animator.SetBool("Running", false);
+    }
+
+    bool CalculateNewPath()
+    {
+        nav.CalculatePath(targetTransform.position, navMeshPath);
+
+        if (navMeshPath.status != NavMeshPathStatus.PathComplete)
+            return false;
+        else
+            return true;
     }
 }
