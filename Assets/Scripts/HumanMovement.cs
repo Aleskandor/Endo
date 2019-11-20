@@ -34,8 +34,6 @@ public class HumanMovement : MonoBehaviour
     private float velocityY;
     private float gravity;
 
-    private bool canTeleport;
-
     public bool Locked;
 
     private void Start()
@@ -54,8 +52,6 @@ public class HumanMovement : MonoBehaviour
 
         turnSmoothTime = 0.2f;
         speedSmoothTime = 0.1f;
-
-        canTeleport = false;
 
         Locked = false;
     }
@@ -78,48 +74,11 @@ public class HumanMovement : MonoBehaviour
             }
             else if (Input.GetKeyDown(KeyCode.F))
                 CheckForPush();
-            else if (Input.GetKeyDown(KeyCode.B) && canTeleport)
-                TryToTeleport();
             else
                 Move(inputDir);
         }
         else
             Locked = false;
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.tag == "Teleporter")
-        {
-            teleporterPad = other.gameObject;
-            canTeleport = true;
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.tag == "Teleporter")
-        {
-            canTeleport = false;
-        }
-    }
-
-    private void TryToTeleport()
-    {
-        Locked = true;
-
-        GameObject parent = teleporterPad.transform.parent.gameObject;
-        Transform[] childTransforms = parent.GetComponentsInChildren<Transform>();
-        GameObject otherTeleporterPad = teleporterPad; // Sätter det till "teleporterPad" för att den inte får vara null samt om det sker ett misstag så händer inget
-
-        for (int i = 1; i < childTransforms.Length; i++)
-        {
-            if (childTransforms[i] != teleporterPad.transform)
-                otherTeleporterPad = childTransforms[i].gameObject;
-        }
-
-        charController.Move(otherTeleporterPad.transform.position + Vector3.up);
-        //transform.position = otherTeleporterPad.transform.position + Vector3.up;
     }
 
     private void Move(Vector2 inputDir)
@@ -155,15 +114,8 @@ public class HumanMovement : MonoBehaviour
 
         int layerMask = 1 << 8;
         int lookDist = 100;
-
-        // The acceptable distance we can be away from the wall in our forward plane when we raycast to detect a wall
         float acceptableDist = 3f;
-
-        // We cannot climb up over objects shorter than this value from where we shoot our ray
         float minClimbHeight = 19f;
-
-        // We can only climb on objects taller than this (it's a smaller value than minClimbHeight seeing as we
-        // are shooting a ray from above and it will collide earlier on a higher object
         float maxClimbHeight = 18f;
 
         if (Physics.Raycast(transform.position + (Vector3.up * charController.height / 2), transform.forward, out straightHit, lookDist, layerMask))
@@ -172,15 +124,12 @@ public class HumanMovement : MonoBehaviour
             {
                 if (Physics.Raycast(transform.position + (transform.forward * 1.5f) + (transform.up * charController.height * 5), -transform.up, out overLedgeHit, lookDist, layerMask))
                 {
-                    // We are not able to climb up over anything which is closer from our raycast start than maxClimbHeight
-                    // And we are not able to climb anything farther away from our raycast start than minClimbHeight
                     if (overLedgeHit.distance > maxClimbHeight && overLedgeHit.distance < minClimbHeight)
                     {
                         hit = straightHit;
                         distanceToClimb = overLedgeHit.point.y - transform.position.y;
                         distanceToWalk = Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(overLedgeHit.point.x, overLedgeHit.point.z)) + charController.radius;
 
-                        // Add the order of events that will comprise this action
                         tempDelegate = new Delegate(TurnTowardsWall);
                         delegateList.Add(tempDelegate);
                         tempDelegate = new Delegate(MoveAwayFromWall);
@@ -203,7 +152,6 @@ public class HumanMovement : MonoBehaviour
 
             int layerMask = 1 << 8;
             int lookDist = 100;
-
             float minDistToGround = 4;
             float maxDistToGround = 7;
 
@@ -239,7 +187,7 @@ public class HumanMovement : MonoBehaviour
 
         if (Physics.Raycast(transform.position + (Vector3.up * charController.height / 2) + (transform.forward), Vector3.down, out groundHit, lookDist))
         {
-            if (minDistToGround < groundHit.distance)
+            if (groundHit.distance > minDistToGround)
                 currentWalkSpeed = 0;
             else
                 currentWalkSpeed = originalWalkSpeed;
@@ -253,8 +201,6 @@ public class HumanMovement : MonoBehaviour
             RaycastHit straightHit;
 
             int lookDist = 10;
-
-            // The acceptable distance we can be away from the wall in our forward plane when we raycast to detect a wall
             float acceptableDist = 2f;
 
             if (Physics.Raycast(transform.position + (Vector3.up * charController.height / 2), transform.forward, out straightHit, lookDist))
@@ -267,7 +213,6 @@ public class HumanMovement : MonoBehaviour
                     {
                         hit = straightHit;
 
-                        // Add the order of events that will comprise this action
                         tempDelegate = new Delegate(TurnTowardsWall);
                         delegateList.Add(tempDelegate);
                         tempDelegate = new Delegate(Push);
@@ -284,7 +229,6 @@ public class HumanMovement : MonoBehaviour
         {
             Quaternion lookRotation = Quaternion.LookRotation(-hit.normal);
 
-            // Rotate us over time according to speed until we are in the required rotation
             transform.rotation = Quaternion.Lerp(transform.rotation, lookRotation, Time.deltaTime * 10);
         }
         else
@@ -299,7 +243,6 @@ public class HumanMovement : MonoBehaviour
         {
             Quaternion lookRotation = Quaternion.LookRotation(hit.normal);
 
-            // Rotate us over time according to speed until we are in the required rotation
             transform.rotation = Quaternion.Lerp(transform.rotation, lookRotation, Time.deltaTime * 10);
         }
         else
@@ -316,7 +259,6 @@ public class HumanMovement : MonoBehaviour
         if (hit.distance < 1.5)
         {
             charController.Move(-transform.forward * Time.deltaTime);
-            //transform.position += -transform.forward * Time.deltaTime;
         }
         else
             delegateList.RemoveAt(0);
@@ -325,7 +267,6 @@ public class HumanMovement : MonoBehaviour
     private void ClimbUp()
     {
         animator.SetBool("ClimbUp", false);
-        //transform.position += Vector3.up * distanceToClimb + transform.forward * distanceToWalk;
         charController.Move(Vector3.up * distanceToClimb + transform.forward * distanceToWalk);
         delegateList.RemoveAt(0);
     }
@@ -333,7 +274,6 @@ public class HumanMovement : MonoBehaviour
     private void ClimbDown()
     {
         animator.SetBool("ClimbDown", false);
-        //transform.position += Vector3.up * distanceToClimb + transform.forward * distanceToWalk;
         charController.Move(Vector3.up * distanceToClimb + transform.forward * distanceToWalk);
         delegateList.RemoveAt(0);
     }

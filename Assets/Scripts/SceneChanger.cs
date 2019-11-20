@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
 public class SceneChanger : MonoBehaviour
 {
     private int sceneToLoad;
@@ -11,9 +12,10 @@ public class SceneChanger : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.T))
-        {
             FadeToNextScene();
-        }
+
+        if (Input.GetKeyDown(KeyCode.Y))
+            FadeToPreviousScene();
     }
 
     public void FadeToNextScene()
