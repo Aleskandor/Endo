@@ -16,6 +16,7 @@ public class DogMovement : MonoBehaviour
     private Vector3 velocity;
     private Animator animator;
     private GameObject teleporterPad;
+    private GameObject otherTeleporterPad;
     private CapsuleCollider capsuleCollider;
 
     private float currentWalkSpeed;
@@ -44,8 +45,8 @@ public class DogMovement : MonoBehaviour
         charController = GetComponent<CharacterController>();
         capsuleCollider = GetComponent<CapsuleCollider>();
 
-        currentWalkSpeed = 10;
-        originalWalkSpeed = 10;
+        currentWalkSpeed = 7.5f;
+        originalWalkSpeed = 7.5f;
         pushSpeed = originalWalkSpeed / 2;
 
         gravity = -12;
@@ -72,7 +73,7 @@ public class DogMovement : MonoBehaviour
             else if (Input.GetKeyDown(KeyCode.F))
                 CheckForPush();
             else if (Input.GetKeyDown(KeyCode.B) && canTeleport)
-                TryToTeleport();
+                CheckForTeleport();
             else
                 Move(inputDir);
         }
@@ -95,25 +96,6 @@ public class DogMovement : MonoBehaviour
         {
             canTeleport = false;
         }
-    }
-
-    private void TryToTeleport()
-    {
-        Locked = true;
-
-        GameObject parent = teleporterPad.transform.parent.gameObject;
-        Transform[] childTransforms = parent.GetComponentsInChildren<Transform>();
-        GameObject otherTeleporterPad = teleporterPad;
-
-        for (int i = 1; i < childTransforms.Length; i++)
-        {
-            if (childTransforms[i] != teleporterPad.transform)
-                otherTeleporterPad = childTransforms[i].gameObject;
-        }
-
-        Vector3 distance = otherTeleporterPad.transform.position - transform.position;
-
-        charController.Move(distance);
     }
 
     private void Move(Vector2 inputDir)
@@ -191,18 +173,54 @@ public class DogMovement : MonoBehaviour
         }
     }
 
+    private void CheckForTeleport()
+    {
+        GameObject parent = teleporterPad.transform.parent.gameObject;
+        Transform[] childTransforms = parent.GetComponentsInChildren<Transform>();
+        otherTeleporterPad = teleporterPad;
+
+        for (int i = 1; i < childTransforms.Length; i++)
+        {
+            if (childTransforms[i] != teleporterPad.transform)
+                otherTeleporterPad = childTransforms[i].gameObject;
+        }
+
+        tempDelegate = new Delegate(TurnTowardsTeleport);
+        delegateList.Add(tempDelegate);
+        tempDelegate = new Delegate(TriggerCrouchInAnimation);
+        delegateList.Add(tempDelegate);
+    }
+
+    private void TurnTowardsTeleport()
+    {
+        if (Vector3.Angle(transform.forward, -teleporterPad.transform.up) > 2)
+        {
+            Quaternion lookRotation = Quaternion.LookRotation(-teleporterPad.transform.up);
+            transform.rotation = Quaternion.Lerp(transform.rotation, lookRotation, Time.deltaTime);
+        }
+        else
+            delegateList.RemoveAt(0);
+    }
+
+    private void Teleport()
+    {
+        Vector3 dogPositionWithTeleporterHeight = new Vector3(transform.position.x, teleporterPad.transform.position.y, transform.position.z);
+        Vector3 distance = (otherTeleporterPad.transform.position - dogPositionWithTeleporterHeight) + otherTeleporterPad.transform.up * (capsuleCollider.height / 2);
+
+        transform.position += distance;
+        transform.Rotate(transform.rotation.x, otherTeleporterPad.transform.rotation.y + 180, transform.rotation.z);
+        animator.SetTrigger("CrouchTransition");
+    }
+
     private void TurnTowardsWall()
     {
         if (Vector3.Angle(transform.forward, -hit.normal) > 2)
         {
             Quaternion lookRotation = Quaternion.LookRotation(-hit.normal);
-        
             transform.rotation = Quaternion.Lerp(transform.rotation, lookRotation, Time.deltaTime * 10);
         }
         else
-        {
             delegateList.RemoveAt(0);
-        }
     }
 
     private void MoveAwayFromWall()
@@ -211,9 +229,7 @@ public class DogMovement : MonoBehaviour
         Physics.Raycast(transform.position, transform.forward, out hit);
 
         if (hit.distance < 1.75)
-        {
             charController.Move(-transform.forward * Time.deltaTime);
-        }
         else
             delegateList.RemoveAt(0);
     }
@@ -240,9 +256,16 @@ public class DogMovement : MonoBehaviour
             animator.SetBool("PushTransition", true);
     }
 
+    private void TriggerCrouchInAnimation()
+    {
+        if (!animator.GetBool("Crouching"))
+            animator.SetBool("Crouching", true);
+    }
+
     private void RemoveDelegate()
     {
         delegateList.RemoveAt(0);
         animator.SetBool("PushTransition", false);
+        animator.SetBool("Crouching", false);
     }
 }

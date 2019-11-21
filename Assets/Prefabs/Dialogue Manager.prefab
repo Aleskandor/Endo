@@ -45,8 +45,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textDisplay: {fileID: 0}
   sentences:
-  - Hejsan!
-  - Action is coming!
-  - Amanos on saturday!
+  - Yawn...
+  - Endo, where are you?
+  - Come here boy!
   typingSpeed: 0.05
   continueButton: {fileID: 0}

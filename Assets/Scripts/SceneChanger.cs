@@ -1,13 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SceneChanger : MonoBehaviour
 {
     private int sceneToLoad;
 
-    public Animator animator;
+    private Animator animator;
+
+    private void Start()
+    {
+        animator = GetComponent<Animator>();
+    }
 
     void Update()
     {
@@ -16,6 +19,12 @@ public class SceneChanger : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Y))
             FadeToPreviousScene();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.name == "Human")
+            FadeToNextScene();
     }
 
     public void FadeToNextScene()
