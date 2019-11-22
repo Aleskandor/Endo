@@ -60,7 +60,7 @@ ModelImporter:
       curves: []
       events:
       - time: 1
-        functionName: Teleport
+        functionName: RemoveDelegate
         data: 
         objectReferenceParameter: {fileID: 1075372092558005654, guid: 13b5943c37e279546b66c8a591004a92,
           type: 3}

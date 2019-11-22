@@ -59,7 +59,15 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 1
+      - time: 0
+        functionName: Teleport
+        data: 
+        objectReferenceParameter: {fileID: 1075372092558005654, guid: 13b5943c37e279546b66c8a591004a92,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.9852217
         functionName: RemoveDelegate
         data: 
         objectReferenceParameter: {fileID: 1075372092558005654, guid: 13b5943c37e279546b66c8a591004a92,
@@ -120,7 +128,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.5
+    globalScale: 50
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
