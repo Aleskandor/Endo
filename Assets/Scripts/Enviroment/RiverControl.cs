@@ -13,7 +13,7 @@ public class RiverControl : MonoBehaviour
     void Start()
     {
         startPosition = transform.position;
-        endPosition = new Vector3(transform.position.x, transform.position.y -3, transform.position.z);
+        endPosition = new Vector3(transform.position.x, transform.position.y -2.5f, transform.position.z);
     }
 
     // Update is called once per frame

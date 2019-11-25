@@ -10,6 +10,8 @@ public class UIManager : MonoBehaviour
 
     public GameObject marker;
     public GameObject pointer;
+    public GameObject larvaMark;
+
     public Transform dogTransform;
 
     private void Start()
@@ -60,5 +62,17 @@ public class UIManager : MonoBehaviour
         {
             timer = 4f;
         }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.name == "Human")
+            larvaMark.SetActive(true);
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.name == "Human")
+            larvaMark.SetActive(false);
     }
 }
