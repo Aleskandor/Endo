@@ -5,12 +5,15 @@ using UnityEngine;
 public class UIManager : MonoBehaviour
 {
     private float timer;
+    private bool larvaIconActive;
 
     private Vector3 screenPos;
 
     public GameObject marker;
     public GameObject pointer;
+    public GameObject exclamationMark;
     public Transform dogTransform;
+    public Transform larvaTransform;
 
     private void Start()
     {
@@ -42,6 +45,16 @@ public class UIManager : MonoBehaviour
             }
         }
 
+        screenPos = Camera.main.WorldToScreenPoint(larvaTransform.position);
+
+        if (screenPos.z > 0 &&
+            screenPos.y > 0 && screenPos.y < Screen.height &&
+            screenPos.x > 0 && screenPos.x < Screen.width &&
+            larvaIconActive)
+            exclamationMark.SetActive(true);
+        else
+            exclamationMark.SetActive(false);
+
         if (marker.activeSelf || pointer.activeSelf)
         {
             timer -= Time.deltaTime;
@@ -60,5 +73,17 @@ public class UIManager : MonoBehaviour
         {
             timer = 4f;
         }
+    }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.name == "Human")
+            larvaIconActive = true;
+    }
+
+    public void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.name == "Human")
+            larvaIconActive = false;
     }
 }
