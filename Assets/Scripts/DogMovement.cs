@@ -142,32 +142,29 @@ public class DogMovement : MonoBehaviour
 
     private void CheckForPush()
     {
-        if (delegateList.Count == 0)
+        RaycastHit straightHit;
+
+        int lookDist = 10;
+        float acceptableDist = 4f;
+
+        if (Physics.Raycast(transform.position + (Vector3.up * charController.height / 2), transform.forward, out straightHit, lookDist))
         {
-            RaycastHit straightHit;
-
-            int lookDist = 10;
-            float acceptableDist = 4f;
-
-            if (Physics.Raycast(transform.position + (Vector3.up * charController.height / 2), transform.forward, out straightHit, lookDist))
+            if (straightHit.collider.tag == "Pushable")
             {
-                if (straightHit.collider.tag == "Pushable")
+                direction = -straightHit.normal;
+
+                if (straightHit.distance < acceptableDist)
                 {
-                    direction = -straightHit.normal;
+                    hit = straightHit;
 
-                    if (straightHit.distance < acceptableDist)
-                    {
-                        hit = straightHit;
-
-                        tempDelegate = new Delegate(TurnTowardsWall);
-                        delegateList.Add(tempDelegate);
-                        tempDelegate = new Delegate(MoveAwayFromWall);
-                        delegateList.Add(tempDelegate);
-                        tempDelegate = new Delegate(TriggerDogPushingTransitionAnimation);
-                        delegateList.Add(tempDelegate);
-                        tempDelegate = new Delegate(Push);
-                        delegateList.Add(tempDelegate);
-                    }
+                    tempDelegate = new Delegate(TurnTowardsWall);
+                    delegateList.Add(tempDelegate);
+                    tempDelegate = new Delegate(MoveAwayFromWall);
+                    delegateList.Add(tempDelegate);
+                    tempDelegate = new Delegate(TriggerDogPushingTransitionAnimation);
+                    delegateList.Add(tempDelegate);
+                    tempDelegate = new Delegate(Push);
+                    delegateList.Add(tempDelegate);
                 }
             }
         }
@@ -187,6 +184,8 @@ public class DogMovement : MonoBehaviour
 
         tempDelegate = new Delegate(TurnTowardsTeleport);
         delegateList.Add(tempDelegate);
+        tempDelegate = new Delegate(MoveAwayFromTeleport);
+        delegateList.Add(tempDelegate);
         tempDelegate = new Delegate(TriggerCrouchInAnimation);
         delegateList.Add(tempDelegate);
         tempDelegate = new Delegate(TriggerCrouchTransitionAnimation);
@@ -200,6 +199,17 @@ public class DogMovement : MonoBehaviour
             Quaternion lookRotation = Quaternion.LookRotation(-teleporterPad.transform.up);
             transform.rotation = Quaternion.Lerp(transform.rotation, lookRotation, Time.deltaTime);
         }
+        else
+            delegateList.RemoveAt(0);
+    }
+
+    private void MoveAwayFromTeleport()
+    {
+        Vector2 dogPosV2 = new Vector2(transform.position.x, transform.position.z);
+        Vector2 teleportPosV2 = new Vector2(teleporterPad.transform.position.x, teleporterPad.transform.position.z);
+
+        if (Vector2.Distance(dogPosV2, teleportPosV2) < 2.25)
+            charController.Move(-transform.forward * Time.deltaTime);
         else
             delegateList.RemoveAt(0);
     }
@@ -227,10 +237,10 @@ public class DogMovement : MonoBehaviour
 
     private void MoveAwayFromWall()
     {
-        RaycastHit hit;
-        Physics.Raycast(transform.position, transform.forward, out hit);
+        RaycastHit tempHit;
+        Physics.Raycast(transform.position + (Vector3.up * charController.height / 2), transform.forward, out tempHit);
 
-        if (hit.distance < 1.75)
+        if (tempHit.distance < 1.75)
             charController.Move(-transform.forward * Time.deltaTime);
         else
             delegateList.RemoveAt(0);
@@ -238,16 +248,19 @@ public class DogMovement : MonoBehaviour
 
     private void Push()
     {
-        if (Input.GetKey(KeyCode.F))
+        PushObject boxPO = hit.collider.gameObject.GetComponent<PushObject>();
+
+        if (Input.GetKey(KeyCode.F) && boxPO.CheckForLedges(transform.forward))
         {
             animator.SetBool("Pushing", true);
             velocity = direction * pushSpeed;
             charController.Move(velocity * Time.deltaTime);
-            hit.collider.gameObject.GetComponent<PushObject>().Move(velocity);
+            boxPO.Move(velocity);
         }
         else
         {
             animator.SetBool("Pushing", false);
+            animator.SetBool("PushTransition", false);
             delegateList.RemoveAt(0);
         }
     }
@@ -255,7 +268,10 @@ public class DogMovement : MonoBehaviour
     private void TriggerDogPushingTransitionAnimation()
     {
         if (!animator.GetBool("PushTransition"))
+        {
             animator.SetBool("PushTransition", true);
+            animator.SetBool("Pushing", true);
+        }
     }
 
     private void TriggerCrouchInAnimation()

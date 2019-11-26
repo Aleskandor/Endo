@@ -168,17 +168,17 @@ PrefabInstance:
     - target: {fileID: 4086775733867718533, guid: 13b5943c37e279546b66c8a591004a92,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.78
+      value: 7.51
       objectReference: {fileID: 0}
     - target: {fileID: 4086775733867718533, guid: 13b5943c37e279546b66c8a591004a92,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.04
+      value: 0.03
       objectReference: {fileID: 0}
     - target: {fileID: 4086775733867718533, guid: 13b5943c37e279546b66c8a591004a92,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 13.1
+      value: 9.86
       objectReference: {fileID: 0}
     - target: {fileID: 4086775733867718533, guid: 13b5943c37e279546b66c8a591004a92,
         type: 3}
@@ -220,11 +220,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7797904783946479207, guid: 13b5943c37e279546b66c8a591004a92,
+    - target: {fileID: 9065060153296534664, guid: 13b5943c37e279546b66c8a591004a92,
         type: 3}
-      propertyPath: targetTransform
-      value: 
-      objectReference: {fileID: 675727964}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9065060153296534666, guid: 13b5943c37e279546b66c8a591004a92,
         type: 3}
       propertyPath: m_Speed
@@ -234,6 +234,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_StoppingDistance
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 9065060153296534666, guid: 13b5943c37e279546b66c8a591004a92,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3179019775741233298, guid: 13b5943c37e279546b66c8a591004a92,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7797904783946479207, guid: 13b5943c37e279546b66c8a591004a92,
+        type: 3}
+      propertyPath: targetTransform
+      value: 
+      objectReference: {fileID: 675727964}
+    - target: {fileID: 7797904783946479207, guid: 13b5943c37e279546b66c8a591004a92,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13b5943c37e279546b66c8a591004a92, type: 3}
@@ -252,17 +272,17 @@ PrefabInstance:
     - target: {fileID: 6106803483869644858, guid: 48d92f03417f3dd4bba0fe13f988b130,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 16.01
+      value: 12.07
       objectReference: {fileID: 0}
     - target: {fileID: 6106803483869644858, guid: 48d92f03417f3dd4bba0fe13f988b130,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 12.082001
+      value: 12.12
       objectReference: {fileID: 0}
     - target: {fileID: 6106803483869644858, guid: 48d92f03417f3dd4bba0fe13f988b130,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 33.93
+      value: 33.7
       objectReference: {fileID: 0}
     - target: {fileID: 6106803483869644858, guid: 48d92f03417f3dd4bba0fe13f988b130,
         type: 3}
@@ -303,6 +323,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1280444680586727635, guid: 48d92f03417f3dd4bba0fe13f988b130,
+        type: 3}
+      propertyPath: m_Radius
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 48d92f03417f3dd4bba0fe13f988b130, type: 3}
@@ -2232,17 +2257,17 @@ PrefabInstance:
     - target: {fileID: 1425740015410973296, guid: 0b22cd6b206ef624087c88ce4f9c32a3,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.71
+      value: 3.69
       objectReference: {fileID: 0}
     - target: {fileID: 1425740015410973296, guid: 0b22cd6b206ef624087c88ce4f9c32a3,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5.8813044e-17
+      value: 12.19
       objectReference: {fileID: 0}
     - target: {fileID: 1425740015410973296, guid: 0b22cd6b206ef624087c88ce4f9c32a3,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5.03
+      value: 32.88
       objectReference: {fileID: 0}
     - target: {fileID: 1425740015410973296, guid: 0b22cd6b206ef624087c88ce4f9c32a3,
         type: 3}
@@ -2294,6 +2319,26 @@ PrefabInstance:
       propertyPath: m_SkinWidth
       value: 0.0001
       objectReference: {fileID: 0}
+    - target: {fileID: 6247489061957279211, guid: 0b22cd6b206ef624087c88ce4f9c32a3,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6247489061957279189, guid: 0b22cd6b206ef624087c88ce4f9c32a3,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6201990801770059271, guid: 0b22cd6b206ef624087c88ce4f9c32a3,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6247489061957279210, guid: 0b22cd6b206ef624087c88ce4f9c32a3,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0b22cd6b206ef624087c88ce4f9c32a3, type: 3}
 --- !u!43 &1449739467
@@ -2302,7 +2347,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh18990
+  m_Name: pb_Mesh168582
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -2542,8 +2587,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 10.000005, y: 10, z: 10.000002}
-  m_Center: {x: 0, y: 5, z: 0}
+  m_Size: {x: 10.000005, y: 8, z: 10.000002}
+  m_Center: {x: 0, y: 4, z: 0}
 --- !u!23 &1761814056
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2635,8 +2680,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 10.000005, y: 10, z: 10.000002}
-  m_Center: {x: 0, y: 5, z: 0}
+  m_Size: {x: 10.000005, y: 8, z: 10.000002}
+  m_Center: {x: 0, y: 4, z: 0}
 --- !u!23 &1839731786
 MeshRenderer:
   m_ObjectHideFlags: 0

@@ -196,28 +196,25 @@ public class HumanMovement : MonoBehaviour
 
     private void CheckForPush()
     {
-        if (delegateList.Count == 0)
+        RaycastHit straightHit;
+
+        int lookDist = 10;
+        float acceptableDist = 2f;
+
+        if (Physics.Raycast(transform.position + (Vector3.up * charController.height / 2), transform.forward, out straightHit, lookDist))
         {
-            RaycastHit straightHit;
-
-            int lookDist = 10;
-            float acceptableDist = 2f;
-
-            if (Physics.Raycast(transform.position + (Vector3.up * charController.height / 2), transform.forward, out straightHit, lookDist))
+            if (straightHit.collider.tag == "Pushable")
             {
-                if (straightHit.collider.tag == "Pushable")
+                direction = -straightHit.normal;
+
+                if (straightHit.distance < acceptableDist)
                 {
-                    direction = -straightHit.normal;
+                    hit = straightHit;
 
-                    if (straightHit.distance < acceptableDist)
-                    {
-                        hit = straightHit;
-
-                        tempDelegate = new Delegate(TurnTowardsWall);
-                        delegateList.Add(tempDelegate);
-                        tempDelegate = new Delegate(Push);
-                        delegateList.Add(tempDelegate);
-                    }
+                    tempDelegate = new Delegate(TurnTowardsWall);
+                    delegateList.Add(tempDelegate);
+                    tempDelegate = new Delegate(Push);
+                    delegateList.Add(tempDelegate);
                 }
             }
         }
@@ -228,13 +225,10 @@ public class HumanMovement : MonoBehaviour
         if (Vector3.Angle(transform.forward, -hit.normal) > 2)
         {
             Quaternion lookRotation = Quaternion.LookRotation(-hit.normal);
-
             transform.rotation = Quaternion.Lerp(transform.rotation, lookRotation, Time.deltaTime * 10);
         }
         else
-        {
             delegateList.RemoveAt(0);
-        }
     }
 
     private void TurnAwayFromWall()
@@ -254,7 +248,7 @@ public class HumanMovement : MonoBehaviour
     private void MoveAwayFromWall()
     {
         RaycastHit hit;
-        Physics.Raycast(transform.position, transform.forward, out hit);
+        Physics.Raycast(transform.position + (Vector3.up * charController.height / 2), transform.forward, out hit);
 
         if (hit.distance < 1.5)
         {
@@ -294,12 +288,14 @@ public class HumanMovement : MonoBehaviour
 
     private void Push()
     {
-        if (Input.GetKey(KeyCode.F))
+        PushObject boxPO = hit.collider.gameObject.GetComponent<PushObject>();
+
+        if (Input.GetKey(KeyCode.F) && boxPO.CheckForLedges(transform.forward))
         {
             animator.SetBool("Pushing", true);
             velocity = direction * pushSpeed;
             charController.Move(velocity * Time.deltaTime);
-            hit.collider.gameObject.GetComponent<PushObject>().Move(velocity);
+            boxPO.Move(velocity);
         }
         else
         {
