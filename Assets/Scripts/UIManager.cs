@@ -12,6 +12,7 @@ public class UIManager : MonoBehaviour
     public GameObject marker;
     public GameObject pointer;
     public GameObject exclamationMark;
+    public GameObject helpShere;
     public Transform dogTransform;
     public Transform larvaTransform;
 
@@ -65,6 +66,12 @@ public class UIManager : MonoBehaviour
                 pointer.SetActive(false);
             }
         }
+
+        if (LarvaInteract.HasCrossed || !helpShere.GetComponent<TriggerHelp>().help)
+            larvaIconActive = false;
+        else if (helpShere.GetComponent<TriggerHelp>().help)
+            larvaIconActive = true;
+      
     }
 
     public void ShowDogIcon()
@@ -73,17 +80,5 @@ public class UIManager : MonoBehaviour
         {
             timer = 4f;
         }
-    }
-
-    public void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.name == "Human")
-            larvaIconActive = true;
-    }
-
-    public void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.name == "Human")
-            larvaIconActive = false;
     }
 }

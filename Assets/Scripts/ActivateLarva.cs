@@ -15,7 +15,7 @@ public class ActivateLarva : MonoBehaviour
 
     void Update()
     {
-        if (inDaPuzzle && Input.GetKeyDown(KeyCode.G))
+        if (inDaPuzzle && Input.GetKeyDown(KeyCode.G) && LarvaInteract.HasCrossed)
         {
             Stick.SetActive(false);
             UI.SetActive(true);
@@ -34,6 +34,7 @@ public class ActivateLarva : MonoBehaviour
             Human.GetComponent<CharacterController>().enabled = false;
             Human.GetComponent<HumanMovement>().enabled = false;
             inDaPuzzle = true;
+            Human.GetComponent<Animator>().SetBool("Running", false);
         }
 
     }

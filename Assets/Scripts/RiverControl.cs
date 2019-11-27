@@ -8,6 +8,7 @@ public class RiverControl : MonoBehaviour
     Vector3 startPosition;
 
     public GameObject Door;
+    public GameObject CheckPoint;
 
     void Start()
     {
@@ -18,10 +19,15 @@ public class RiverControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (LarvaInteract.HasCrossed)
+        if (LarvaInteract.HasCrossed && !CheckPoint.GetComponent<TriggerOverRiver>().overRiver)
         {
             transform.position = Vector3.MoveTowards(transform.position, endPosition, 0.5f * Time.deltaTime);
             Door.SetActive(false);
+        }
+        else if (CheckPoint.GetComponent<TriggerOverRiver>().overRiver)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, startPosition, 0.5f * Time.deltaTime);
+            Door.SetActive(true);
         }
     }
 }
