@@ -1,5 +1,92 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1068746187
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1068746191}
+  - component: {fileID: 1068746190}
+  - component: {fileID: 1068746188}
+  - component: {fileID: 1068746189}
+  m_Layer: 2
+  m_Name: ExclamationMark
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &1068746191
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1068746187}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1049722800496400816}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &1068746190
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1068746187}
+  m_CullTransparentMesh: 0
+--- !u!114 &1068746188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1068746187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 843dcc40e5dec5f49b64a8b4266194c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dogTransform: {fileID: 0}
+--- !u!114 &1068746189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1068746187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 429713138572ddd4d801a2bc35cb5d56, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &1049722800445296221
 GameObject:
   m_ObjectHideFlags: 0
@@ -12,7 +99,7 @@ GameObject:
   - component: {fileID: 1049722800445296222}
   - component: {fileID: 1049722800445296223}
   - component: {fileID: 1049722800445296209}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: Pointer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -86,8 +173,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b55647433c383c046b8d57fa94d05cfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dogTransform: {fileID: 4086775733867718533, guid: 13b5943c37e279546b66c8a591004a92,
-    type: 3}
+  dogTransform: {fileID: 0}
 --- !u!1 &1049722800496400828
 GameObject:
   m_ObjectHideFlags: 0
@@ -101,7 +187,8 @@ GameObject:
   - component: {fileID: 1049722800496400830}
   - component: {fileID: 1049722800496400831}
   - component: {fileID: 1049722800496400819}
-  m_Layer: 5
+  - component: {fileID: 1108101220}
+  m_Layer: 2
   m_Name: UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -123,6 +210,7 @@ RectTransform:
   - {fileID: 1049722800445296220}
   - {fileID: 8025640115091914399}
   - {fileID: 8025640115051092249}
+  - {fileID: 1068746191}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -205,8 +293,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   marker: {fileID: 1049722800706547440}
   pointer: {fileID: 1049722800445296221}
+  exclamationMark: {fileID: 1068746187}
   dogTransform: {fileID: 4086775733867718533, guid: 13b5943c37e279546b66c8a591004a92,
     type: 3}
+  larvaTransform: {fileID: 4086775733867718533, guid: 13b5943c37e279546b66c8a591004a92,
+    type: 3}
+--- !u!135 &1108101220
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1049722800496400828}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 30
+  m_Center: {x: -675, y: -450, z: -50}
 --- !u!1 &1049722800706547440
 GameObject:
   m_ObjectHideFlags: 0
@@ -219,7 +323,7 @@ GameObject:
   - component: {fileID: 1049722800706547444}
   - component: {fileID: 1049722800706547445}
   - component: {fileID: 1049722800706547442}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: Marker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -293,8 +397,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 843dcc40e5dec5f49b64a8b4266194c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dogTransform: {fileID: 4086775733867718533, guid: 13b5943c37e279546b66c8a591004a92,
-    type: 3}
+  dogTransform: {fileID: 0}
 --- !u!1 &8025640115051092250
 GameObject:
   m_ObjectHideFlags: 0
@@ -306,7 +409,7 @@ GameObject:
   - component: {fileID: 8025640115051092249}
   - component: {fileID: 8025640115051092247}
   - component: {fileID: 8025640115051092248}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: ContinueText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -462,7 +565,7 @@ GameObject:
   - component: {fileID: 8025640115091914399}
   - component: {fileID: 8025640115091914397}
   - component: {fileID: 8025640115091914398}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: Dialogue Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
