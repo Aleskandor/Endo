@@ -12,7 +12,7 @@ public class PushObject : MonoBehaviour
 
     private CharacterController charController;
     private BoxCollider boxCollider;
-    private Vector3 playerForward;
+    private Vector3 playerDirection;
 
     private bool canMove;
     private float gravity;
@@ -45,13 +45,13 @@ public class PushObject : MonoBehaviour
             charController.Move(velocity * Time.deltaTime);
     }
 
-    public bool CheckForLedges(Vector3 playerForward)
+    public bool CheckForLedges(Vector3 direction)
     {
         if (delegateList.Count == 0)
         {
-            this.playerForward = playerForward; //Used in MoveOffLedge, but can't send in as perameter.
+            playerDirection = direction; //Used in MoveOffLedge, but can't send in as perameter.
 
-            if (Physics.Raycast(transform.position + (Vector3.up * boxCollider.size.y / 2) + playerForward * boxCollider.size.x / 2, Vector3.down, out hit, lookDist))
+            if (Physics.Raycast(transform.position + (Vector3.up * boxCollider.size.y / 2) + direction * boxCollider.size.x / 2, Vector3.down, out hit, lookDist))
             {
                 if (hit.distance > boxCollider.size.y / 2 + 0.1)
                 {
@@ -76,10 +76,10 @@ public class PushObject : MonoBehaviour
 
     public void MoveOffLedge()
     {
-        Physics.Raycast(transform.position + (playerForward * (boxCollider.size.x / 2)) + -transform.up, -playerForward, out hit, lookDist);
+        Physics.Raycast(transform.position + (playerDirection * (boxCollider.size.x / 2)) + -transform.up, -playerDirection, out hit, lookDist);
 
         if (hit.distance < boxCollider.size.x)
-            charController.Move(playerForward * Time.deltaTime * 2);
+            charController.Move(playerDirection * Time.deltaTime * 2);
         else
             delegateList.RemoveAt(0);
     }

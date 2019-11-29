@@ -290,7 +290,7 @@ public class HumanMovement : MonoBehaviour
     {
         PushObject boxPO = hit.collider.gameObject.GetComponent<PushObject>();
 
-        if (Input.GetKey(KeyCode.F) && boxPO.CheckForLedges(transform.forward))
+        if (Input.GetKey(KeyCode.F) && boxPO.CheckForLedges(-hit.normal))
         {
             animator.SetBool("Pushing", true);
             velocity = direction * pushSpeed;
