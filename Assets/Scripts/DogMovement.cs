@@ -188,8 +188,6 @@ public class DogMovement : MonoBehaviour
         delegateList.Add(tempDelegate);
         tempDelegate = new Delegate(TriggerCrouchInAnimation);
         delegateList.Add(tempDelegate);
-        tempDelegate = new Delegate(TriggerCrouchTransitionAnimation);
-        delegateList.Add(tempDelegate);
     }
 
     private void TurnTowardsTeleport()
@@ -278,11 +276,6 @@ public class DogMovement : MonoBehaviour
     {
         if (!animator.GetBool("Crouching"))
             animator.SetBool("Crouching", true);
-    }
-
-    private void TriggerCrouchTransitionAnimation()
-    {
-        animator.SetTrigger("CrouchTransition");
     }
 
     private void RemoveDelegate()
