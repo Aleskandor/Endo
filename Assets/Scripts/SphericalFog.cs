@@ -19,7 +19,7 @@ public class SphericalFog : MonoBehaviour
 			Camera.main.depthTextureMode = DepthTextureMode.Depth;
 		
 		sphericalFogObject.material = sphericalFogMaterial;
-        transform.forward = Camera.main.transform.forward;
+        //transform.forward = Camera.main.transform.forward;
 
     }
 
@@ -31,6 +31,6 @@ public class SphericalFog : MonoBehaviour
 			mat.SetVector ("FogParam", new Vector4(transform.position.x, transform.position.y, transform.position.z, radius * scaleFactor));
 
         //Denna fungerar bättre
-        transform.forward = Camera.main.transform.forward;
+        //transform.forward = Camera.main.transform.forward;
     }
 }
