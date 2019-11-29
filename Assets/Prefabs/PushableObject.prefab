@@ -1,5 +1,23 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!143 &-6309957242228791341
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5645133756206734570}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Height: 1
+  m_Radius: 2
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 2, z: 0}
 --- !u!65 &1280444680586727468
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -25,24 +43,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfe668899346f5f4d9497f6656081ae8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!143 &-6309957242228791341
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5645133756206734570}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Height: 2
-  m_Radius: 0.5
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &4428839620956620259
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -57,18 +57,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -927199367670048503, guid: e7c7554e6b520e34a95022655350ff42,
         type: 3}
-      propertyPath: m_TagString
-      value: Pushable
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: -927199367670048503, guid: e7c7554e6b520e34a95022655350ff42,
         type: 3}
-      propertyPath: m_Layer
-      value: 8
+      propertyPath: m_TagString
+      value: Pushable
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: e7c7554e6b520e34a95022655350ff42,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 21.86
+      value: 21.948
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: e7c7554e6b520e34a95022655350ff42,
         type: 3}
@@ -78,7 +78,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: e7c7554e6b520e34a95022655350ff42,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.98
+      value: -6.12
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: e7c7554e6b520e34a95022655350ff42,
         type: 3}
