@@ -25,6 +25,10 @@ public class SceneChanger : MonoBehaviour
     {
         if (other.name == "Human")
             FadeToNextScene();
+        if (SoundManager.instance != null)
+        {
+            SoundManager.instance.PlayScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
     }
 
     public void FadeToNextScene()

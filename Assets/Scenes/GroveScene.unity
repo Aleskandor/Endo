@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -1217,6 +1217,7 @@ GameObject:
   - component: {fileID: 459361690}
   - component: {fileID: 459361693}
   - component: {fileID: 459361694}
+  - component: {fileID: 459361695}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1336,6 +1337,23 @@ MonoBehaviour:
   Human: {fileID: 1048450132}
   Dog: {fileID: 1075372092558005654, guid: 13b5943c37e279546b66c8a591004a92, type: 3}
   lockCursor: 0
+--- !u!114 &459361695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 459361689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: 5d2bb5880b672e9428323d0d9549096a, type: 2}
 --- !u!1001 &460390762
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3425,6 +3443,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2707339737151535203, guid: 0b22cd6b206ef624087c88ce4f9c32a3,
+        type: 3}
+      propertyPath: m_Name
+      value: Human
+      objectReference: {fileID: 0}
     - target: {fileID: 1425740015410973296, guid: 0b22cd6b206ef624087c88ce4f9c32a3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3480,11 +3503,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2707339737151535203, guid: 0b22cd6b206ef624087c88ce4f9c32a3,
-        type: 3}
-      propertyPath: m_Name
-      value: Human
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0b22cd6b206ef624087c88ce4f9c32a3, type: 3}
 --- !u!1001 &1637529089
@@ -3494,11 +3512,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4299406247953960216, guid: 2e8b6112efb1f9b4299ba6fa53d87e44,
-        type: 3}
-      propertyPath: m_Name
-      value: MagicMushroomGreenGroup (1)
-      objectReference: {fileID: 0}
     - target: {fileID: 4299406247953960219, guid: 2e8b6112efb1f9b4299ba6fa53d87e44,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3563,6 +3576,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.y
       value: 0.99999994
+      objectReference: {fileID: 0}
+    - target: {fileID: 4299406247953960216, guid: 2e8b6112efb1f9b4299ba6fa53d87e44,
+        type: 3}
+      propertyPath: m_Name
+      value: MagicMushroomGreenGroup (1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2e8b6112efb1f9b4299ba6fa53d87e44, type: 3}
@@ -31273,11 +31291,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 9028235623569016590, guid: 95c51ff399697a54482c68d7cb12a6a7,
-        type: 3}
-      propertyPath: m_Name
-      value: Arch (2)
-      objectReference: {fileID: 0}
     - target: {fileID: 9028235623569016577, guid: 95c51ff399697a54482c68d7cb12a6a7,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -31348,12 +31361,12 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.81158
       objectReference: {fileID: 0}
-    - target: {fileID: 9028235623569016578, guid: 95c51ff399697a54482c68d7cb12a6a7,
+    - target: {fileID: 9028235623569016590, guid: 95c51ff399697a54482c68d7cb12a6a7,
         type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 313285142}
-    - target: {fileID: 9028235623569016589, guid: 95c51ff399697a54482c68d7cb12a6a7,
+      propertyPath: m_Name
+      value: Arch (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 9028235623569016578, guid: 95c51ff399697a54482c68d7cb12a6a7,
         type: 3}
       propertyPath: m_Mesh
       value: 
@@ -37033,6 +37046,11 @@ PrefabInstance:
       propertyPath: m_SelectedVertices.Array.data[347]
       value: 527
       objectReference: {fileID: 0}
+    - target: {fileID: 9028235623569016589, guid: 95c51ff399697a54482c68d7cb12a6a7,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 313285142}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 95c51ff399697a54482c68d7cb12a6a7, type: 3}
 --- !u!1001 &1712072902
@@ -37042,11 +37060,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 9028235623569016590, guid: 95c51ff399697a54482c68d7cb12a6a7,
-        type: 3}
-      propertyPath: m_Name
-      value: Arch
-      objectReference: {fileID: 0}
     - target: {fileID: 9028235623569016577, guid: 95c51ff399697a54482c68d7cb12a6a7,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -37112,12 +37125,12 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 1.331625
       objectReference: {fileID: 0}
-    - target: {fileID: 9028235623569016578, guid: 95c51ff399697a54482c68d7cb12a6a7,
+    - target: {fileID: 9028235623569016590, guid: 95c51ff399697a54482c68d7cb12a6a7,
         type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 879454553}
-    - target: {fileID: 9028235623569016589, guid: 95c51ff399697a54482c68d7cb12a6a7,
+      propertyPath: m_Name
+      value: Arch
+      objectReference: {fileID: 0}
+    - target: {fileID: 9028235623569016578, guid: 95c51ff399697a54482c68d7cb12a6a7,
         type: 3}
       propertyPath: m_Mesh
       value: 
@@ -42797,6 +42810,11 @@ PrefabInstance:
       propertyPath: m_SelectedVertices.Array.data[347]
       value: 527
       objectReference: {fileID: 0}
+    - target: {fileID: 9028235623569016589, guid: 95c51ff399697a54482c68d7cb12a6a7,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 879454553}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 95c51ff399697a54482c68d7cb12a6a7, type: 3}
 --- !u!1001 &1754402241
@@ -42970,11 +42988,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 9028235623569016590, guid: 95c51ff399697a54482c68d7cb12a6a7,
-        type: 3}
-      propertyPath: m_Name
-      value: Arch (1)
-      objectReference: {fileID: 0}
     - target: {fileID: 9028235623569016577, guid: 95c51ff399697a54482c68d7cb12a6a7,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -43035,12 +43048,12 @@ PrefabInstance:
       propertyPath: m_LocalScale.x
       value: 1.4485769
       objectReference: {fileID: 0}
-    - target: {fileID: 9028235623569016578, guid: 95c51ff399697a54482c68d7cb12a6a7,
+    - target: {fileID: 9028235623569016590, guid: 95c51ff399697a54482c68d7cb12a6a7,
         type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 11271294}
-    - target: {fileID: 9028235623569016589, guid: 95c51ff399697a54482c68d7cb12a6a7,
+      propertyPath: m_Name
+      value: Arch (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 9028235623569016578, guid: 95c51ff399697a54482c68d7cb12a6a7,
         type: 3}
       propertyPath: m_Mesh
       value: 
@@ -48720,6 +48733,11 @@ PrefabInstance:
       propertyPath: m_SelectedVertices.Array.data[347]
       value: 527
       objectReference: {fileID: 0}
+    - target: {fileID: 9028235623569016589, guid: 95c51ff399697a54482c68d7cb12a6a7,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 11271294}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 95c51ff399697a54482c68d7cb12a6a7, type: 3}
 --- !u!1001 &1943944208
@@ -49026,11 +49044,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4299406247953960216, guid: 2e8b6112efb1f9b4299ba6fa53d87e44,
-        type: 3}
-      propertyPath: m_Name
-      value: MagicMushroomGreenGroup
-      objectReference: {fileID: 0}
     - target: {fileID: 4299406247953960219, guid: 2e8b6112efb1f9b4299ba6fa53d87e44,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -49085,6 +49098,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -0.42600003
+      objectReference: {fileID: 0}
+    - target: {fileID: 4299406247953960216, guid: 2e8b6112efb1f9b4299ba6fa53d87e44,
+        type: 3}
+      propertyPath: m_Name
+      value: MagicMushroomGreenGroup
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2e8b6112efb1f9b4299ba6fa53d87e44, type: 3}

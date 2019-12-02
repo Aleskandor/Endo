@@ -318,4 +318,9 @@ public class HumanMovement : MonoBehaviour
     {
         delegateList.RemoveAt(0);
     }
+
+    public void WalkingSound()
+    {
+        GetComponent<MoreAudioClips>().PlayRandomClip();
+    }
 }

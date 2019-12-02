@@ -1,0 +1,91 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8652182644611010854
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8652182644611010848}
+  - component: {fileID: 8652182644611010855}
+  m_Layer: 0
+  m_Name: SoundManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 1
+--- !u!4 &8652182644611010848
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8652182644611010854}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -95.89673, y: 29.036522, z: 11.852234}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8652182644611010855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8652182644611010854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09d743bab486f5d43b82ddd44750501c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: EndlessForest
+    clip: {fileID: 8300000, guid: 0ceada19af804214fbe2197ada53fcd4, type: 3}
+    volume: 0.15
+    originalVolume: 0
+    pitch: 0.3
+    source: {fileID: 0}
+    mixerGroup: {fileID: -4212633838738764243, guid: 9996065e280ffa44a98e39f2db6b4c9c,
+      type: 2}
+    loop: 1
+  - name: Owls
+    clip: {fileID: 8300000, guid: d17d233bbc51638408e36424af448157, type: 3}
+    volume: 0.7
+    originalVolume: 0
+    pitch: 0.7
+    source: {fileID: 0}
+    mixerGroup: {fileID: -3234417260055287267, guid: 9996065e280ffa44a98e39f2db6b4c9c,
+      type: 2}
+    loop: 1
+  - name: MainTheme
+    clip: {fileID: 8300000, guid: 120696021c34d0a45a9666c13e1d6608, type: 3}
+    volume: 1
+    originalVolume: 0
+    pitch: 1
+    source: {fileID: 0}
+    mixerGroup: {fileID: -4212633838738764243, guid: 9996065e280ffa44a98e39f2db6b4c9c,
+      type: 2}
+    loop: 1
+  - name: Birds
+    clip: {fileID: 8300000, guid: cfed06bdee7d97f438f809bed7affa88, type: 3}
+    volume: 1
+    originalVolume: 0
+    pitch: 0.9
+    source: {fileID: 0}
+    mixerGroup: {fileID: -3234417260055287267, guid: 9996065e280ffa44a98e39f2db6b4c9c,
+      type: 2}
+    loop: 1
+  - name: Whistle
+    clip: {fileID: 8300000, guid: d0712b1acade0064cb3235b50eb587d2, type: 3}
+    volume: 0.238
+    originalVolume: 0
+    pitch: 0.9
+    source: {fileID: 0}
+    mixerGroup: {fileID: -3600795001165637277, guid: 9996065e280ffa44a98e39f2db6b4c9c,
+      type: 2}
+    loop: 0
