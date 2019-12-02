@@ -105,6 +105,7 @@ public class ThirdPersonView : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.V) && !swappingTarget)
         {
+            SoundManager.instance.Play("Whistle");
             swappingTarget = true;
         }
 

@@ -24,9 +24,9 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _ColorFalloff: 23
-    - _Density: 2.1
-    - _InnerRatio: 0.26
+    - _ColorFalloff: 6.6
+    - _Density: 1.06
+    - _InnerRatio: 0.458
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _FogBaseColor: {r: 0, g: 0.65879583, b: 1, a: 1}
