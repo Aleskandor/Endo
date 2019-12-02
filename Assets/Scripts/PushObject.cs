@@ -71,7 +71,12 @@ public class PushObject : MonoBehaviour
 
             if (Physics.Raycast(transform.position + (Vector3.up * boxCollider.size.y / 2) + direction * boxCollider.size.x / 2, Vector3.down, out hit, lookDist))
             {
-                if (hit.distance > boxCollider.size.y / 2 + 0.1)
+                if (hit.distance < boxCollider.size.y / 2 - 0.05)
+                {
+                    canMove = false;
+                    return false;
+                }
+                else if (hit.distance > boxCollider.size.y / 2 + 0.1)
                 {
                     tempDelegate = new Delegate(MoveOffLedge);
                     delegateList.Add(tempDelegate);
