@@ -24,9 +24,9 @@ Material:
     - Vector1_1B55640E: 1.27
     - Vector1_996E8CEC: 4.91
     - Vector1_A716C250: 4.48
-    - Vector1_ACD2A101: -0.78
+    - Vector1_ACD2A101: -0.76
     - Vector1_DA2C9F2F: 6.83
     - Vector1_EEF95FB0: 162.22
     m_Colors:
     - Color_1DABA74C: {r: 0, g: 1.1206621, b: 2.270603, a: 1}
-    - Vector2_D4766AE7: {r: 0, g: 0.3, b: 0, a: 0}
+    - Vector2_D4766AE7: {r: 0, g: 0.5, b: 0, a: 0}
