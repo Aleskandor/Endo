@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class PushObject : MonoBehaviour
 {
@@ -11,12 +12,16 @@ public class PushObject : MonoBehaviour
     private delegate void Delegate();
 
     private CharacterController charController;
+    private NavMeshSurface navMeshSurface;
     private BoxCollider boxCollider;
     private Vector3 playerDirection;
+    private GameObject childCube;
 
     private bool canMove;
     private float gravity;
     private int lookDist;
+
+    public bool inHole;
 
     private void Start()
     {
@@ -25,10 +30,14 @@ public class PushObject : MonoBehaviour
 
         boxCollider = GetComponent<BoxCollider>();
         charController = GetComponent<CharacterController>();
+        navMeshSurface = GameObject.FindGameObjectWithTag("Environment").GetComponent<NavMeshSurface>();
+        childCube = transform.GetChild(0).gameObject;
 
         canMove = true;
         gravity = -9.8f;
         lookDist = 100;
+
+        inHole = false;
     }
 
     private void Update()
@@ -37,6 +46,15 @@ public class PushObject : MonoBehaviour
             delegateList[0].Method.Invoke(this, null);
         else if (!charController.isGrounded)
             charController.Move(new Vector3(0, gravity * Time.deltaTime, 0));
+
+        if(charController.isGrounded && inHole && !gameObject.isStatic)
+        {
+            gameObject.isStatic = true;
+            childCube.isStatic = true;
+            gameObject.layer = 0;
+            childCube.layer = 0;
+            navMeshSurface.BuildNavMesh();
+        }
     }
 
     public void Move(Vector3 velocity)
