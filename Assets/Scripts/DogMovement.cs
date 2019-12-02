@@ -172,6 +172,11 @@ public class DogMovement : MonoBehaviour
 
     private void CheckForTeleport()
     {
+        if (delegateList.Count >0)
+        {
+            return;
+        }
+        
         GameObject parent = teleporterPad.transform.parent.gameObject;
         Transform[] childTransforms = parent.GetComponentsInChildren<Transform>();
         otherTeleporterPad = teleporterPad;
@@ -187,8 +192,6 @@ public class DogMovement : MonoBehaviour
         tempDelegate = new Delegate(MoveAwayFromTeleport);
         delegateList.Add(tempDelegate);
         tempDelegate = new Delegate(TriggerCrouchInAnimation);
-        delegateList.Add(tempDelegate);
-        tempDelegate = new Delegate(TriggerCrouchTransitionAnimation);
         delegateList.Add(tempDelegate);
     }
 
@@ -280,14 +283,11 @@ public class DogMovement : MonoBehaviour
             animator.SetBool("Crouching", true);
     }
 
-    private void TriggerCrouchTransitionAnimation()
-    {
-        animator.SetTrigger("CrouchTransition");
-    }
-
     private void RemoveDelegate()
     {
-        delegateList.RemoveAt(0);
+        if (delegateList.Count != 0)
+            delegateList.RemoveAt(0);
+
         animator.SetBool("PushTransition", false);
         animator.SetBool("Crouching", false);
     }

@@ -263,4 +263,9 @@ public class ThirdPersonView : MonoBehaviour
     {
         return target;
     }
+
+    public GameObject GetCurrentOther()
+    {
+        return other;
+    }
 }
