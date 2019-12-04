@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6307793002044672982}
   - component: {fileID: 4277585634340804654}
   - component: {fileID: 2188762407547321393}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: DialogueBlock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
