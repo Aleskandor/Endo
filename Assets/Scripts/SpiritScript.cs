@@ -33,7 +33,7 @@ public class SpiritScript : MonoBehaviour
     void Start()
     {
         speedFactor = 1;
-        transitionSpeed = 1;
+        transitionSpeed = .6f;
         orbSpeed = 3;
         arcHeight = 4;
         startRotation = transform.localRotation;
@@ -124,7 +124,6 @@ public class SpiritScript : MonoBehaviour
         dog.gameObject.GetComponent<DogAI>().enabled = true;
 
         human.gameObject.GetComponent<Animator>().SetBool("Running", false);
-        //dog.gameObject.GetComponent<Animator>().SetBool("Idle", true);
         delegateList.RemoveAt(0);
     }
 
@@ -152,9 +151,9 @@ public class SpiritScript : MonoBehaviour
             human.gameObject.GetComponent<Animator>().SetBool("Running", true);
             dog.gameObject.GetComponent<Animator>().SetBool("Running", true);
 
-            human.transform.position = Vector3.MoveTowards(human.transform.position, humanPoint.position, 3.5f * Time.deltaTime);
+            human.transform.position = Vector3.MoveTowards(human.transform.position, humanPoint.position, 5f * Time.deltaTime);
             human.transform.LookAt(humanPoint.transform);
-            dog.transform.position = Vector3.MoveTowards(dog.transform.position, dogPoint.position, 3.5f * Time.deltaTime);
+            dog.transform.position = Vector3.MoveTowards(dog.transform.position, dogPoint.position, 7f * Time.deltaTime);
             dog.transform.LookAt(dogPoint.transform);
 
             MoveCamera();
