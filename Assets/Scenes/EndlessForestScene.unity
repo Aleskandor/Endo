@@ -3601,6 +3601,21 @@ PrefabInstance:
       propertyPath: m_Center.z
       value: -5
       objectReference: {fileID: 0}
+    - target: {fileID: 7210456389301813914, guid: 302243ff67d33074ea7b4a4d8e6277bd,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7210456389301813914, guid: 302243ff67d33074ea7b4a4d8e6277bd,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7210456389301813914, guid: 302243ff67d33074ea7b4a4d8e6277bd,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 302243ff67d33074ea7b4a4d8e6277bd, type: 3}
 --- !u!43 &596516312
@@ -7493,6 +7508,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1075372092558005654, guid: 13b5943c37e279546b66c8a591004a92,
+        type: 3}
+      propertyPath: m_Name
+      value: Dog
+      objectReference: {fileID: 0}
     - target: {fileID: 4086775733867718533, guid: 13b5943c37e279546b66c8a591004a92,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -7547,11 +7567,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1075372092558005654, guid: 13b5943c37e279546b66c8a591004a92,
-        type: 3}
-      propertyPath: m_Name
-      value: Dog
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13b5943c37e279546b66c8a591004a92, type: 3}
@@ -10482,6 +10497,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2707339737151535203, guid: 0b22cd6b206ef624087c88ce4f9c32a3,
+        type: 3}
+      propertyPath: m_Name
+      value: Human
+      objectReference: {fileID: 0}
     - target: {fileID: 1425740015410973296, guid: 0b22cd6b206ef624087c88ce4f9c32a3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -10536,11 +10556,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2707339737151535203, guid: 0b22cd6b206ef624087c88ce4f9c32a3,
-        type: 3}
-      propertyPath: m_Name
-      value: Human
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0b22cd6b206ef624087c88ce4f9c32a3, type: 3}
