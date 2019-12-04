@@ -131,6 +131,19 @@ public class SoundManager : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        playing.RemoveAll(sound => sound.source.isPlaying == false);
+    }
+
+    public void PlayWhistle()
+    {
+        if (playing.Find(sound => sound.name == "Whistle") == null)
+        {
+            Play("Whistle");
+        }
+    }
+
     private void PlayEndlessForestScene()
     {
         queue.Clear();

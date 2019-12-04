@@ -74,6 +74,10 @@ public class HumanMovement : MonoBehaviour
             }
             else if (Input.GetKeyDown(KeyCode.F))
                 CheckForPush();
+            else if (Input.GetKeyDown(KeyCode.E))
+            {
+                SoundManager.instance.PlayWhistle();
+            }
             else
                 Move(inputDir);
         }
