@@ -13,13 +13,13 @@ public class StartDialogue : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
-            DT.TriggerDialogue();
+        // if (Input.GetKeyDown(KeyCode.E))
+           // DT.TriggerDialogue();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.name == "Human" || other.name == "Dog")
+        if (other.name == "Human")
             DT.TriggerDialogue();
     }
 }
