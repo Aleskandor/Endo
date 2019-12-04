@@ -261,6 +261,7 @@ public class DogMovement : MonoBehaviour
         }
         else
         {
+            boxPO.StopPlayingSound();
             animator.SetBool("Pushing", false);
             animator.SetBool("PushTransition", false);
             delegateList.RemoveAt(0);

@@ -299,6 +299,7 @@ public class HumanMovement : MonoBehaviour
         }
         else
         {
+            boxPO.StopPlayingSound();
             animator.SetBool("Pushing", false);
             delegateList.RemoveAt(0);
         }

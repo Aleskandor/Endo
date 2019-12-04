@@ -11,6 +11,8 @@ public class LarvaInteract : MonoBehaviour
     public Transform endPivot;
     public Transform startPivot;
     public Animator larvaAni;
+    private bool puzzleCompleted = false;
+    private bool hasPlayedSound = false;
 
     private Vector3 stickStartPos;
     private Vector3 stickMoveVector;
@@ -21,7 +23,7 @@ public class LarvaInteract : MonoBehaviour
     {
         HasCrossed = false;
         stickMoveVector = (endPivot.position - startPivot.position).normalized;
-        stickStartPos = startPivot.position + stickMoveVector *0.8f;
+        stickStartPos = startPivot.position + stickMoveVector * 0.8f;
         pivot.position = stickStartPos;
     }
 
@@ -53,7 +55,7 @@ public class LarvaInteract : MonoBehaviour
     }
     private void StickMove()
     {
-        if(!stickAtEnd || !stickAtStart)
+        if (!stickAtEnd || !stickAtStart)
         {
             if (Input.GetAxis("Mouse X") <= 0)
             {
@@ -74,6 +76,12 @@ public class LarvaInteract : MonoBehaviour
 
         if (pivot.position == endPivot.position && stickAtLarva)
         {
+            if (!hasPlayedSound)
+            {
+                SoundManager.instance.Play("Victory");
+                hasPlayedSound = true;
+            }
+
             stickAtEnd = true;
             HasCrossed = true;
         }

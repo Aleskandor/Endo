@@ -10,7 +10,6 @@ public class PushObject : MonoBehaviour
     private RaycastHit hit;
     private List<Delegate> delegateList;
     private delegate void Delegate();
-
     private CharacterController charController;
     private NavMeshSurface navMeshSurface;
     private BoxCollider boxCollider;
@@ -47,8 +46,10 @@ public class PushObject : MonoBehaviour
         else if (!charController.isGrounded)
             charController.Move(new Vector3(0, gravity * Time.deltaTime, 0));
 
-        if(charController.isGrounded && inHole && !gameObject.isStatic)
+        if (charController.isGrounded && inHole && !gameObject.isStatic)
         {
+            AudioSource ac = GetComponents<AudioSource>()[1];
+            ac.Play();
             gameObject.isStatic = true;
             childCube.isStatic = true;
             gameObject.layer = 0;
@@ -57,10 +58,29 @@ public class PushObject : MonoBehaviour
         }
     }
 
+    public void StopPlayingSound()
+    {
+        if (delegateList.Count == 0)
+        {
+            if (GetComponent<AudioSource>().isPlaying)
+            {
+                GetComponent<AudioSource>().Stop();
+            }
+        }
+    }
+
     public void Move(Vector3 velocity)
     {
         if (canMove)
             charController.Move(velocity * Time.deltaTime);
+
+        //if (Math.Abs(velocity.x) > 1 || Math.Abs(velocity.z) > 1)
+        //{
+        if (!GetComponent<AudioSource>().isPlaying)
+        {
+            GetComponent<AudioSource>().Play();
+        }
+        //}
     }
 
     public bool CheckForLedges(Vector3 direction)
@@ -73,6 +93,10 @@ public class PushObject : MonoBehaviour
             {
                 if (hit.distance < boxCollider.size.y / 2 - 0.05)
                 {
+                    if (GetComponent<AudioSource>().isPlaying)
+                    {
+                        GetComponent<AudioSource>().Stop();
+                    }
                     canMove = false;
                     return false;
                 }
@@ -104,6 +128,12 @@ public class PushObject : MonoBehaviour
         if (hit.distance < boxCollider.size.x)
             charController.Move(playerDirection * Time.deltaTime * 2);
         else
+        {
+            if (GetComponent<AudioSource>().isPlaying)
+            {
+                GetComponent<AudioSource>().Stop();
+            }
             delegateList.RemoveAt(0);
+        }
     }
 }
