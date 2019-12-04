@@ -224,7 +224,6 @@ public class DogMovement : MonoBehaviour
 
         transform.position += distance;
         transform.Rotate(transform.rotation.x, otherTeleporterPad.transform.rotation.y + 180, transform.rotation.z);
-        animator.SetTrigger("CrouchTransition");
     }
 
     private void TurnTowardsWall()
@@ -262,6 +261,7 @@ public class DogMovement : MonoBehaviour
         }
         else
         {
+            boxPO.StopPlayingSound();
             animator.SetBool("Pushing", false);
             animator.SetBool("PushTransition", false);
             delegateList.RemoveAt(0);

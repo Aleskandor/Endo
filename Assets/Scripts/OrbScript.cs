@@ -6,7 +6,7 @@ public class OrbScript : MonoBehaviour
 {
     public GameObject orb;
     public Transform holePivot;
-    public GameObject curruptionPit;
+    public GameObject corruptionPit;
 
     private bool move;
     private Vector3 startPos, targetPos;
@@ -35,7 +35,7 @@ public class OrbScript : MonoBehaviour
             orb.transform.position = nextPos;
 
             if (nextPos == targetPos)
-                curruptionPit.GetComponent<CurruptionHoleInteraction>().die = true;
+                corruptionPit.GetComponent<CurruptionHoleInteraction>().die = true;
         }
     }
     void SpawnOrb()
