@@ -44,8 +44,8 @@ public class HumanMovement : MonoBehaviour
         camTransform = Camera.main.transform;
         charController = GetComponent<CharacterController>();
 
-        currentWalkSpeed = 7.5f;
-        originalWalkSpeed = 7.5f;
+        currentWalkSpeed = 15f;
+        originalWalkSpeed = 15f;
         pushSpeed = originalWalkSpeed / 2;
 
         gravity = -12;

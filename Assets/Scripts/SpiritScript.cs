@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,24 +7,51 @@ public class SpiritScript : MonoBehaviour
 {
     public GameObject head_J;
     public GameObject human;
+    public GameObject dog;
+    public GameObject orb;
     public DialogueManager DM;
+    public Transform humanPoint;
+    public Transform dogPoint;
+    public Transform desiredCameraTransform;
+    public Transform karlHand;
 
-    Quaternion startRotation, currentRotation;
-    float speedFactor;
-    bool humanClose;
-    DialogueTrigger DT;
+    private Delegate tempDelegate;
+    private List<Delegate> delegateList;
+    private delegate void Delegate();
+
+    private Transform previousCamPos;
+    private Quaternion startRotation, currentRotation;
+    private float speedFactor, transitionSpeed;
+    private bool humanClose;
+    private DialogueTrigger DT;
+
+    private Vector3 orbStart, orbEnd;
+    private bool running, orbCaught;
+    private float arcHeight, orbSpeed;
 
     // Start is called before the first frame update
     void Start()
     {
         speedFactor = 1;
+        transitionSpeed = .6f;
+        orbSpeed = 3;
+        arcHeight = 4;
         startRotation = transform.localRotation;
-        DT = gameObject.GetComponent<DialogueTrigger>();
+        DT = gameObject.GetComponent<DialogueTrigger>(); 
+        delegateList = new List<Delegate>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        orbEnd = karlHand.position;
+
+        if (orbCaught)
+            orb.transform.position = karlHand.position;
+
+        if (delegateList.Count != 0)
+            delegateList[0].Method.Invoke(this, null);
+
         if (humanClose)
         {
             head_J.transform.LookAt(human.transform);
@@ -43,7 +71,23 @@ public class SpiritScript : MonoBehaviour
             humanClose = true;
             if (!DM.speechOver)
             {
-                DT.TriggerDialogue();
+                tempDelegate = new Delegate(RunToPoint);
+                delegateList.Add(tempDelegate);
+                tempDelegate = new Delegate(TurnTowardsSpirit);
+                delegateList.Add(tempDelegate);
+                tempDelegate = new Delegate(TriggerDialogue);
+                delegateList.Add(tempDelegate);
+                tempDelegate = new Delegate(SpawnOrb);
+                delegateList.Add(tempDelegate);
+                tempDelegate = new Delegate(OrbFromSpirit);
+                delegateList.Add(tempDelegate);
+                tempDelegate = new Delegate(MoveOrb);
+                delegateList.Add(tempDelegate);
+                tempDelegate = new Delegate(GetOrb);
+                delegateList.Add(tempDelegate);
+                tempDelegate = new Delegate(Reactivate);
+                delegateList.Add(tempDelegate);
+
             }
         }
     }
@@ -52,6 +96,129 @@ public class SpiritScript : MonoBehaviour
         if (other.gameObject.name == "Human")
         {
             humanClose = false;
+        }
+    }
+
+    private void Deactivate()
+    {
+        //Turns off Human Logic     
+        human.gameObject.GetComponent<CharacterController>().enabled = false;
+        human.gameObject.GetComponent<HumanMovement>().enabled = false;
+        human.gameObject.GetComponent<HumanAI>().enabled = false;
+
+        //Turns off Dog Logic
+        dog.gameObject.GetComponent<CharacterController>().enabled = false;
+        dog.gameObject.GetComponent<DogMovement>().enabled = false;
+        dog.gameObject.GetComponent<DogAI>().enabled = false;
+
+    }
+
+    private void Reactivate()
+    {
+        orb.SetActive(false);
+
+        Camera.main.gameObject.GetComponent<ThirdPersonView>().enabled = true;
+        human.gameObject.GetComponent<HumanMovement>().enabled = true;
+        human.gameObject.GetComponent<CharacterController>().enabled = true;
+
+        dog.gameObject.GetComponent<DogAI>().enabled = true;
+
+        human.gameObject.GetComponent<Animator>().SetBool("Running", false);
+        delegateList.RemoveAt(0);
+    }
+
+    private void TurnTowardsSpirit()
+    {
+        Vector3 tempVector = transform.position - human.transform.position;
+        tempVector.Normalize();
+        Vector3 desiredRotation = new Vector3(tempVector.x, 0, tempVector.z);
+        human.gameObject.GetComponent<Animator>().SetBool("Running", false);
+        dog.gameObject.GetComponent<Animator>().SetBool("Running", false);
+
+        if (Vector3.Angle(human.transform.forward, desiredRotation) > 2)
+        {
+            Quaternion lookRotation = Quaternion.LookRotation(desiredRotation);
+            human.transform.rotation = Quaternion.Lerp(human.transform.rotation, lookRotation, 2.5f * Time.deltaTime);
+        }
+        else
+            delegateList.RemoveAt(0);
+    }
+    private void RunToPoint()
+    {
+        if (Vector3.Distance(human.transform.position, humanPoint.position) > .3f && Vector3.Distance(dog.transform.position, dogPoint.position) > .3f)
+        {
+            Deactivate();
+            human.gameObject.GetComponent<Animator>().SetBool("Running", true);
+            dog.gameObject.GetComponent<Animator>().SetBool("Running", true);
+
+            human.transform.position = Vector3.MoveTowards(human.transform.position, humanPoint.position, 5f * Time.deltaTime);
+            human.transform.LookAt(humanPoint.transform);
+            dog.transform.position = Vector3.MoveTowards(dog.transform.position, dogPoint.position, 7f * Time.deltaTime);
+            dog.transform.LookAt(dogPoint.transform);
+
+            MoveCamera();
+        }
+        else
+            delegateList.RemoveAt(0);
+    }
+
+    private void MoveCamera()
+    {
+        Camera.main.gameObject.GetComponent<ThirdPersonView>().enabled = false;
+        Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, desiredCameraTransform.position, transitionSpeed * Time.deltaTime);
+
+        Vector3 currentAngle = new Vector3(
+            Mathf.LerpAngle(Camera.main.transform.eulerAngles.x, desiredCameraTransform.rotation.eulerAngles.x, transitionSpeed * Time.deltaTime),
+            Mathf.LerpAngle(Camera.main.transform.eulerAngles.y, desiredCameraTransform.rotation.eulerAngles.y, transitionSpeed * Time.deltaTime),
+            Mathf.LerpAngle(Camera.main.transform.eulerAngles.z, desiredCameraTransform.rotation.eulerAngles.z, transitionSpeed * Time.deltaTime));
+
+        Camera.main.transform.eulerAngles = currentAngle;
+    }
+
+    private void TriggerDialogue()
+    {
+        DT.TriggerDialogue();
+        delegateList.RemoveAt(0);
+    }
+
+    private void MoveOrb()
+    {
+        Vector2 pos = new Vector2(orbStart.x, orbStart.z);
+        Vector2 posTarget = new Vector2(orbEnd.x, orbEnd.z);
+        float distance = Vector2.Distance(posTarget, pos);
+        Vector2 nextPlanePos = Vector2.MoveTowards(new Vector2(orb.transform.position.x, orb.transform.position.z), posTarget, orbSpeed * Time.deltaTime);
+
+        float baseY = Mathf.Lerp(orbStart.y, orbEnd.y, Vector2.Distance(nextPlanePos, pos) / distance);
+        float arc = arcHeight * Vector2.Distance(nextPlanePos, pos) * Vector2.Distance(nextPlanePos, posTarget) / (0.25f * distance * distance);
+        Vector3 nextPos = new Vector3(nextPlanePos.x, baseY + arc, nextPlanePos.y);
+        orb.transform.position = nextPos;
+
+        if (nextPos == orbEnd)
+        {
+            nextPos = karlHand.position;
+            orbCaught = true;
+            delegateList.RemoveAt(0);
+        }
+    }
+
+    private void OrbFromSpirit()
+    {
+        human.GetComponent<Animator>().SetTrigger("OrbFromSpirit");
+        delegateList.RemoveAt(0);
+    }
+    private void GetOrb()
+    {
+        human.gameObject.GetComponent<Animator>().SetTrigger("GetOrb");
+        delegateList.RemoveAt(0);
+    }
+
+    void SpawnOrb()
+    {
+        if (DM.speechOver)
+        {
+            orb.SetActive(true);
+            orbStart = orb.transform.position;
+            delegateList.RemoveAt(0);
         }
     }
 }
