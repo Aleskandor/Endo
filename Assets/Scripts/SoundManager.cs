@@ -181,7 +181,8 @@ public class SoundManager : MonoBehaviour
 
     private void PlayRiver()
     {
-        Play("MainTheme");
+        Play("Chill");
+        Play("Birds");
     }
 
     private void PlayGroveScene()
@@ -200,7 +201,7 @@ public class SoundManager : MonoBehaviour
 
     private void PlayGrove()
     {
-        Play("MainTheme");
+        Play("Mellow");
     }
 
     private void PlayCampScene()
