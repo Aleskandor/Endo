@@ -44,9 +44,9 @@ public class HumanMovement : MonoBehaviour
         camTransform = Camera.main.transform;
         charController = GetComponent<CharacterController>();
 
-        currentWalkSpeed = 15f;
-        originalWalkSpeed = 15f;
-        pushSpeed = originalWalkSpeed / 2;
+        currentWalkSpeed = 9f;
+        originalWalkSpeed = 9f;
+        pushSpeed = 3;
 
         gravity = -12;
 
@@ -74,6 +74,10 @@ public class HumanMovement : MonoBehaviour
             }
             else if (Input.GetKeyDown(KeyCode.F))
                 CheckForPush();
+            else if (Input.GetKeyDown(KeyCode.E))
+            {
+                SoundManager.instance.PlayWhistle();
+            }
             else
                 Move(inputDir);
         }

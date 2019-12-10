@@ -46,7 +46,7 @@ MonoBehaviour:
   sounds:
   - name: EndlessForest
     clip: {fileID: 8300000, guid: 0ceada19af804214fbe2197ada53fcd4, type: 3}
-    volume: 0.15
+    volume: 0.109
     originalVolume: 0
     pitch: 0.3
     source: {fileID: 0}
@@ -55,7 +55,7 @@ MonoBehaviour:
     loop: 1
   - name: Owls
     clip: {fileID: 8300000, guid: d17d233bbc51638408e36424af448157, type: 3}
-    volume: 0.7
+    volume: 0.57
     originalVolume: 0
     pitch: 0.7
     source: {fileID: 0}
@@ -84,17 +84,35 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: d0712b1acade0064cb3235b50eb587d2, type: 3}
     volume: 0.238
     originalVolume: 0
-    pitch: 0.9
+    pitch: 1
     source: {fileID: 0}
     mixerGroup: {fileID: -3600795001165637277, guid: 9996065e280ffa44a98e39f2db6b4c9c,
       type: 2}
     loop: 0
   - name: Victory
-    clip: {fileID: 8300000, guid: 8c616acc778592a4a8ce52a7b48bf396, type: 3}
-    volume: 0.879
+    clip: {fileID: 8300000, guid: 3202b92ea3b9a5744ba45fdbb9ed4aa3, type: 3}
+    volume: 0.68
     originalVolume: 0
     pitch: 1
     source: {fileID: 0}
     mixerGroup: {fileID: -4212633838738764243, guid: 9996065e280ffa44a98e39f2db6b4c9c,
       type: 2}
     loop: 0
+  - name: Mellow
+    clip: {fileID: 8300000, guid: 0d0c8d93b6292284bb8c15ed9111153e, type: 3}
+    volume: 0.785
+    originalVolume: 0
+    pitch: 1
+    source: {fileID: 0}
+    mixerGroup: {fileID: -4212633838738764243, guid: 9996065e280ffa44a98e39f2db6b4c9c,
+      type: 2}
+    loop: 1
+  - name: Chill
+    clip: {fileID: 8300000, guid: 8d2910e8a648c2d47bfab0b9c77dfc25, type: 3}
+    volume: 0.7
+    originalVolume: 0
+    pitch: 1
+    source: {fileID: 0}
+    mixerGroup: {fileID: -4212633838738764243, guid: 9996065e280ffa44a98e39f2db6b4c9c,
+      type: 2}
+    loop: 1

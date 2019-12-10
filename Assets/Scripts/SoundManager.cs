@@ -131,6 +131,19 @@ public class SoundManager : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        playing.RemoveAll(sound => sound.source.isPlaying == false);
+    }
+
+    public void PlayWhistle()
+    {
+        if (playing.Find(sound => sound.name == "Whistle") == null)
+        {
+            Play("Whistle");
+        }
+    }
+
     private void PlayEndlessForestScene()
     {
         queue.Clear();
@@ -168,7 +181,8 @@ public class SoundManager : MonoBehaviour
 
     private void PlayRiver()
     {
-        Play("MainTheme");
+        Play("Chill");
+        Play("Birds");
     }
 
     private void PlayGroveScene()
@@ -187,7 +201,7 @@ public class SoundManager : MonoBehaviour
 
     private void PlayGrove()
     {
-        Play("MainTheme");
+        Play("Mellow");
     }
 
     private void PlayCampScene()
