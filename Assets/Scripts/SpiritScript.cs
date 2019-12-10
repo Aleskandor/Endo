@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class SpiritScript : MonoBehaviour
 {
@@ -103,13 +104,16 @@ public class SpiritScript : MonoBehaviour
     {
         //Turns off Human Logic     
         human.gameObject.GetComponent<CharacterController>().enabled = false;
+        human.gameObject.GetComponent<NavMeshAgent>().enabled = false;
         human.gameObject.GetComponent<HumanMovement>().enabled = false;
         human.gameObject.GetComponent<HumanAI>().enabled = false;
 
         //Turns off Dog Logic
         dog.gameObject.GetComponent<CharacterController>().enabled = false;
+        dog.gameObject.GetComponent<NavMeshAgent>().enabled = false;
         dog.gameObject.GetComponent<DogMovement>().enabled = false;
         dog.gameObject.GetComponent<DogAI>().enabled = false;
+
 
     }
 
@@ -122,38 +126,55 @@ public class SpiritScript : MonoBehaviour
         human.gameObject.GetComponent<CharacterController>().enabled = true;
 
         dog.gameObject.GetComponent<DogAI>().enabled = true;
+        dog.gameObject.GetComponent<NavMeshAgent>().enabled = true;
 
-        human.gameObject.GetComponent<Animator>().SetBool("Running", false);
+        //human.gameObject.GetComponent<Animator>().SetBool("Running", false);
         delegateList.RemoveAt(0);
     }
 
     private void TurnTowardsSpirit()
     {
-        Vector3 tempVector = transform.position - human.transform.position;
-        tempVector.Normalize();
-        Vector3 desiredRotation = new Vector3(tempVector.x, 0, tempVector.z);
+        Vector3 humanVector = transform.position - human.transform.position;
+        humanVector.Normalize();
+        Vector3 dogVector = transform.position - dog.transform.position;
+        dogVector.Normalize();
+        Vector3 desiredHumanRot = new Vector3(humanVector.x, 0, humanVector.z);
+        Vector3 desiredDogRot = new Vector3(dogVector.x, 0, dogVector.z);
         human.gameObject.GetComponent<Animator>().SetBool("Running", false);
         dog.gameObject.GetComponent<Animator>().SetBool("Running", false);
 
-        if (Vector3.Angle(human.transform.forward, desiredRotation) > 2)
+        if (Vector3.Angle(human.transform.forward, desiredHumanRot) > 2 || Vector3.Angle(dog.transform.forward, desiredDogRot) > 2)
         {
-            Quaternion lookRotation = Quaternion.LookRotation(desiredRotation);
-            human.transform.rotation = Quaternion.Lerp(human.transform.rotation, lookRotation, 2.5f * Time.deltaTime);
+            Quaternion humanLookRot = Quaternion.LookRotation(desiredHumanRot);
+            human.transform.rotation = Quaternion.Lerp(human.transform.rotation, humanLookRot, 2f * Time.deltaTime);
+
+            Quaternion dogLookRot = Quaternion.LookRotation(desiredDogRot);
+            dog.transform.rotation = Quaternion.Lerp(dog.transform.rotation, dogLookRot, 2f * Time.deltaTime);
         }
         else
             delegateList.RemoveAt(0);
     }
     private void RunToPoint()
     {
-        if (Vector3.Distance(human.transform.position, humanPoint.position) > .3f && Vector3.Distance(dog.transform.position, dogPoint.position) > .3f)
+        if (Vector3.Distance(human.transform.position, humanPoint.position) > .3f || Vector3.Distance(dog.transform.position, dogPoint.position) > .3f)
         {
             Deactivate();
             human.gameObject.GetComponent<Animator>().SetBool("Running", true);
-            dog.gameObject.GetComponent<Animator>().SetBool("Running", true);
+            
+
+            if(Vector3.Distance(dog.transform.position, dogPoint.position) <= .3f)
+                dog.gameObject.GetComponent<Animator>().SetBool("Running", false);
+            else
+                dog.gameObject.GetComponent<Animator>().SetBool("Running", true);
+
+            if (Vector3.Distance(human.transform.position, humanPoint.position) <= .3f)
+                human.gameObject.GetComponent<Animator>().SetBool("Running", false);
+            else
+                human.gameObject.GetComponent<Animator>().SetBool("Running", true);
 
             human.transform.position = Vector3.MoveTowards(human.transform.position, humanPoint.position, 5f * Time.deltaTime);
             human.transform.LookAt(humanPoint.transform);
-            dog.transform.position = Vector3.MoveTowards(dog.transform.position, dogPoint.position, 7f * Time.deltaTime);
+            dog.transform.position = Vector3.MoveTowards(dog.transform.position, dogPoint.position, 8f * Time.deltaTime);
             dog.transform.LookAt(dogPoint.transform);
 
             MoveCamera();
