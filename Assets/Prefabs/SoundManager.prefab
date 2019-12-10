@@ -91,7 +91,7 @@ MonoBehaviour:
     loop: 0
   - name: Victory
     clip: {fileID: 8300000, guid: 3202b92ea3b9a5744ba45fdbb9ed4aa3, type: 3}
-    volume: 0.779
+    volume: 0.68
     originalVolume: 0
     pitch: 1
     source: {fileID: 0}
@@ -109,7 +109,7 @@ MonoBehaviour:
     loop: 1
   - name: Chill
     clip: {fileID: 8300000, guid: 8d2910e8a648c2d47bfab0b9c77dfc25, type: 3}
-    volume: 0.785
+    volume: 0.7
     originalVolume: 0
     pitch: 1
     source: {fileID: 0}

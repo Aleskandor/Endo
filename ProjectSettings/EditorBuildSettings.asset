@@ -5,19 +5,19 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/CampScene.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/EndlessForestScene.unity
     guid: a4cd7f34dfc70574894e130f2aebc67f
   - enabled: 1
     path: Assets/Scenes/RiverScene.unity
     guid: 05f6798761ed73e40ba2cee94af0a9fc
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/ForestSpiritScene.unity
     guid: eb660d5b166427648b9d04f542200272
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/GroveScene.unity
     guid: 873c9c140e3ffa9448279e68673e3d9b
   m_configObjects: {}
