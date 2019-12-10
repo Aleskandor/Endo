@@ -3,7 +3,27 @@ guid: 6a7b0561fba2c324abbf79a9b0230cb6
 ModelImporter:
   serializedVersion: 28
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: purple2_leaftree
+    second: {fileID: 2100000, guid: 83c804c69fe34b042b4449f5bd99df84, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: purple3_leaftree
+    second: {fileID: 2100000, guid: 7ad70068b6a9e1f4fb1c7905f15f1478, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: purple_leaftree
+    second: {fileID: 2100000, guid: 83c804c69fe34b042b4449f5bd99df84, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: purple_stem_leaftree
+    second: {fileID: 2100000, guid: bcbcf4029e757ab4eb1998fa850884bb, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
@@ -80,7 +100,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.5
+    globalScale: 50
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

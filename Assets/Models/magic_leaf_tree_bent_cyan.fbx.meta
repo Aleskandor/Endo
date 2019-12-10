@@ -3,7 +3,22 @@ guid: 9f84e212305a38e43889796b15e60178
 ModelImporter:
   serializedVersion: 28
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: magic_bent_cyan2_leaftree
+    second: {fileID: 2100000, guid: cef1e750a88286d459146dacb542bef5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: magic_bent_cyan_leaftree1
+    second: {fileID: 2100000, guid: cef1e750a88286d459146dacb542bef5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: magic_bent_cyan_stem_leaftree
+    second: {fileID: 2100000, guid: 83c804c69fe34b042b4449f5bd99df84, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
@@ -80,7 +95,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.5
+    globalScale: 50
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

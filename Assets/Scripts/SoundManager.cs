@@ -106,7 +106,10 @@ public class SoundManager : MonoBehaviour
             Debug.LogWarning("Sound " + name + " not found.");
             return;
         }
-        playing.Add(s);
+        if (name != "Transition")
+        {
+            playing.Add(s);
+        }
         s.source.volume = s.originalVolume;
         s.source.Play();
     }
@@ -115,17 +118,21 @@ public class SoundManager : MonoBehaviour
     {
         if (index == 0)
         {
-            PlayCampScene();
+            PlayTitleScene();
         }
-        else if (index == 1)
+        if (index == 1)
         {
-            PlayEndlessForestScene();
+            PlayCampScene();
         }
         else if (index == 2)
         {
-            PlayRiverScene();
+            PlayEndlessForestScene();
         }
         else if (index == 3)
+        {
+            PlayRiverScene();
+        }
+        else if (index == 4)
         {
             PlayGroveScene();
         }
@@ -142,6 +149,26 @@ public class SoundManager : MonoBehaviour
         {
             Play("Whistle");
         }
+    }
+
+    private void PlayTitleScene()
+    {
+        queue.Clear();
+        tempDelegate = new Delegate(PlayTitle);
+        queue.Enqueue(tempDelegate);
+        if (musicTransition != null)
+        {
+            StopCoroutine(musicTransition);
+        }
+        removing = playing;
+        musicTransition = FadeOut(20);
+        StartCoroutine(musicTransition);
+    }
+
+    private void PlayTitle()
+    {
+        Play("Chill");
+        Play("Birds");
     }
 
     private void PlayEndlessForestScene()
@@ -181,7 +208,7 @@ public class SoundManager : MonoBehaviour
 
     private void PlayRiver()
     {
-        Play("Chill");
+        Play("MainTheme");
         Play("Birds");
     }
 
