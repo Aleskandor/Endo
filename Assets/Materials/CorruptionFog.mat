@@ -29,5 +29,5 @@ Material:
     - _InnerRatio: 0.19
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _FogBaseColor: {r: 0.38679248, g: 0.13683696, b: 0.32324284, a: 1}
-    - _FogDenseColor: {r: 0.6320754, g: 0.6320754, b: 0.6320754, a: 0.6509804}
+    - _FogBaseColor: {r: 0.23584908, g: 0.14351194, b: 0.21176109, a: 1}
+    - _FogDenseColor: {r: 0.3207547, g: 0.13465646, b: 0.13465646, a: 0.6509804}
