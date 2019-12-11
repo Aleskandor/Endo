@@ -20,7 +20,7 @@ MonoBehaviour:
     min: 0
   intensity:
     m_OverrideState: 1
-    m_Value: 1.71
+    m_Value: 9.71
     min: 0
   scatter:
     m_OverrideState: 0
@@ -63,15 +63,15 @@ MonoBehaviour:
   m_AdvancedMode: 0
   postExposure:
     m_OverrideState: 1
-    m_Value: 1.05
+    m_Value: 0.48
   contrast:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 14.5
     min: -100
     max: 100
   colorFilter:
-    m_OverrideState: 0
-    m_Value: {r: 1, g: 1, b: 1, a: 1}
+    m_OverrideState: 1
+    m_Value: {r: 0.8254717, g: 1, b: 0.871423, a: 1}
     hdr: 1
     showAlpha: 0
     showEyeDropper: 1
@@ -82,7 +82,7 @@ MonoBehaviour:
     max: 180
   saturation:
     m_OverrideState: 1
-    m_Value: 11
+    m_Value: 12.55
     min: -100
     max: 100
 --- !u!114 &11400000
@@ -180,7 +180,7 @@ MonoBehaviour:
   m_AdvancedMode: 0
   color:
     m_OverrideState: 1
-    m_Value: {r: 0.5471698, g: 0.5471698, b: 0.5471698, a: 1}
+    m_Value: {r: 0, g: 0, b: 0, a: 1}
     hdr: 0
     showAlpha: 0
     showEyeDropper: 1
@@ -189,12 +189,12 @@ MonoBehaviour:
     m_Value: {x: 0.5, y: 0.5}
   intensity:
     m_OverrideState: 1
-    m_Value: 0.419
+    m_Value: 0.368
     min: 0
     max: 1
   smoothness:
     m_OverrideState: 1
-    m_Value: 0.34
+    m_Value: 0.42
     min: 0.01
     max: 1
   rounded:

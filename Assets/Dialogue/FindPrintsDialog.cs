@@ -13,7 +13,8 @@ public class FindPrintsDialog : MonoBehaviour
     private bool startSpeech = false;
     private bool part1Speech = false;
     private bool part2Speech = false;
-    private bool over = false;
+
+    public static bool over = false;
 
     void Start()
     {

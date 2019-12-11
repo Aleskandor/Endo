@@ -15,20 +15,18 @@ public class ActivateLarva : MonoBehaviour
 
     void Update()
     {
-        if (inDaPuzzle && Input.GetKeyDown(KeyCode.G) && LarvaInteract.HasCrossed)
+        if (inDaPuzzle && LarvaInteract.HasCrossed)
         {
             Stick.SetActive(false);
-            UI.SetActive(true);
             MainCamera.SetActive(true);
             puzzleCamera.SetActive(false);
             Human.GetComponent<CharacterController>().enabled = true;
             Human.GetComponent<HumanMovement>().enabled = true;
             inDaPuzzle = false;
         }
-        else if (inDaZone && Input.GetKeyDown(KeyCode.G))
+        else if (inDaZone && !LarvaInteract.HasCrossed && FindPrintsDialog.over)
         {
             Stick.SetActive(true);
-            UI.SetActive(false);
             MainCamera.SetActive(false);
             puzzleCamera.SetActive(true);
             Human.GetComponent<CharacterController>().enabled = false;

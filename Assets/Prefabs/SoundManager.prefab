@@ -46,7 +46,7 @@ MonoBehaviour:
   sounds:
   - name: EndlessForest
     clip: {fileID: 8300000, guid: 0ceada19af804214fbe2197ada53fcd4, type: 3}
-    volume: 0.109
+    volume: 0.097
     originalVolume: 0
     pitch: 0.3
     source: {fileID: 0}
@@ -82,16 +82,16 @@ MonoBehaviour:
     loop: 1
   - name: Whistle
     clip: {fileID: 8300000, guid: d0712b1acade0064cb3235b50eb587d2, type: 3}
-    volume: 0.238
+    volume: 0.04
     originalVolume: 0
-    pitch: 1
+    pitch: 1.16
     source: {fileID: 0}
     mixerGroup: {fileID: -3600795001165637277, guid: 9996065e280ffa44a98e39f2db6b4c9c,
       type: 2}
     loop: 0
   - name: Victory
     clip: {fileID: 8300000, guid: 3202b92ea3b9a5744ba45fdbb9ed4aa3, type: 3}
-    volume: 0.779
+    volume: 0.68
     originalVolume: 0
     pitch: 1
     source: {fileID: 0}
@@ -109,10 +109,19 @@ MonoBehaviour:
     loop: 1
   - name: Chill
     clip: {fileID: 8300000, guid: 8d2910e8a648c2d47bfab0b9c77dfc25, type: 3}
-    volume: 0.785
+    volume: 0.75
     originalVolume: 0
     pitch: 1
     source: {fileID: 0}
     mixerGroup: {fileID: -4212633838738764243, guid: 9996065e280ffa44a98e39f2db6b4c9c,
       type: 2}
     loop: 1
+  - name: Transition
+    clip: {fileID: 8300000, guid: 5dd0c4d5244c86548a9669b46127b7bd, type: 3}
+    volume: 0.8
+    originalVolume: 0
+    pitch: 0.84
+    source: {fileID: 0}
+    mixerGroup: {fileID: -4212633838738764243, guid: 9996065e280ffa44a98e39f2db6b4c9c,
+      type: 2}
+    loop: 0

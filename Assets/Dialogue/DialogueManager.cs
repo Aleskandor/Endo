@@ -7,10 +7,11 @@ public class DialogueManager : MonoBehaviour
 {
     public Text nameText;
     public Text dialogueText;
-
     public Animator animator;
+    public Transform charPic;
     public bool speechOver =false;
 
+    private bool sentenceOver;
     private Queue<string> sentences;
 
     void Start()
@@ -20,7 +21,7 @@ public class DialogueManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && sentenceOver)
             DisplayNextSentence();
 
     }
@@ -28,6 +29,16 @@ public class DialogueManager : MonoBehaviour
     {
         animator.SetBool("IsOpen", true);
         nameText.text = dialogue.name;
+        foreach (Transform child in charPic)
+        {
+            if (child.gameObject.name == dialogue.name)
+                child.gameObject.SetActive(true);
+            else if (child.gameObject.name == "Spirit" && dialogue.name == "????")
+                child.gameObject.SetActive(true);
+            else
+                child.gameObject.SetActive(false);
+        }
+
         speechOver = false;
 
         sentences.Clear();
@@ -50,6 +61,7 @@ public class DialogueManager : MonoBehaviour
 
         string sentence = sentences.Dequeue();
         StopAllCoroutines();
+        sentenceOver = false;
         StartCoroutine(TypeSentence(sentence));
     }
 
@@ -59,8 +71,9 @@ public class DialogueManager : MonoBehaviour
         foreach (char letter in sentence.ToCharArray())
         {
             dialogueText.text += letter;
-            yield return null;
+            yield return new WaitForSecondsRealtime(0.0000000001f);
         }
+        sentenceOver = true;
     }
 
     void EndDialogue()
