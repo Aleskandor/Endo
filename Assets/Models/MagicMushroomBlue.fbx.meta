@@ -3,7 +3,12 @@ guid: 8e038a2398ff75a489741a1b807391dd
 ModelImporter:
   serializedVersion: 28
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: mushroom_hat_red
+    second: {fileID: 2100000, guid: 811f2d19ffb7d07448b114274f66fbcf, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
@@ -80,7 +85,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.099999994
+    globalScale: 10
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
