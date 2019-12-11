@@ -153,29 +153,32 @@ public class HumanMovement : MonoBehaviour
         if (delegateList.Count == 0)
         {
             RaycastHit groundHit;
+            RaycastHit hitClimb;
 
             int layerMask = 1 << 8;
             int lookDist = 100;
             float minDistToGround = 4;
             float maxDistToGround = 7;
-
-            if (Physics.Raycast(transform.position + (Vector3.up * charController.height / 2) + (transform.forward * 1.1f), Vector3.down, out groundHit, lookDist))
+            if (Physics.Raycast(transform.position, -transform.up, out hitClimb, Mathf.Infinity, layerMask))
             {
-                if (minDistToGround < groundHit.distance && groundHit.distance < maxDistToGround)
+                if (Physics.Raycast(transform.position + (Vector3.up * charController.height / 2) + (transform.forward * 1.1f), Vector3.down, out groundHit, lookDist))
                 {
-                    distanceToClimb = groundHit.point.y - transform.position.y;
-
-                    if (Physics.Raycast(transform.position + (transform.forward * 1f) + (-transform.up * 1), -transform.forward, out hit, lookDist, layerMask))
+                    if (minDistToGround < groundHit.distance && groundHit.distance < maxDistToGround)
                     {
-                        float animationOffset = 1.5f;
-                        distanceToWalk = Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(hit.point.x, hit.point.z)) + charController.radius + animationOffset;
+                        distanceToClimb = groundHit.point.y - transform.position.y;
 
-                        tempDelegate = new Delegate(TurnAwayFromWall);
-                        delegateList.Add(tempDelegate);
-                        tempDelegate = new Delegate(TriggerClimbDownAnimation);
-                        delegateList.Add(tempDelegate);
-                        tempDelegate = new Delegate(ClimbDown);
-                        delegateList.Add(tempDelegate);
+                        if (Physics.Raycast(transform.position + (transform.forward * 1f) + (-transform.up * 1), -transform.forward, out hit, lookDist, layerMask))
+                        {
+                            float animationOffset = 1.5f;
+                            distanceToWalk = Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(hit.point.x, hit.point.z)) + charController.radius + animationOffset;
+
+                            tempDelegate = new Delegate(TurnAwayFromWall);
+                            delegateList.Add(tempDelegate);
+                            tempDelegate = new Delegate(TriggerClimbDownAnimation);
+                            delegateList.Add(tempDelegate);
+                            tempDelegate = new Delegate(ClimbDown);
+                            delegateList.Add(tempDelegate);
+                        }
                     }
                 }
             }
