@@ -338,4 +338,9 @@ public class HumanMovement : MonoBehaviour
     {
         GetComponent<MoreAudioClips>().PlayRandomClip();
     }
+
+    public void SetAnimationOverTrue()
+    {
+        GameObject.FindGameObjectWithTag("ForestSpirit").GetComponent<SpiritScript>().animationOver = true;
+    }
 }
