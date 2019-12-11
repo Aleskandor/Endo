@@ -94,8 +94,8 @@ using UnityEngine;
 
             ac.clip = clips[clipNum];
             previousRandom = clipNum;
-            ac.volume = Random.Range(0.8f, volumes[clipNum]);
-            ac.pitch = Random.Range(0.8f, 1.1f);
+            ac.volume = Random.Range(0.9f, volumes[clipNum]);
+            ac.pitch = Random.Range(0.9f, 1.1f);
             ac.PlayDelayed(delay);
             //GetComponent<AudioSource>().PlayOneShot(clips[clipNum], volume);
             ac.pitch = startPitch;
