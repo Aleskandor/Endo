@@ -230,7 +230,10 @@ public class SpiritScript : MonoBehaviour
     private void GetOrb()
     {
         human.gameObject.GetComponent<Animator>().SetTrigger("GetOrb");
-        delegateList.RemoveAt(0);
+
+
+            delegateList.RemoveAt(0);
+        
     }
 
     void SpawnOrb()
