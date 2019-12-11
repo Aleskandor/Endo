@@ -29,6 +29,7 @@ public class SpiritScript : MonoBehaviour
     private Vector3 orbStart, orbEnd;
     private bool running, orbCaught;
     private float arcHeight, orbSpeed;
+    public bool animationOver;
 
     // Start is called before the first frame update
     void Start()
@@ -40,6 +41,7 @@ public class SpiritScript : MonoBehaviour
         startRotation = transform.localRotation;
         DT = gameObject.GetComponent<DialogueTrigger>(); 
         delegateList = new List<Delegate>();
+        animationOver = false;
     }
 
     // Update is called once per frame
@@ -86,6 +88,8 @@ public class SpiritScript : MonoBehaviour
                 delegateList.Add(tempDelegate);
                 tempDelegate = new Delegate(GetOrb);
                 delegateList.Add(tempDelegate);
+                tempDelegate = new Delegate(PlayAnimation);
+                delegateList.Add(tempDelegate);
                 tempDelegate = new Delegate(Reactivate);
                 delegateList.Add(tempDelegate);
 
@@ -117,6 +121,14 @@ public class SpiritScript : MonoBehaviour
 
     }
 
+    private void PlayAnimation()
+    {
+        if (animationOver)
+        {
+            delegateList.RemoveAt(0);
+        }
+    }
+
     private void Reactivate()
     {
         orb.SetActive(false);
@@ -128,7 +140,7 @@ public class SpiritScript : MonoBehaviour
         dog.gameObject.GetComponent<DogAI>().enabled = true;
         dog.gameObject.GetComponent<NavMeshAgent>().enabled = true;
 
-        //human.gameObject.GetComponent<Animator>().SetBool("Running", false);
+        human.gameObject.GetComponent<Animator>().SetTrigger("GetOrbFinished");
         delegateList.RemoveAt(0);
     }
 
@@ -230,9 +242,9 @@ public class SpiritScript : MonoBehaviour
     private void GetOrb()
     {
         human.gameObject.GetComponent<Animator>().SetTrigger("GetOrb");
-
-
-            delegateList.RemoveAt(0);
+        //human.GetComponent<Animator>().SetBool("Idle", true);
+        delegateList.RemoveAt(0);
+        
         
     }
 

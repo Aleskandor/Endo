@@ -77,6 +77,13 @@ public class HumanMovement : MonoBehaviour
             else if (Input.GetKeyDown(KeyCode.E))
             {
                 SoundManager.instance.PlayWhistle();
+                GameObject dog = GameObject.Find("Dog");
+                float delay = (Vector3.Distance(transform.position, dog.transform.position) / 150);
+                if (delay < 0.5)
+                {
+                    delay = 1;
+                }
+                dog.GetComponent<MoreAudioClips>().PlayRandomClipDelayed(delay);
             }
             else
                 Move(inputDir);
@@ -330,5 +337,10 @@ public class HumanMovement : MonoBehaviour
     public void WalkingSound()
     {
         GetComponent<MoreAudioClips>().PlayRandomClip();
+    }
+
+    public void SetAnimationOverTrue()
+    {
+        GameObject.FindGameObjectWithTag("ForestSpirit").GetComponent<SpiritScript>().animationOver = true;
     }
 }
