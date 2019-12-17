@@ -9,6 +9,7 @@ public class HumanMovement : MonoBehaviour
     private RaycastHit hit;
     private List<Delegate> delegateList;
     private delegate void Delegate();
+    private MoreAudioClips[] moreClips;
 
     private CharacterController charController;
     private Transform camTransform;
@@ -38,6 +39,10 @@ public class HumanMovement : MonoBehaviour
 
     private void Start()
     {
+        //moreClips is a list of the MoreAudioClips component. 
+        //Index 0 should be the footsteps clips and index 1 should be the grunts
+        moreClips = GetComponents<MoreAudioClips>();
+
         animator = GetComponent<Animator>();
         hit = new RaycastHit();
         delegateList = new List<Delegate>();
@@ -336,7 +341,26 @@ public class HumanMovement : MonoBehaviour
 
     public void WalkingSound()
     {
-        GetComponent<MoreAudioClips>().PlayRandomClip();
+        if (moreClips[0])
+        {
+            moreClips[0].PlayRandomClip();
+        }
+    }
+
+    public void GruntSound()
+    {
+        if (moreClips[1])
+        {
+            moreClips[1].PlayRandomClip();
+        }
+    }
+
+    public void CoughSound()
+    {
+        if (moreClips[2])
+        {
+            moreClips[2].PlayRandomClip();
+        }
     }
 
     public void SetAnimationOverTrue()

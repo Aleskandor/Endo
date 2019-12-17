@@ -67,6 +67,22 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
+      - time: 0.26725268
+        functionName: GruntSound
+        data: 
+        objectReferenceParameter: {fileID: 2707339737151535203, guid: 0b22cd6b206ef624087c88ce4f9c32a3,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.81450886
+        functionName: GruntSound
+        data: 
+        objectReferenceParameter: {fileID: 2707339737151535203, guid: 0b22cd6b206ef624087c88ce4f9c32a3,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
