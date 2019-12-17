@@ -11,10 +11,7 @@ public class UIManager : MonoBehaviour
 
     public GameObject marker;
     public GameObject pointer;
-    public GameObject exclamationMark;
-    public GameObject helpShere;
     public Transform dogTransform;
-    public Transform larvaTransform;
 
     private void Start()
     {
@@ -46,16 +43,6 @@ public class UIManager : MonoBehaviour
             }
         }
 
-        screenPos = Camera.main.WorldToScreenPoint(larvaTransform.position);
-
-        if (screenPos.z > 0 &&
-            screenPos.y > 0 && screenPos.y < Screen.height &&
-            screenPos.x > 0 && screenPos.x < Screen.width &&
-            larvaIconActive)
-            exclamationMark.SetActive(true);
-        else
-            exclamationMark.SetActive(false);
-
         if (marker.activeSelf || pointer.activeSelf)
         {
             timer -= Time.deltaTime;
@@ -65,13 +52,7 @@ public class UIManager : MonoBehaviour
                 marker.SetActive(false);
                 pointer.SetActive(false);
             }
-        }
-
-        if (LarvaInteract.HasCrossed || !helpShere.GetComponent<TriggerHelp>().help)
-            larvaIconActive = false;
-        else if (helpShere.GetComponent<TriggerHelp>().help)
-            larvaIconActive = true;
-      
+        }    
     }
 
     public void ShowDogIcon()
