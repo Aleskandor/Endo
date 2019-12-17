@@ -18,6 +18,8 @@ public class DogMovement : MonoBehaviour
     private GameObject teleporterPad;
     private GameObject otherTeleporterPad;
     private CapsuleCollider capsuleCollider;
+    private Vector3 pushTargetPos;
+    private Vector3 charTargetPos;
 
     private float currentWalkSpeed;
     private float originalWalkSpeed;
@@ -252,19 +254,23 @@ public class DogMovement : MonoBehaviour
     {
         PushObject boxPO = hit.collider.gameObject.GetComponent<PushObject>();
 
-        if (Input.GetKey(KeyCode.F) && boxPO.CheckForLedges(transform.forward))
+        if (Input.GetKey(KeyCode.F) && !boxPO.CheckForObstacle(-hit.normal))
         {
             animator.SetBool("Pushing", true);
-            velocity = direction * pushSpeed;
-            charController.Move(velocity * Time.deltaTime);
-            boxPO.Move(velocity);
+
+            pushTargetPos = boxPO.transform.position + (-hit.normal * 4f);
+            charTargetPos = transform.position + (-hit.normal * 4f);
+
+            delegateList.RemoveAt(0);
+            tempDelegate = new Delegate(PushMove);
+            delegateList.Add(tempDelegate);
         }
         else
         {
-            boxPO.StopPlayingSound();
             animator.SetBool("Pushing", false);
             animator.SetBool("PushTransition", false);
             delegateList.RemoveAt(0);
+            boxPO.GetComponent<CharacterController>().Move(Vector3.zero);
         }
     }
 
@@ -290,5 +296,20 @@ public class DogMovement : MonoBehaviour
 
         animator.SetBool("PushTransition", false);
         animator.SetBool("Crouching", false);
+    }
+
+    private void PushMove()
+    {
+        PushObject boxPO = hit.collider.gameObject.GetComponent<PushObject>();
+
+        transform.position = Vector3.MoveTowards(transform.position, charTargetPos, pushSpeed * Time.deltaTime);
+        boxPO.transform.position = Vector3.MoveTowards(boxPO.transform.position, pushTargetPos, pushSpeed * Time.deltaTime);
+
+        if (transform.position == charTargetPos && boxPO.transform.position == pushTargetPos)
+        {
+            delegateList.RemoveAt(0);
+            tempDelegate = new Delegate(Push);
+            delegateList.Add(tempDelegate);
+        }
     }
 }
