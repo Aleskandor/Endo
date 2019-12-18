@@ -21,7 +21,7 @@ public class DialogueManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && sentenceOver)
+        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("BButton")) && sentenceOver)
             DisplayNextSentence();
 
     }
@@ -71,7 +71,7 @@ public class DialogueManager : MonoBehaviour
         foreach (char letter in sentence.ToCharArray())
         {
             dialogueText.text += letter;
-            yield return new WaitForSecondsRealtime(0.0000000001f);
+            yield return new WaitForSecondsRealtime(0.00000000000000000000000000000001f);
         }
         sentenceOver = true;
     }

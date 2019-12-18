@@ -74,14 +74,14 @@ public class HumanMovement : MonoBehaviour
 
             if (delegateList.Count != 0)
                 delegateList[0].Method.Invoke(this, null);
-            else if (Input.GetKeyDown(KeyCode.R) || Input.GetButtonDown("YButton"))
+            else if (Input.GetKeyDown(KeyCode.R) || Input.GetButtonDown("AButton"))
             {
                 CheckForClimb();
                 CheckforDrop();
             }
             else if (Input.GetKeyDown(KeyCode.F) || Input.GetButtonDown("XButton"))
                 CheckForPush();
-            else if (Input.GetKeyDown(KeyCode.E) || Input.GetButtonDown("AButton"))
+            else if (Input.GetKeyDown(KeyCode.E) || Input.GetButtonDown("YButton"))
             {
                 SoundManager.instance.PlayWhistle();
                 GameObject dog = GameObject.Find("Dog");

@@ -45,7 +45,7 @@ public class TitleSceneCutScene : MonoBehaviour
         if (cameraMove)
             MoveCamera();
 
-        if (Input.GetKeyDown(KeyCode.Return) && delegateList.Count == 0)
+        if ((Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown("StartButton")) && delegateList.Count == 0)
         {
             tempDelegate = new Delegate(Deactivate);
             delegateList.Add(tempDelegate);
