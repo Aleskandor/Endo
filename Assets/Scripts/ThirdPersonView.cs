@@ -59,6 +59,11 @@ public class ThirdPersonView : MonoBehaviour
 
     private void Start()
     {
+        Camera camera = Camera.main;
+        float[] distances = new float[32];
+        distances[10] = 150;
+        camera.layerCullDistances = distances;
+
         lerpTime = 3;
         currentLerpTime = 0;
         minAngleDiffForSwap = 10;
