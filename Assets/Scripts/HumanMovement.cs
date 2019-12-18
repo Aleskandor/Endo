@@ -327,6 +327,7 @@ public class HumanMovement : MonoBehaviour
             animator.SetBool("Pushing", false);
             delegateList.RemoveAt(0);
             boxPO.GetComponent<CharacterController>().Move(Vector3.zero);
+            boxPO.GetComponent<PushObject>().StopPlayingSound();
         }
     }
 
@@ -377,15 +378,18 @@ public class HumanMovement : MonoBehaviour
     private void PushMove()
     {
         PushObject boxPO = hit.collider.gameObject.GetComponent<PushObject>();
+        boxPO.GetComponent<CharacterController>().enabled = false;
 
         transform.position = Vector3.MoveTowards(transform.position, charTargetPos, pushSpeed * Time.deltaTime);
         boxPO.transform.position = Vector3.MoveTowards(boxPO.transform.position, pushTargetPos, pushSpeed * Time.deltaTime);
+        Debug.Log(boxPO.transform.position + " " + pushTargetPos);
 
-        if(transform.position == charTargetPos&& boxPO.transform.position == pushTargetPos)
+        if(Math.Round(boxPO.transform.position.x, 2)== Math.Round(pushTargetPos.x, 2) && Math.Round(boxPO.transform.position.z, 2) == Math.Round(pushTargetPos.z, 2))
         {
             delegateList.RemoveAt(0);
             tempDelegate = new Delegate(Push);
             delegateList.Add(tempDelegate);
+            boxPO.GetComponent<CharacterController>().enabled = true;
         }
     }
 }
