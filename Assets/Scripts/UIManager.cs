@@ -24,7 +24,7 @@ public class UIManager : MonoBehaviour
     {
         screenPos = Camera.main.WorldToScreenPoint(dogTransform.position);
 
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E) || Input.GetButton("AButton"))
             ShowDogIcon();
 
         if (timer >= 0)

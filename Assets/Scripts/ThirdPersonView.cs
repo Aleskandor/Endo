@@ -130,6 +130,9 @@ public class ThirdPersonView : MonoBehaviour
             {
                 yaw += Input.GetAxis("Mouse X") * mouseSensitivity;
                 pitch -= Input.GetAxis("Mouse Y") * mouseSensitivity;
+
+                yaw += Input.GetAxis("RightStickHorizontal") * mouseSensitivity;
+                pitch -= Input.GetAxis("RightStickVertical") * mouseSensitivity;
                 pitch = Mathf.Clamp(pitch, pitchMinMax.x, pitchMinMax.y);
                 targetRotation = new Vector3(pitch, yaw);
             }
