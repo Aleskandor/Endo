@@ -7,7 +7,6 @@ public class LogBookScript : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    public Text text;
     public GameObject Log;
     public GameObject Cont;
     public Animator animator;
@@ -18,7 +17,6 @@ public class LogBookScript : MonoBehaviour
     void Start()
     {
         open = false;
-        AddToLog("- Do More Stuff");
     }
 
     // Update is called once per frame
@@ -49,10 +47,5 @@ public class LogBookScript : MonoBehaviour
             Cont.SetActive(false);
             tab = true;
         }
-    }
-
-    public void AddToLog(string t)
-    {
-        text.text = text.text + "\n" + t;
     }
 }

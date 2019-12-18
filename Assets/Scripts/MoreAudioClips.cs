@@ -42,6 +42,42 @@ using UnityEngine;
         }  
     }
 
+    public void PlayClipDelayed(int clipNum, float delay)
+    { // used to play a specific clip from another script
+      // GetComponent<MoreAudioClips>().PlayClip[2] would play the 3rd clip (index 2) that you set in the Inspector list for MoreAudioCLips
+        { // used to play a random clip from the set of clips
+            if (ac == null)
+            {
+                ac = GetComponent<AudioSource>();
+            }
+            if (clips.Count > 0 && clipNum >= 0 && clipNum < clips.Count)
+            {
+                //ac.PlayOneShot(clips[clipNum], volumes[clipNum]); //uses the AudioSource on the current gameObject
+                ac.clip = clips[clipNum];
+                ac.volume = volumes[clipNum];
+                ac.PlayDelayed(delay);
+            }
+        }
+    }
+
+    public void PlayClipDelayedTwice(int clipNum, float delay)
+    { // used to play a specific clip from another script
+      // GetComponent<MoreAudioClips>().PlayClip[2] would play the 3rd clip (index 2) that you set in the Inspector list for MoreAudioCLips
+        { // used to play a random clip from the set of clips
+            if (ac == null)
+            {
+                ac = GetComponent<AudioSource>();
+            }
+            if (clips.Count > 0 && clipNum >= 0 && clipNum < clips.Count)
+            {
+                //ac.PlayOneShot(clips[clipNum], volumes[clipNum]); //uses the AudioSource on the current gameObject
+                ac.clip = clips[clipNum];
+                ac.volume = volumes[clipNum];
+                ac.PlayDelayed(delay);
+            }
+        }
+    }
+
     public void PlayRandomClip()
     { // used to play a random clip from the set of clips
         if (ac == null)

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class WhistleEndlessStartDialog : MonoBehaviour
 {
+    public GameObject logManager;
+
     private DialogueTrigger DT;
 
     void Start()
@@ -15,6 +17,7 @@ public class WhistleEndlessStartDialog : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
+            logManager.GetComponent<QUESTscript>().Humming();
             DT.TriggerDialogue();
         }
     }
