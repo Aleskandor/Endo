@@ -11,13 +11,13 @@ GameObject:
   - component: {fileID: 8452588039986877411}
   - component: {fileID: 582836506480945621}
   - component: {fileID: 6569115635897783596}
-  - component: {fileID: 3474268484605539176}
-  m_Layer: 0
+  - component: {fileID: 2229616592388873464}
+  m_Layer: 10
   m_Name: pCube18
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &8452588039986877411
 Transform:
@@ -80,8 +80,8 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!135 &3474268484605539176
-SphereCollider:
+--- !u!65 &2229616592388873464
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -91,5 +91,5 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1.2
+  m_Size: {x: 3.7366776, y: 1.9122193, z: 2.3817816}
   m_Center: {x: -0.01580548, y: -0.22158995, z: 0.038043976}

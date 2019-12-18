@@ -11,12 +11,12 @@ GameObject:
   - component: {fileID: 1876972635603914173}
   - component: {fileID: 2881750754058769048}
   - component: {fileID: 8791704924505369730}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: pCylinder3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1876972635603914173
 Transform:
@@ -90,12 +90,12 @@ GameObject:
   - component: {fileID: 7652090085430171157}
   - component: {fileID: 1633102019960386131}
   - component: {fileID: 8450391762063599828}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: pSphere17
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &7652090085430171157
 Transform:
@@ -169,12 +169,12 @@ GameObject:
   - component: {fileID: 4603458472225440515}
   - component: {fileID: 2191570044082016295}
   - component: {fileID: 3500295450970932400}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: pCylinder2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &4603458472225440515
 Transform:
@@ -248,12 +248,12 @@ GameObject:
   - component: {fileID: 959054633226766386}
   - component: {fileID: 908422225018352247}
   - component: {fileID: 6352204962906924956}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: pCylinder5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &959054633226766386
 Transform:
@@ -327,12 +327,12 @@ GameObject:
   - component: {fileID: 6923487454318079192}
   - component: {fileID: 6254270880725906639}
   - component: {fileID: 8315755595812596265}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: pSphere13
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &6923487454318079192
 Transform:
@@ -404,15 +404,15 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1707976265051987983}
-  - component: {fileID: 2745968935353572815}
   - component: {fileID: 7532519315440068044}
   - component: {fileID: 8598491373020036824}
-  m_Layer: 0
+  - component: {fileID: 6242482014866373699}
+  m_Layer: 10
   m_Name: LeafTree
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1707976265051987983
 Transform:
@@ -445,20 +445,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &2745968935353572815
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2443390289489826332}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 1
-  m_Height: 10
-  m_Direction: 1
-  m_Center: {x: 0, y: 4, z: 0}
 --- !u!198 &7532519315440068044
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -5181,6 +5167,19 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!65 &6242482014866373699
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2443390289489826332}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2, y: 10, z: 2}
+  m_Center: {x: 0, y: 5, z: 0}
 --- !u!1 &2716402928727131174
 GameObject:
   m_ObjectHideFlags: 0
@@ -5192,12 +5191,12 @@ GameObject:
   - component: {fileID: 4514348169031203547}
   - component: {fileID: 5055549274872819888}
   - component: {fileID: 4527532266515988672}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: pSphere9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &4514348169031203547
 Transform:
@@ -5271,12 +5270,12 @@ GameObject:
   - component: {fileID: 2924359851217916396}
   - component: {fileID: 2552941395746143241}
   - component: {fileID: 318658844223704932}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: pSphere12
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &2924359851217916396
 Transform:
@@ -5350,12 +5349,12 @@ GameObject:
   - component: {fileID: 6968633835331292763}
   - component: {fileID: 9167921022172608041}
   - component: {fileID: 8350080515390569479}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: pSphere11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &6968633835331292763
 Transform:
@@ -5429,12 +5428,12 @@ GameObject:
   - component: {fileID: 7546888317147201851}
   - component: {fileID: 3286331431977518311}
   - component: {fileID: 8471683389743909809}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: pCylinder4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &7546888317147201851
 Transform:
@@ -5508,12 +5507,12 @@ GameObject:
   - component: {fileID: 8428503685560155289}
   - component: {fileID: 4183610825277344438}
   - component: {fileID: 7534586236326613338}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: pSphere8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &8428503685560155289
 Transform:
@@ -5587,12 +5586,12 @@ GameObject:
   - component: {fileID: 1277910059467384341}
   - component: {fileID: 3259456848951925083}
   - component: {fileID: 7753465459045970158}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: pSphere15
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1277910059467384341
 Transform:
@@ -5666,12 +5665,12 @@ GameObject:
   - component: {fileID: 6846215668053572424}
   - component: {fileID: 4924167754984246746}
   - component: {fileID: 4573219816313889162}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: pSphere4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &6846215668053572424
 Transform:
@@ -5745,12 +5744,12 @@ GameObject:
   - component: {fileID: 9048821923871247312}
   - component: {fileID: 5539207947393284379}
   - component: {fileID: 343718048662161245}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: pSphere2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &9048821923871247312
 Transform:
@@ -5824,12 +5823,12 @@ GameObject:
   - component: {fileID: 2033882809810283707}
   - component: {fileID: 7056573728121629877}
   - component: {fileID: 2191447400045377364}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: pCylinder1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &2033882809810283707
 Transform:
@@ -5903,12 +5902,12 @@ GameObject:
   - component: {fileID: 7276577665083054483}
   - component: {fileID: 5955493887182846424}
   - component: {fileID: 1856731212558356281}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: pSphere1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &7276577665083054483
 Transform:
@@ -5982,12 +5981,12 @@ GameObject:
   - component: {fileID: 1359933285535488587}
   - component: {fileID: 178305819119760604}
   - component: {fileID: 3534140163959015309}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: pSphere16
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1359933285535488587
 Transform:
@@ -6061,12 +6060,12 @@ GameObject:
   - component: {fileID: 8239338905294303605}
   - component: {fileID: 5195983585101307517}
   - component: {fileID: 3264178397735374534}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: pSphere14
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &8239338905294303605
 Transform:

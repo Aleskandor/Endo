@@ -11,13 +11,13 @@ GameObject:
   - component: {fileID: 7876865385932536478}
   - component: {fileID: 1156081410274689192}
   - component: {fileID: 4843533994808114257}
-  - component: {fileID: 2894279208888224972}
-  m_Layer: 0
+  - component: {fileID: 538630237612730088}
+  m_Layer: 10
   m_Name: pCube16
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &7876865385932536478
 Transform:
@@ -80,8 +80,8 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!136 &2894279208888224972
-CapsuleCollider:
+--- !u!65 &538630237612730088
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -90,7 +90,6 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 1.7475587
-  m_Height: 2.3
-  m_Direction: 2
-  m_Center: {x: 0.104974754, y: -0.22159028, z: 0.035835147}
+  serializedVersion: 2
+  m_Size: {x: 3.4951174, y: 1.9122188, z: 2.3861988}
+  m_Center: {x: 0.104974754, y: -0.22159004, z: 0.035835147}

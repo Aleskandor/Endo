@@ -9,12 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5623827740852344475}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: pCone6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &5623827740852344475
 Transform:
@@ -40,12 +40,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2419747778809747906}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: pCone1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &2419747778809747906
 Transform:
@@ -71,12 +71,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 282859751441014482}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: pCone2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &282859751441014482
 Transform:
@@ -104,12 +104,12 @@ GameObject:
   - component: {fileID: 9033399351415400933}
   - component: {fileID: 38602830962174443}
   - component: {fileID: 9155057963313951242}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: pCylinder1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &9033399351415400933
 Transform:
@@ -181,12 +181,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8784801129666519394}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: transform2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &8784801129666519394
 Transform:
@@ -211,12 +211,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8875566586318331812}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: pCone4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &8875566586318331812
 Transform:
@@ -242,12 +242,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2149602160033269707}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: transform3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &2149602160033269707
 Transform:
@@ -272,12 +272,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6151959337289871858}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: transform5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &6151959337289871858
 Transform:
@@ -302,12 +302,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2215040662312046044}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: pCone7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &2215040662312046044
 Transform:
@@ -334,12 +334,12 @@ GameObject:
   m_Component:
   - component: {fileID: 8563359566780228945}
   - component: {fileID: 4065573752855973411}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: PineTree
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &8563359566780228945
 Transform:
@@ -386,12 +386,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6816893521065162633}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: transform6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &6816893521065162633
 Transform:
@@ -416,12 +416,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3315314389896313845}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: transform7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &3315314389896313845
 Transform:
@@ -446,12 +446,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7082903346328465471}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: transform4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &7082903346328465471
 Transform:
@@ -476,12 +476,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1451032436424615681}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: pCone3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1451032436424615681
 Transform:
@@ -507,12 +507,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 279943400036927614}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: pCone5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &279943400036927614
 Transform:
@@ -538,12 +538,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6441190852636849568}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: transform1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &6441190852636849568
 Transform:
@@ -570,12 +570,12 @@ GameObject:
   - component: {fileID: 2410847957295255613}
   - component: {fileID: 3911398890989444501}
   - component: {fileID: 2973598288778583984}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: pCone8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &2410847957295255613
 Transform:

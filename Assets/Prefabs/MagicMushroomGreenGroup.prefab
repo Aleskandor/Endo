@@ -9,12 +9,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4299406247953960219}
+  - component: {fileID: 5489948137002640623}
   m_Layer: 0
   m_Name: MagicMushroomGreenGroup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &4299406247953960219
 Transform:
@@ -35,6 +36,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 1.7520001, y: -118.102005, z: -0.42600003}
+--- !u!65 &5489948137002640623
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4299406247953960216}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.7, y: 2, z: 1.7}
+  m_Center: {x: 1.16, y: -0.4, z: 1.32}
 --- !u!1001 &4299406248879447254
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -42,11 +56,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4299406247953960219}
     m_Modifications:
-    - target: {fileID: -927199367670048503, guid: c36ba9bdfe3dee943bcafdca6b777758,
-        type: 3}
-      propertyPath: m_Name
-      value: MagicMushroomGreen (1)
-      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: c36ba9bdfe3dee943bcafdca6b777758,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -117,11 +126,51 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.41615996
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: c36ba9bdfe3dee943bcafdca6b777758,
+        type: 3}
+      propertyPath: m_Name
+      value: MagicMushroomGreen (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: c36ba9bdfe3dee943bcafdca6b777758,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: -5426758703216422906, guid: c36ba9bdfe3dee943bcafdca6b777758,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: -5102530947620581811, guid: c36ba9bdfe3dee943bcafdca6b777758,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: -6855062863988604957, guid: c36ba9bdfe3dee943bcafdca6b777758,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 5232488858435980449, guid: c36ba9bdfe3dee943bcafdca6b777758,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: -6581041025168474491, guid: c36ba9bdfe3dee943bcafdca6b777758,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 6200443131042155592, guid: c36ba9bdfe3dee943bcafdca6b777758,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 0a2e2986e0718404d9bdae1bb6385ef9, type: 2}
+    - target: {fileID: 6292535884062368016, guid: c36ba9bdfe3dee943bcafdca6b777758,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c36ba9bdfe3dee943bcafdca6b777758, type: 3}
 --- !u!4 &9137869592085166028 stripped
@@ -137,11 +186,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4299406247953960219}
     m_Modifications:
-    - target: {fileID: -927199367670048503, guid: c36ba9bdfe3dee943bcafdca6b777758,
-        type: 3}
-      propertyPath: m_Name
-      value: MagicMushroomGreen
-      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: c36ba9bdfe3dee943bcafdca6b777758,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -197,11 +241,51 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: c36ba9bdfe3dee943bcafdca6b777758,
+        type: 3}
+      propertyPath: m_Name
+      value: MagicMushroomGreen
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: c36ba9bdfe3dee943bcafdca6b777758,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: -5426758703216422906, guid: c36ba9bdfe3dee943bcafdca6b777758,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: -5102530947620581811, guid: c36ba9bdfe3dee943bcafdca6b777758,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: -6855062863988604957, guid: c36ba9bdfe3dee943bcafdca6b777758,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 5232488858435980449, guid: c36ba9bdfe3dee943bcafdca6b777758,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: -6581041025168474491, guid: c36ba9bdfe3dee943bcafdca6b777758,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 6200443131042155592, guid: c36ba9bdfe3dee943bcafdca6b777758,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 0a2e2986e0718404d9bdae1bb6385ef9, type: 2}
+    - target: {fileID: 6292535884062368016, guid: c36ba9bdfe3dee943bcafdca6b777758,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c36ba9bdfe3dee943bcafdca6b777758, type: 3}
 --- !u!4 &9137869592317710345 stripped
@@ -217,11 +301,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4299406247953960219}
     m_Modifications:
-    - target: {fileID: -927199367670048503, guid: c36ba9bdfe3dee943bcafdca6b777758,
-        type: 3}
-      propertyPath: m_Name
-      value: MagicMushroomGreen (4)
-      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: c36ba9bdfe3dee943bcafdca6b777758,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -292,11 +371,51 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.20706041
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: c36ba9bdfe3dee943bcafdca6b777758,
+        type: 3}
+      propertyPath: m_Name
+      value: MagicMushroomGreen (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: c36ba9bdfe3dee943bcafdca6b777758,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: -5426758703216422906, guid: c36ba9bdfe3dee943bcafdca6b777758,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: -5102530947620581811, guid: c36ba9bdfe3dee943bcafdca6b777758,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: -6855062863988604957, guid: c36ba9bdfe3dee943bcafdca6b777758,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 5232488858435980449, guid: c36ba9bdfe3dee943bcafdca6b777758,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: -6581041025168474491, guid: c36ba9bdfe3dee943bcafdca6b777758,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 6200443131042155592, guid: c36ba9bdfe3dee943bcafdca6b777758,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 0a2e2986e0718404d9bdae1bb6385ef9, type: 2}
+    - target: {fileID: 6292535884062368016, guid: c36ba9bdfe3dee943bcafdca6b777758,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c36ba9bdfe3dee943bcafdca6b777758, type: 3}
 --- !u!4 &9137869592438153099 stripped
@@ -312,11 +431,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4299406247953960219}
     m_Modifications:
-    - target: {fileID: -927199367670048503, guid: c36ba9bdfe3dee943bcafdca6b777758,
-        type: 3}
-      propertyPath: m_Name
-      value: MagicMushroomGreen (3)
-      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: c36ba9bdfe3dee943bcafdca6b777758,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -387,11 +501,51 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.20706041
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: c36ba9bdfe3dee943bcafdca6b777758,
+        type: 3}
+      propertyPath: m_Name
+      value: MagicMushroomGreen (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: c36ba9bdfe3dee943bcafdca6b777758,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: -5426758703216422906, guid: c36ba9bdfe3dee943bcafdca6b777758,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: -5102530947620581811, guid: c36ba9bdfe3dee943bcafdca6b777758,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: -6855062863988604957, guid: c36ba9bdfe3dee943bcafdca6b777758,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 5232488858435980449, guid: c36ba9bdfe3dee943bcafdca6b777758,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: -6581041025168474491, guid: c36ba9bdfe3dee943bcafdca6b777758,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 6200443131042155592, guid: c36ba9bdfe3dee943bcafdca6b777758,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 0a2e2986e0718404d9bdae1bb6385ef9, type: 2}
+    - target: {fileID: 6292535884062368016, guid: c36ba9bdfe3dee943bcafdca6b777758,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c36ba9bdfe3dee943bcafdca6b777758, type: 3}
 --- !u!4 &9137869592425006389 stripped
@@ -407,11 +561,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4299406247953960219}
     m_Modifications:
-    - target: {fileID: -927199367670048503, guid: c36ba9bdfe3dee943bcafdca6b777758,
-        type: 3}
-      propertyPath: m_Name
-      value: MagicMushroomGreen (2)
-      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: c36ba9bdfe3dee943bcafdca6b777758,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -482,11 +631,51 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.41616
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: c36ba9bdfe3dee943bcafdca6b777758,
+        type: 3}
+      propertyPath: m_Name
+      value: MagicMushroomGreen (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: c36ba9bdfe3dee943bcafdca6b777758,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: -5426758703216422906, guid: c36ba9bdfe3dee943bcafdca6b777758,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: -5102530947620581811, guid: c36ba9bdfe3dee943bcafdca6b777758,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: -6855062863988604957, guid: c36ba9bdfe3dee943bcafdca6b777758,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 5232488858435980449, guid: c36ba9bdfe3dee943bcafdca6b777758,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: -6581041025168474491, guid: c36ba9bdfe3dee943bcafdca6b777758,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 6200443131042155592, guid: c36ba9bdfe3dee943bcafdca6b777758,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 0a2e2986e0718404d9bdae1bb6385ef9, type: 2}
+    - target: {fileID: 6292535884062368016, guid: c36ba9bdfe3dee943bcafdca6b777758,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c36ba9bdfe3dee943bcafdca6b777758, type: 3}
 --- !u!4 &9137869593145164429 stripped
