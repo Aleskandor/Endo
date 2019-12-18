@@ -7,6 +7,8 @@ public class HasCrossedDialogue : MonoBehaviour
     private DialogueTrigger dt;
     private bool played;
 
+    public GameObject logManager;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,6 +21,7 @@ public class HasCrossedDialogue : MonoBehaviour
         if (LarvaInteract.HasCrossed && !played)
         {
             dt.TriggerDialogue();
+            logManager.GetComponent<QUESTscript>().KindnessDone();
             played = true;
         }
     }
