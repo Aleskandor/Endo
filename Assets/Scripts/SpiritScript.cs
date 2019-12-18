@@ -15,6 +15,7 @@ public class SpiritScript : MonoBehaviour
     public Transform dogPoint;
     public Transform desiredCameraTransform;
     public Transform karlHand;
+    public GameObject logManager;
 
     private Delegate tempDelegate;
     private List<Delegate> delegateList;
@@ -141,6 +142,7 @@ public class SpiritScript : MonoBehaviour
         dog.gameObject.GetComponent<NavMeshAgent>().enabled = true;
 
         human.gameObject.GetComponent<Animator>().SetTrigger("GetOrbFinished");
+        logManager.GetComponent<QUESTscript>().Soul();
         delegateList.RemoveAt(0);
     }
 

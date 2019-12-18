@@ -9,6 +9,7 @@ public class FindPrintsDialog : MonoBehaviour
     public DialogueTrigger spiritDT;
     public DialogueManager DM;
     public GameObject light;
+    public GameObject logManager;
 
     private bool startSpeech = false;
     private bool part1Speech = false;
@@ -44,7 +45,10 @@ public class FindPrintsDialog : MonoBehaviour
             }
         }
         else if (over)
+        {
             light.SetActive(true);
+            logManager.GetComponent<QUESTscript>().Kindness();
+        }
     }
 
     private void OnTriggerEnter(Collider other)
