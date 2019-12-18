@@ -15,6 +15,8 @@ public class HumanMovement : MonoBehaviour
     private Transform camTransform;
     private Vector3 velocity;
     private Vector3 direction;
+    private Vector3 pushTargetPos;
+    private Vector3 charTargetPos;
     private Animator animator;
     private GameObject teleporterPad;
 
@@ -309,18 +311,22 @@ public class HumanMovement : MonoBehaviour
     {
         PushObject boxPO = hit.collider.gameObject.GetComponent<PushObject>();
 
-        if (Input.GetKey(KeyCode.F) && boxPO.CheckForLedges(-hit.normal))
+        if (Input.GetKey(KeyCode.F) && !boxPO.CheckForObstacle(-hit.normal))
         {
             animator.SetBool("Pushing", true);
-            velocity = direction * pushSpeed;
-            charController.Move(velocity * Time.deltaTime);
-            boxPO.Move(velocity);
+
+            pushTargetPos = boxPO.transform.position +( -hit.normal * 4f);
+            charTargetPos = transform.position + (-hit.normal * 4f);
+
+            delegateList.RemoveAt(0);
+            tempDelegate = new Delegate(PushMove);
+            delegateList.Add(tempDelegate);
         }
         else
         {
-            boxPO.StopPlayingSound();
             animator.SetBool("Pushing", false);
             delegateList.RemoveAt(0);
+            boxPO.GetComponent<CharacterController>().Move(Vector3.zero);
         }
     }
 
@@ -366,5 +372,20 @@ public class HumanMovement : MonoBehaviour
     public void SetAnimationOverTrue()
     {
         GameObject.FindGameObjectWithTag("ForestSpirit").GetComponent<SpiritScript>().animationOver = true;
+    }
+
+    private void PushMove()
+    {
+        PushObject boxPO = hit.collider.gameObject.GetComponent<PushObject>();
+
+        transform.position = Vector3.MoveTowards(transform.position, charTargetPos, pushSpeed * Time.deltaTime);
+        boxPO.transform.position = Vector3.MoveTowards(boxPO.transform.position, pushTargetPos, pushSpeed * Time.deltaTime);
+
+        if(transform.position == charTargetPos&& boxPO.transform.position == pushTargetPos)
+        {
+            delegateList.RemoveAt(0);
+            tempDelegate = new Delegate(Push);
+            delegateList.Add(tempDelegate);
+        }
     }
 }
