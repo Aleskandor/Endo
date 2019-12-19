@@ -48,7 +48,7 @@ public class PushObject : MonoBehaviour
 
     public bool CheckForObstacle(Vector3 dir)
     {
-        float offSetFromGround = 0.25f;
+        float offSetFromGround = 0.15f;
         RaycastHit hit;
         Vector3 rayOri = new Vector3(transform.position.x, transform.position.y + offSetFromGround, transform.position.z) + dir * 1.9f;
 
@@ -59,15 +59,43 @@ public class PushObject : MonoBehaviour
                 if (hit.distance < 4)
                     return true;
                 else
+                {
+                    if (!GetComponent<AudioSource>().isPlaying)
+                    {
+                        GetComponent<AudioSource>().Play();
+                    }
                     return false;
+                }
             }
             else
+            {
+                if (!GetComponent<AudioSource>().isPlaying)
+                {
+                    GetComponent<AudioSource>().Play();
+                }
                 return false;
+            }
         }
         else
         {
             charController.Move(Vector3.zero);
             return true;
+        }
+    }
+
+    public void StopPlayingSound()
+    {
+        if (GetComponent<AudioSource>().isPlaying)
+        {
+            GetComponent<AudioSource>().Stop();
+        }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.name == "thudCube")
+        {
+            AudioSource ac = GetComponents<AudioSource>()[1];
+            ac.Play();
         }
     }
 }

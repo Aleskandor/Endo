@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class HumanMovement : MonoBehaviour
 {
@@ -67,21 +68,21 @@ public class HumanMovement : MonoBehaviour
     {
         if (!Locked)
         {
-            Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+            Vector2 input = new Vector2(Input.GetAxisRaw("LeftStickHorizontal") + Input.GetAxisRaw("Horizontal"), -Input.GetAxisRaw("LeftStickVertical") + Input.GetAxisRaw("Vertical"));
             Vector2 inputDir = input.normalized;
 
             CheckforLedges();
 
             if (delegateList.Count != 0)
                 delegateList[0].Method.Invoke(this, null);
-            else if (Input.GetKeyDown(KeyCode.R))
+            else if (Input.GetKeyDown(KeyCode.R) || Input.GetButtonDown("AButton"))
             {
                 CheckForClimb();
                 CheckforDrop();
             }
-            else if (Input.GetKeyDown(KeyCode.F))
+            else if (Input.GetKeyDown(KeyCode.F) || Input.GetButtonDown("XButton"))
                 CheckForPush();
-            else if (Input.GetKeyDown(KeyCode.E))
+            else if (Input.GetKeyDown(KeyCode.E) || Input.GetButtonDown("YButton"))
             {
                 SoundManager.instance.PlayWhistle();
                 GameObject dog = GameObject.Find("Dog");
@@ -90,7 +91,8 @@ public class HumanMovement : MonoBehaviour
                 {
                     delay = 1;
                 }
-                dog.GetComponent<MoreAudioClips>().PlayRandomClipDelayed(delay);
+                if(SceneManager.GetActiveScene().buildIndex != 2)
+                    dog.GetComponent<MoreAudioClips>().PlayRandomClipDelayed(delay);
             }
             else
                 Move(inputDir);
@@ -311,7 +313,7 @@ public class HumanMovement : MonoBehaviour
     {
         PushObject boxPO = hit.collider.gameObject.GetComponent<PushObject>();
 
-        if (Input.GetKey(KeyCode.F) && !boxPO.CheckForObstacle(-hit.normal))
+        if ((Input.GetKey(KeyCode.F) || Input.GetButton("XButton")) && !boxPO.CheckForObstacle(-hit.normal))
         {
             animator.SetBool("Pushing", true);
 
@@ -327,6 +329,7 @@ public class HumanMovement : MonoBehaviour
             animator.SetBool("Pushing", false);
             delegateList.RemoveAt(0);
             boxPO.GetComponent<CharacterController>().Move(Vector3.zero);
+            boxPO.GetComponent<PushObject>().StopPlayingSound();
         }
     }
 
@@ -377,15 +380,18 @@ public class HumanMovement : MonoBehaviour
     private void PushMove()
     {
         PushObject boxPO = hit.collider.gameObject.GetComponent<PushObject>();
+        boxPO.GetComponent<CharacterController>().enabled = false;
 
         transform.position = Vector3.MoveTowards(transform.position, charTargetPos, pushSpeed * Time.deltaTime);
         boxPO.transform.position = Vector3.MoveTowards(boxPO.transform.position, pushTargetPos, pushSpeed * Time.deltaTime);
+        Debug.Log(boxPO.transform.position + " " + pushTargetPos);
 
-        if(transform.position == charTargetPos&& boxPO.transform.position == pushTargetPos)
+        if(Math.Round(boxPO.transform.position.x, 2)== Math.Round(pushTargetPos.x, 2) && Math.Round(boxPO.transform.position.z, 2) == Math.Round(pushTargetPos.z, 2))
         {
             delegateList.RemoveAt(0);
             tempDelegate = new Delegate(Push);
             delegateList.Add(tempDelegate);
+            boxPO.GetComponent<CharacterController>().enabled = true;
         }
     }
 }

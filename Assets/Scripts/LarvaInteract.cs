@@ -57,11 +57,11 @@ public class LarvaInteract : MonoBehaviour
     {
         if (!stickAtEnd || !stickAtStart)
         {
-            if (Input.GetAxis("Mouse X") <= 0)
+            if (Input.GetAxis("Mouse X") < 0 || Input.GetAxis("LeftStickHorizontal") < 0)
             {
                 pivot.position = Vector3.MoveTowards(pivot.position, endPivot.position, Time.deltaTime);
             }
-            if (Input.GetAxis("Mouse X") >= 0)
+            if (Input.GetAxis("Mouse X") > 0 || Input.GetAxis("LeftStickHorizontal") > 0)
             {
                 pivot.position = Vector3.MoveTowards(pivot.position, startPivot.position, Time.deltaTime);
             }
