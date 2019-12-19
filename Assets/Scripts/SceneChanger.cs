@@ -29,12 +29,30 @@ public class SceneChanger : MonoBehaviour
 
     public void FadeToNextScene()
     {
-        FadeToScene(SceneManager.GetActiveScene().buildIndex + 1);
+        int currentScene = SceneManager.GetActiveScene().buildIndex;
+
+        if (currentScene < SceneManager.sceneCountInBuildSettings - 1)
+        {
+            FadeToScene(currentScene + 1);
+        }
+        else
+        {
+            FadeToScene(0);
+        }
     }
 
     public void FadeToPreviousScene()
     {
-        FadeToScene(SceneManager.GetActiveScene().buildIndex - 1);
+        int currentScene = SceneManager.GetActiveScene().buildIndex;
+
+        if (currentScene > 0)
+        {
+            FadeToScene(SceneManager.GetActiveScene().buildIndex - 1);
+        }
+        else
+        {
+            FadeToScene(SceneManager.sceneCountInBuildSettings - 1);
+        }
     }
 
     public void FadeToScene(int sceneIndex)
@@ -43,7 +61,6 @@ public class SceneChanger : MonoBehaviour
         {
             SoundManager.instance.Play("Transition");
             SoundManager.instance.PlayScene(sceneIndex);
-
         }
         sceneToLoad = sceneIndex;
         animator.SetTrigger("FadeOut");
