@@ -180,6 +180,7 @@ public class HumanMovement : MonoBehaviour
             int lookDist = 100;
             float minDistToGround = 4;
             float maxDistToGround = 7;
+
             if (Physics.Raycast(transform.position, -transform.up, out hitClimb, Mathf.Infinity, layerMask))
             {
                 if (Physics.Raycast(transform.position + (Vector3.up * charController.height / 2) + (transform.forward * 1.1f), Vector3.down, out groundHit, lookDist))
@@ -213,7 +214,7 @@ public class HumanMovement : MonoBehaviour
         int lookDist = 100;
         float minDistToGround = 4;
 
-        if (Physics.Raycast(transform.position + (Vector3.up * charController.height / 2) + (transform.forward * 2f), Vector3.down, out groundHit, lookDist))
+        if (Physics.Raycast(transform.position + (Vector3.up * charController.height / 2) + (transform.forward * 1f), Vector3.down, out groundHit, lookDist))
         {
             if (groundHit.distance > minDistToGround)
                 return true;

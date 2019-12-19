@@ -33,8 +33,6 @@ public class DialogueManager : MonoBehaviour
         {
             if (child.gameObject.name == dialogue.name)
                 child.gameObject.SetActive(true);
-            else if (child.gameObject.name == "Forest Spirit" && dialogue.name == "????")
-                child.gameObject.SetActive(true);
             else
                 child.gameObject.SetActive(false);
         }
