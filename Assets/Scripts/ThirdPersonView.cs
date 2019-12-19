@@ -111,7 +111,7 @@ public class ThirdPersonView : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.V) && !swappingTarget)
+        if ((Input.GetKeyDown(KeyCode.V) || Input.GetButtonDown("YButton")) && !swappingTarget)
         {
             swappingTarget = true;
         }
