@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class HumanMovement : MonoBehaviour
 {
@@ -90,7 +91,8 @@ public class HumanMovement : MonoBehaviour
                 {
                     delay = 1;
                 }
-                dog.GetComponent<MoreAudioClips>().PlayRandomClipDelayed(delay);
+                if(SceneManager.GetActiveScene().buildIndex != 2)
+                    dog.GetComponent<MoreAudioClips>().PlayRandomClipDelayed(delay);
             }
             else
                 Move(inputDir);
