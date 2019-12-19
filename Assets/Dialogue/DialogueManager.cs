@@ -21,7 +21,7 @@ public class DialogueManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && sentenceOver)
+        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("BButton")) && sentenceOver)
             DisplayNextSentence();
 
     }
@@ -32,8 +32,6 @@ public class DialogueManager : MonoBehaviour
         foreach (Transform child in charPic)
         {
             if (child.gameObject.name == dialogue.name)
-                child.gameObject.SetActive(true);
-            else if (child.gameObject.name == "Forest Spirit" && dialogue.name == "????")
                 child.gameObject.SetActive(true);
             else
                 child.gameObject.SetActive(false);
@@ -71,7 +69,7 @@ public class DialogueManager : MonoBehaviour
         foreach (char letter in sentence.ToCharArray())
         {
             dialogueText.text += letter;
-            yield return new WaitForSecondsRealtime(0.0000000001f);
+            yield return new WaitForSecondsRealtime(0.00000000000000000000000000000001f);
         }
         sentenceOver = true;
     }

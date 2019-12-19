@@ -99,6 +99,9 @@ public class ThirdPersonView : MonoBehaviour
         targetCC = target.GetComponent<CharacterController>();
         otherNVA = other.GetComponent<NavMeshAgent>();
 
+        
+        yaw = 90;
+
         if (lockCursor)
         {
             Cursor.lockState = CursorLockMode.Locked;
@@ -108,7 +111,7 @@ public class ThirdPersonView : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.V) && !swappingTarget)
+        if ((Input.GetKeyDown(KeyCode.V) || Input.GetButtonDown("YButton")) && !swappingTarget)
         {
             swappingTarget = true;
         }

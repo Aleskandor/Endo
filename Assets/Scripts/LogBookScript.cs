@@ -22,26 +22,26 @@ public class LogBookScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q) && !open)
+        if ((Input.GetKeyDown(KeyCode.Q) || Input.GetButtonDown("SelectButton")) && !open)
         {
             animator.SetBool("IsOpen", true);
             Log.SetActive(true);
             Cont.SetActive(false);
             open = true;
         }
-        else if (Input.GetKeyDown(KeyCode.Q) && open)
+        else if ((Input.GetKeyDown(KeyCode.Q) || Input.GetButtonDown("SelectButton")) && open)
         {
             animator.SetBool("IsOpen", false);
             open = false;
         }
 
-        if(Input.GetKeyDown(KeyCode.Tab) && open && tab)
+        if((Input.GetKeyDown(KeyCode.Tab) || Input.GetButtonDown("XButton")) && open && tab)
         {
             Log.SetActive(false);
             Cont.SetActive(true);
             tab = false;
         }
-        else if(Input.GetKeyDown(KeyCode.Tab) && open && !tab)
+        else if((Input.GetKeyDown(KeyCode.Tab) || Input.GetButtonDown("XButton")) && open && !tab)
         {
             Log.SetActive(true);
             Cont.SetActive(false);

@@ -10,6 +10,7 @@ public class SoundManager : MonoBehaviour
     public Sound[] sounds;
     private List<Sound> playing, removing;
     private Queue<Delegate> queue;
+    private int currentSceneIndex, previousSceneIndex;
 
     private delegate void Delegate();
     private Delegate tempDelegate;
@@ -116,6 +117,13 @@ public class SoundManager : MonoBehaviour
 
     public void PlayScene(int index)
     {
+        previousSceneIndex = currentSceneIndex;
+        currentSceneIndex = index;
+
+        if (previousSceneIndex == 6 && currentSceneIndex == 0)
+        {
+            return;
+        }
         if (index == 0)
         {
             PlayTitleScene();
@@ -135,6 +143,10 @@ public class SoundManager : MonoBehaviour
         else if (index == 4)
         {
             PlayGroveScene();
+        }
+        else if (index == 6)
+        {
+            PlayTitleScene();
         }
     }
 

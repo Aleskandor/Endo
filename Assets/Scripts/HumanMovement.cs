@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class HumanMovement : MonoBehaviour
 {
@@ -70,18 +71,16 @@ public class HumanMovement : MonoBehaviour
             Vector2 input = new Vector2(Input.GetAxisRaw("LeftStickHorizontal") + Input.GetAxisRaw("Horizontal"), -Input.GetAxisRaw("LeftStickVertical") + Input.GetAxisRaw("Vertical"));
             Vector2 inputDir = input.normalized;
 
-            CheckforLedges();
-
             if (delegateList.Count != 0)
                 delegateList[0].Method.Invoke(this, null);
-            else if (Input.GetKeyDown(KeyCode.R) || Input.GetButtonDown("YButton"))
+            else if (Input.GetKeyDown(KeyCode.R) || Input.GetButtonDown("AButton"))
             {
                 CheckForClimb();
                 CheckforDrop();
             }
             else if (Input.GetKeyDown(KeyCode.F) || Input.GetButtonDown("XButton"))
                 CheckForPush();
-            else if (Input.GetKeyDown(KeyCode.E) || Input.GetButtonDown("AButton"))
+            else if (Input.GetKeyDown(KeyCode.E) || Input.GetButtonDown("YButton"))
             {
                 SoundManager.instance.PlayWhistle();
                 GameObject dog = GameObject.Find("Dog");
@@ -90,7 +89,8 @@ public class HumanMovement : MonoBehaviour
                 {
                     delay = 1;
                 }
-                dog.GetComponent<MoreAudioClips>().PlayRandomClipDelayed(delay);
+                if(SceneManager.GetActiveScene().buildIndex != 2)
+                    dog.GetComponent<MoreAudioClips>().PlayRandomClipDelayed(delay);
             }
             else
                 Move(inputDir);
@@ -116,12 +116,19 @@ public class HumanMovement : MonoBehaviour
         velocityY += Time.deltaTime * gravity;
         velocity = transform.forward * currentSpeed + Vector3.up * velocityY;
 
-        charController.Move(velocity * Time.deltaTime);
-        currentSpeed = new Vector2(charController.velocity.x, charController.velocity.z).magnitude;
+        if (!CheckforLedges())
+        {
+            charController.Move(velocity * Time.deltaTime);
+            currentSpeed = new Vector2(charController.velocity.x, charController.velocity.z).magnitude;
+        }
 
         if (charController.isGrounded)
         {
             velocityY = 0;
+        }
+        else
+        {
+            charController.Move(Vector3.up * velocityY * Time.deltaTime);
         }
     }
 
@@ -173,6 +180,7 @@ public class HumanMovement : MonoBehaviour
             int lookDist = 100;
             float minDistToGround = 4;
             float maxDistToGround = 7;
+
             if (Physics.Raycast(transform.position, -transform.up, out hitClimb, Mathf.Infinity, layerMask))
             {
                 if (Physics.Raycast(transform.position + (Vector3.up * charController.height / 2) + (transform.forward * 1.1f), Vector3.down, out groundHit, lookDist))
@@ -199,20 +207,22 @@ public class HumanMovement : MonoBehaviour
         }
     }
 
-    private void CheckforLedges()
+    private bool CheckforLedges()
     {
         RaycastHit groundHit;
 
         int lookDist = 100;
         float minDistToGround = 4;
 
-        if (Physics.Raycast(transform.position + (Vector3.up * charController.height / 2) + (transform.forward), Vector3.down, out groundHit, lookDist))
+        if (Physics.Raycast(transform.position + (Vector3.up * charController.height / 2) + (transform.forward * 1f), Vector3.down, out groundHit, lookDist))
         {
             if (groundHit.distance > minDistToGround)
-                currentWalkSpeed = 0;
+                return true;
             else
-                currentWalkSpeed = originalWalkSpeed;
+                return false;
         }
+        else
+            return false;
     }
 
     private void CheckForPush()
@@ -327,6 +337,7 @@ public class HumanMovement : MonoBehaviour
             animator.SetBool("Pushing", false);
             delegateList.RemoveAt(0);
             boxPO.GetComponent<CharacterController>().Move(Vector3.zero);
+            boxPO.GetComponent<PushObject>().StopPlayingSound();
         }
     }
 
@@ -377,15 +388,18 @@ public class HumanMovement : MonoBehaviour
     private void PushMove()
     {
         PushObject boxPO = hit.collider.gameObject.GetComponent<PushObject>();
+        boxPO.GetComponent<CharacterController>().enabled = false;
 
         transform.position = Vector3.MoveTowards(transform.position, charTargetPos, pushSpeed * Time.deltaTime);
         boxPO.transform.position = Vector3.MoveTowards(boxPO.transform.position, pushTargetPos, pushSpeed * Time.deltaTime);
+        Debug.Log(boxPO.transform.position + " " + pushTargetPos);
 
-        if(transform.position == charTargetPos&& boxPO.transform.position == pushTargetPos)
+        if(Math.Round(boxPO.transform.position.x, 2)== Math.Round(pushTargetPos.x, 2) && Math.Round(boxPO.transform.position.z, 2) == Math.Round(pushTargetPos.z, 2))
         {
             delegateList.RemoveAt(0);
             tempDelegate = new Delegate(Push);
             delegateList.Add(tempDelegate);
+            boxPO.GetComponent<CharacterController>().enabled = true;
         }
     }
 }

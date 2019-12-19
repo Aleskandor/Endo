@@ -5,7 +5,6 @@ using UnityEngine.AI;
 
 public class TitleSceneCutScene : MonoBehaviour
 {
-
     public GameObject dog;
     public Transform[] dogPoints;
     public Transform desiredCameraTransform;
@@ -45,7 +44,7 @@ public class TitleSceneCutScene : MonoBehaviour
         if (cameraMove)
             MoveCamera();
 
-        if (Input.GetKeyDown(KeyCode.Return) && delegateList.Count == 0)
+        if ((Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown("StartButton")) && delegateList.Count == 0)
         {
             tempDelegate = new Delegate(Deactivate);
             delegateList.Add(tempDelegate);
