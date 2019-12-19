@@ -99,6 +99,9 @@ public class ThirdPersonView : MonoBehaviour
         targetCC = target.GetComponent<CharacterController>();
         otherNVA = other.GetComponent<NavMeshAgent>();
 
+        
+        yaw = 90;
+
         if (lockCursor)
         {
             Cursor.lockState = CursorLockMode.Locked;
