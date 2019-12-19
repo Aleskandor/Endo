@@ -71,8 +71,6 @@ public class HumanMovement : MonoBehaviour
             Vector2 input = new Vector2(Input.GetAxisRaw("LeftStickHorizontal") + Input.GetAxisRaw("Horizontal"), -Input.GetAxisRaw("LeftStickVertical") + Input.GetAxisRaw("Vertical"));
             Vector2 inputDir = input.normalized;
 
-            CheckforLedges();
-
             if (delegateList.Count != 0)
                 delegateList[0].Method.Invoke(this, null);
             else if (Input.GetKeyDown(KeyCode.R) || Input.GetButtonDown("AButton"))
@@ -118,12 +116,19 @@ public class HumanMovement : MonoBehaviour
         velocityY += Time.deltaTime * gravity;
         velocity = transform.forward * currentSpeed + Vector3.up * velocityY;
 
-        charController.Move(velocity * Time.deltaTime);
-        currentSpeed = new Vector2(charController.velocity.x, charController.velocity.z).magnitude;
+        if (!CheckforLedges())
+        {
+            charController.Move(velocity * Time.deltaTime);
+            currentSpeed = new Vector2(charController.velocity.x, charController.velocity.z).magnitude;
+        }
 
         if (charController.isGrounded)
         {
             velocityY = 0;
+        }
+        else
+        {
+            charController.Move(Vector3.up * velocityY * Time.deltaTime);
         }
     }
 
@@ -201,20 +206,22 @@ public class HumanMovement : MonoBehaviour
         }
     }
 
-    private void CheckforLedges()
+    private bool CheckforLedges()
     {
         RaycastHit groundHit;
 
         int lookDist = 100;
         float minDistToGround = 4;
 
-        if (Physics.Raycast(transform.position + (Vector3.up * charController.height / 2) + (transform.forward), Vector3.down, out groundHit, lookDist))
+        if (Physics.Raycast(transform.position + (Vector3.up * charController.height / 2) + (transform.forward * 2f), Vector3.down, out groundHit, lookDist))
         {
             if (groundHit.distance > minDistToGround)
-                currentWalkSpeed = 0;
+                return true;
             else
-                currentWalkSpeed = originalWalkSpeed;
+                return false;
         }
+        else
+            return false;
     }
 
     private void CheckForPush()
