@@ -5,7 +5,6 @@ using UnityEngine.AI;
 
 public class TitleSceneCutScene : MonoBehaviour
 {
-
     public GameObject dog;
     public Transform[] dogPoints;
     public Transform desiredCameraTransform;
