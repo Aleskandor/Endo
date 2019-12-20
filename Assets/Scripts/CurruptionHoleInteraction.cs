@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class CurruptionHoleInteraction : MonoBehaviour
 {
@@ -19,15 +20,39 @@ public class CurruptionHoleInteraction : MonoBehaviour
     private List<Delegate> delegateList;
     private delegate void Delegate();
 
+    private Animator animator;
+    private float timer = 0, clipTime;
     private bool running;
     private float transitionSpeed;
     
     void Start()
     {
         delegateList = new List<Delegate>();
-
+        animator = GetComponentInChildren<Animator>(false);
         transitionSpeed = .8f;
 
+        AnimationClip animationClip = GetAnimationClipFromAnimatorByName(animator, "CurruptionDie");
+        if (animationClip)
+        {
+            clipTime = animationClip.length;
+        }
+    }
+
+    private AnimationClip GetAnimationClipFromAnimatorByName(Animator animator, string name)
+    {
+        //can't get data if no animator
+        if (animator == null)
+            return null;
+
+        //favor for above foreach due to performance issues
+        for (int i = 0; i < animator.runtimeAnimatorController.animationClips.Length; i++)
+        {
+            if (animator.runtimeAnimatorController.animationClips[i].name == name)
+                return animator.runtimeAnimatorController.animationClips[i];
+        }
+
+        Debug.LogError("Animation clip: " + name + " not found");
+        return null;
     }
 
     private void Update()
@@ -47,7 +72,14 @@ public class CurruptionHoleInteraction : MonoBehaviour
             {
                 cuppution.gameObject.GetComponent<Animator>().SetBool("Dead", true);
             }
-        } 
+
+            timer += Time.deltaTime;
+        }
+
+        if (timer > clipTime)
+        {
+            GameObject.Find("SceneChanger").GetComponent<SceneChanger>().FadeToNextScene();
+        }
     }
 
     private void LateUpdate()
@@ -60,15 +92,28 @@ public class CurruptionHoleInteraction : MonoBehaviour
     {
         if (other.gameObject.name == "Human")
         {
-            human.gameObject.GetComponent<CharacterController>().enabled = false;
-            //human.GetComponent<Animator>().SetTrigger("GiveOrb");
-            
+            tempDelegate = new Delegate(Deactivate);
+            delegateList.Add(tempDelegate);
             tempDelegate = new Delegate(RunToPoint);
             delegateList.Add(tempDelegate);
             tempDelegate = new Delegate(TurnTowardsPit);
             delegateList.Add(tempDelegate);
             tempDelegate = new Delegate(CallOrb);
             delegateList.Add(tempDelegate);
+        }
+    }
+
+    private void Deactivate()
+    {
+        //Deactivates the humans components
+        human.gameObject.GetComponent<CharacterController>().enabled = false;
+        human.gameObject.GetComponent<NavMeshAgent>().enabled = false;
+        human.gameObject.GetComponent<HumanMovement>().enabled = false;
+        human.gameObject.GetComponent<HumanAI>().enabled = false;
+
+        if (delegateList.Count > 0)
+        {
+            delegateList.RemoveAt(0);
         }
     }
 

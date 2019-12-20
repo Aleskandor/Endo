@@ -40,8 +40,8 @@ public class PushObject : MonoBehaviour
             ac.Play();
             gameObject.isStatic = true;
             childCube.isStatic = true;
-            gameObject.layer = 0;
-            childCube.layer = 0;
+            gameObject.layer = 11;
+            childCube.layer = 11;
             navMeshSurface.BuildNavMesh();
         }
     }
