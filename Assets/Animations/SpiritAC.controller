@@ -8,7 +8,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: SpiritIdle
-  m_Speed: 1
+  m_Speed: 0.5
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours: []
@@ -20,7 +20,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 1827226128182048838, guid: d0d3a64bc7769564b86b3d6c74a25e1c,
+  m_Motion: {fileID: 1827226128182048838, guid: 9ecd59eabd88cc84faca722a481028a7,
     type: 3}
   m_Tag: 
   m_SpeedParameter: 

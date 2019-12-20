@@ -56,6 +56,9 @@ public class SpiritScript : MonoBehaviour
         if (delegateList.Count != 0)
             delegateList[0].Method.Invoke(this, null);
 
+    }
+    private void LateUpdate()
+    {
         if (humanClose)
         {
             head_J.transform.LookAt(human.transform);
@@ -66,7 +69,6 @@ public class SpiritScript : MonoBehaviour
         {
             head_J.transform.localRotation = Quaternion.Lerp(head_J.transform.localRotation, Quaternion.identity, Time.deltaTime);
         }
-
     }
     private void OnTriggerEnter(Collider other)
     {
