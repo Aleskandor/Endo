@@ -20,8 +20,9 @@ public class ActivateLarva : MonoBehaviour
             Stick.SetActive(false);
             MainCamera.SetActive(true);
             puzzleCamera.SetActive(false);
-            Human.GetComponent<CharacterController>().enabled = true;
-            Human.GetComponent<HumanMovement>().enabled = true;
+            Human.SetActive(true);
+            //Human.GetComponent<CharacterController>().enabled = true;
+            //Human.GetComponent<HumanMovement>().enabled = true;
             inDaPuzzle = false;
         }
         else if (inDaZone && !LarvaInteract.HasCrossed && FindPrintsDialog.over)
@@ -29,10 +30,11 @@ public class ActivateLarva : MonoBehaviour
             Stick.SetActive(true);
             MainCamera.SetActive(false);
             puzzleCamera.SetActive(true);
-            Human.GetComponent<CharacterController>().enabled = false;
-            Human.GetComponent<HumanMovement>().enabled = false;
+            Human.SetActive(false);
+            //Human.GetComponent<CharacterController>().enabled = false;
+            //Human.GetComponent<HumanMovement>().enabled = false;
             inDaPuzzle = true;
-            Human.GetComponent<Animator>().SetBool("Running", false);
+            //Human.GetComponent<Animator>().SetBool("Running", false);
         }
 
     }
