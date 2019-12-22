@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
 public class ThirdPersonView : MonoBehaviour
 {
@@ -111,7 +112,7 @@ public class ThirdPersonView : MonoBehaviour
 
     private void Update()
     {
-        if ((Input.GetKeyDown(KeyCode.V) || Input.GetButtonDown("YButton")) && !swappingTarget)
+        if ((Input.GetKeyDown(KeyCode.V) || Input.GetButtonDown("YButton")) && !swappingTarget && SceneManager.GetActiveScene().buildIndex != 4)
         {
             swappingTarget = true;
         }

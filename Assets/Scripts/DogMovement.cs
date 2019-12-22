@@ -271,6 +271,7 @@ public class DogMovement : MonoBehaviour
             animator.SetBool("PushTransition", false);
             delegateList.RemoveAt(0);
             boxPO.GetComponent<CharacterController>().Move(Vector3.zero);
+            boxPO.GetComponent<PushObject>().StopPlayingSound();
         }
     }
 
