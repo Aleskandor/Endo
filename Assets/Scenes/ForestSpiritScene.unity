@@ -4917,6 +4917,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 837075223}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &837075226 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1110787831, guid: 13b5943c37e279546b66c8a591004a92,
+    type: 3}
+  m_PrefabInstance: {fileID: 837075223}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &860523259
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5133,6 +5139,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3636775736319438780, guid: 083d7d948e366734bbb4c72fc0cbf3dc,
+        type: 3}
+      propertyPath: continueButton
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 3636775736319438781, guid: 083d7d948e366734bbb4c72fc0cbf3dc,
         type: 3}
       propertyPath: m_Name
@@ -5192,11 +5203,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3636775736319438780, guid: 083d7d948e366734bbb4c72fc0cbf3dc,
-        type: 3}
-      propertyPath: continueButton
-      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3636775736319438780, guid: 083d7d948e366734bbb4c72fc0cbf3dc, type: 3}
@@ -8678,6 +8684,16 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 36.87
       objectReference: {fileID: 0}
+    - target: {fileID: 5248629761453342237, guid: 3391861a70c46284bace38be9a9e5767,
+        type: 3}
+      propertyPath: dogTransform
+      value: 
+      objectReference: {fileID: 837075226}
+    - target: {fileID: 5248629761729519294, guid: 3391861a70c46284bace38be9a9e5767,
+        type: 3}
+      propertyPath: dogTransform
+      value: 
+      objectReference: {fileID: 837075226}
     m_RemovedComponents:
     - {fileID: 7583801162750605905, guid: 3391861a70c46284bace38be9a9e5767, type: 3}
     - {fileID: 7583801163311710295, guid: 3391861a70c46284bace38be9a9e5767, type: 3}
