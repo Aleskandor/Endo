@@ -84,6 +84,8 @@ public class LarvaInteract : MonoBehaviour
 
             stickAtEnd = true;
             HasCrossed = true;
+
+            GameObject.Find("dogByRiverTransform").transform.position = GameObject.Find("Dog").transform.position;           
         }
         else
             stickAtEnd = false;

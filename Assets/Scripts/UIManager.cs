@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
@@ -33,31 +34,43 @@ public class UIManager : MonoBehaviour
                 screenPos.y > 0 && screenPos.y < Screen.height &&
                 screenPos.x > 0 && screenPos.x < Screen.width)
             {
-                marker.SetActive(true);
-                pointer.SetActive(false);
+                if (marker && pointer)
+                {
+                    marker.GetComponent<Image>().enabled = true;
+                    pointer.GetComponent<Image>().enabled = false;
+                }
+                //marker.SetActive(true);
+                //pointer.SetActive(false);
             }
             else
             {
-                marker.SetActive(false);
-                pointer.SetActive(true);
+                if (marker && pointer)
+                {
+                    marker.GetComponent<Image>().enabled = false;
+                    pointer.GetComponent<Image>().enabled = true;
+                }
+                //marker.SetActive(false);
+                //pointer.SetActive(true);
             }
         }
 
-        if (marker.activeSelf || pointer.activeSelf)
+        if (marker.GetComponent<Image>().enabled || pointer.GetComponent<Image>().enabled)
         {
             timer -= Time.deltaTime;
 
             if (timer <= 0)
             {
-                marker.SetActive(false);
-                pointer.SetActive(false);
+                marker.GetComponent<Image>().enabled = false;
+                pointer.GetComponent<Image>().enabled = false;
+                //marker.SetActive(false);
+                //pointer.SetActive(false);
             }
         }    
     }
 
     public void ShowDogIcon()
     {
-        if (!marker.activeSelf && !pointer.activeSelf)
+        if (!marker.GetComponent<Image>().enabled && !pointer.GetComponent<Image>().enabled)
         {
             timer = 4f;
         }
