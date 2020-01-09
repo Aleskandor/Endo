@@ -39,8 +39,6 @@ public class UIManager : MonoBehaviour
                     marker.GetComponent<Image>().enabled = true;
                     pointer.GetComponent<Image>().enabled = false;
                 }
-                //marker.SetActive(true);
-                //pointer.SetActive(false);
             }
             else
             {
@@ -49,8 +47,6 @@ public class UIManager : MonoBehaviour
                     marker.GetComponent<Image>().enabled = false;
                     pointer.GetComponent<Image>().enabled = true;
                 }
-                //marker.SetActive(false);
-                //pointer.SetActive(true);
             }
         }
 

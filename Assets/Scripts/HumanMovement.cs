@@ -73,7 +73,7 @@ public class HumanMovement : MonoBehaviour
 
             if (delegateList.Count != 0)
                 delegateList[0].Method.Invoke(this, null);
-            else if (Input.GetKeyDown(KeyCode.R) || Input.GetButtonDown("AButton"))
+            else if (Input.GetKeyDown(KeyCode.R) || Input.GetButtonDown("BButton"))
             {
                 CheckForClimb();
                 CheckforDrop();
