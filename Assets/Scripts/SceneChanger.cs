@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 public class SceneChanger : MonoBehaviour
 {
     private int sceneToLoad;
+    private bool playing = false;
 
     private Animator animator;
 
@@ -57,8 +58,9 @@ public class SceneChanger : MonoBehaviour
 
     public void FadeToScene(int sceneIndex)
     {
-        if (SoundManager.instance != null)
+        if (SoundManager.instance != null && !playing)
         {
+            playing = true;
             SoundManager.instance.Play("Transition");
             SoundManager.instance.PlayScene(sceneIndex);
         }
@@ -69,5 +71,6 @@ public class SceneChanger : MonoBehaviour
     public void OnFadeComplete()
     {
         SceneManager.LoadScene(sceneToLoad);
+        playing = false;
     }
 }
