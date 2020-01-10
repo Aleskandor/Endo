@@ -81,18 +81,18 @@ public class RiverCaveCutsceneScript : MonoBehaviour
     private void Deactivate()
     {
         //Turns off Human Logic     
-        human.gameObject.GetComponent<Animator>().SetBool("Running", false);
+        human.GetComponent<Animator>().SetBool("Running", false);
 
-        human.gameObject.GetComponent<CharacterController>().enabled = false;
-        human.gameObject.GetComponent<NavMeshAgent>().enabled = false;
-        human.gameObject.GetComponent<HumanMovement>().enabled = false;
-        human.gameObject.GetComponent<HumanAI>().enabled = false;
+        human.GetComponent<CharacterController>().enabled = false;
+        human.GetComponent<NavMeshAgent>().enabled = false;
+        human.GetComponent<HumanMovement>().enabled = false;
+        human.GetComponent<HumanAI>().enabled = false;
 
         //Turns off Dog Logic
-        dog.gameObject.GetComponent<CharacterController>().enabled = false;
-        dog.gameObject.GetComponent<NavMeshAgent>().enabled = false;
-        dog.gameObject.GetComponent<DogMovement>().enabled = false;
-        dog.gameObject.GetComponent<DogAI>().enabled = false;
+        dog.GetComponent<CharacterController>().enabled = false;
+        dog.GetComponent<NavMeshAgent>().enabled = false;
+        dog.GetComponent<DogMovement>().enabled = false;
+        dog.GetComponent<DogAI>().enabled = false;
 
         delegateList.RemoveAt(0);
     }
@@ -102,9 +102,9 @@ public class RiverCaveCutsceneScript : MonoBehaviour
         {
 
             if (Vector3.Distance(dog.transform.position, dogPoint.position) <= .3f)
-                dog.gameObject.GetComponent<Animator>().SetBool("Running", false);
+                dog.GetComponent<Animator>().SetBool("Running", false);
             else
-                dog.gameObject.GetComponent<Animator>().SetBool("Running", true);
+                dog.GetComponent<Animator>().SetBool("Running", true);
 
             dog.transform.position = Vector3.MoveTowards(dog.transform.position, dogPoint.position, 10f * Time.deltaTime);
             dog.transform.LookAt(dogPoint.transform);
@@ -125,8 +125,8 @@ public class RiverCaveCutsceneScript : MonoBehaviour
         }
         else
         {
-            human.gameObject.GetComponent<Animator>().SetBool("Running", false);
-            human.gameObject.GetComponent<CharacterController>().enabled = true;
+            human.GetComponent<Animator>().SetBool("Running", false);
+            human.GetComponent<CharacterController>().enabled = true;
             delegateList.RemoveAt(0);
         }
     }
@@ -147,7 +147,7 @@ public class RiverCaveCutsceneScript : MonoBehaviour
         Vector3 humanVector = dog.transform.position - human.transform.position;
         humanVector.Normalize();
         Vector3 desiredHumanRot = new Vector3(humanVector.x, 0, humanVector.z);
-        human.gameObject.GetComponent<Animator>().SetBool("Running", false);
+        human.GetComponent<Animator>().SetBool("Running", false);
 
         if (Vector3.Angle(human.transform.forward, desiredHumanRot) > 2)
         {
