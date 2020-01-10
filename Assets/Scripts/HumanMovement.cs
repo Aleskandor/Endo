@@ -80,7 +80,7 @@ public class HumanMovement : MonoBehaviour
             }
             else if (Input.GetKeyDown(KeyCode.F) || Input.GetButtonDown("XButton"))
                 CheckForPush();
-            else if (Input.GetKeyDown(KeyCode.E) || Input.GetButtonDown("YButton"))
+            else if (SceneManager.GetActiveScene().buildIndex != 4 && SceneManager.GetActiveScene().buildIndex != 5 && Input.GetKeyDown(KeyCode.E) || Input.GetButtonDown("YButton"))
             {
                 SoundManager.instance.PlayWhistle();
                 GameObject dog = GameObject.Find("Dog");

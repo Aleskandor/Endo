@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
@@ -25,7 +26,7 @@ public class UIManager : MonoBehaviour
     {
         screenPos = Camera.main.WorldToScreenPoint(dogTransform.position);
 
-        if (Input.GetKeyDown(KeyCode.E) || Input.GetButton("YButton"))
+        if (SceneManager.GetActiveScene().buildIndex != 4 && SceneManager.GetActiveScene().buildIndex != 5 && Input.GetKeyDown(KeyCode.E) || Input.GetButton("YButton"))
             ShowDogIcon();
 
         if (timer >= 0)
