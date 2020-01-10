@@ -26,11 +26,14 @@ public class SpiritScript : MonoBehaviour
     private float speedFactor, transitionSpeed;
     private bool humanClose;
     private DialogueTrigger DT;
+    private Animator anim;
+    private Light spotLight;
 
     private Vector3 orbStart, orbEnd;
     private bool running, orbCaught;
     private float arcHeight, orbSpeed;
     public bool animationOver;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -43,6 +46,8 @@ public class SpiritScript : MonoBehaviour
         DT = gameObject.GetComponent<DialogueTrigger>(); 
         delegateList = new List<Delegate>();
         animationOver = false;
+        anim = GetComponent<Animator>();
+        spotLight = GameObject.Find("Spot Light").GetComponent<Light>();
     }
 
     // Update is called once per frame
@@ -50,26 +55,32 @@ public class SpiritScript : MonoBehaviour
     {
         orbEnd = karlHand.position;
 
-        if (orbCaught)
+        if (orbCaught && orb.activeSelf == true)
+        {
             orb.transform.position = karlHand.position;
+            anim.enabled = false;
+        }
+
+        if (orbCaught && spotLight.intensity > 0)
+        {
+            spotLight.intensity -= 50;
+        }
 
         if (delegateList.Count != 0)
             delegateList[0].Method.Invoke(this, null);
 
     }
+
     private void LateUpdate()
     {
-        if (humanClose)
+        if (humanClose && !orbCaught)
         {
             head_J.transform.LookAt(human.transform);
             head_J.transform.Rotate(0, 0, -90);
             head_J.transform.Rotate(90, 0, 0);
         }
-        else if (!humanClose)
-        {
-            head_J.transform.localRotation = Quaternion.Lerp(head_J.transform.localRotation, Quaternion.identity, Time.deltaTime);
-        }
     }
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.name == "Human")
@@ -99,6 +110,7 @@ public class SpiritScript : MonoBehaviour
             }
         }
     }
+
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.name == "Human")

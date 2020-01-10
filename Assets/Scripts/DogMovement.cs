@@ -74,7 +74,7 @@ public class DogMovement : MonoBehaviour
                 delegateList[0].Method.Invoke(this, null);
             else if (Input.GetKeyDown(KeyCode.F) || Input.GetButtonDown("XButton"))
                 CheckForPush();
-            else if ((Input.GetKeyDown(KeyCode.B) || Input.GetButtonDown("AButton")) && canTeleport)
+            else if ((Input.GetKeyDown(KeyCode.R) || Input.GetButtonDown("BButton")) && canTeleport)
                 CheckForTeleport();
             else
                 Move(inputDir);
@@ -292,11 +292,11 @@ public class DogMovement : MonoBehaviour
 
     private void RemoveDelegate()
     {
-        if (delegateList.Count != 0)
-            delegateList.RemoveAt(0);
-
         animator.SetBool("PushTransition", false);
         animator.SetBool("Crouching", false);
+
+        if (delegateList.Count != 0)
+            delegateList.RemoveAt(0);
     }
 
     private void PushMove()

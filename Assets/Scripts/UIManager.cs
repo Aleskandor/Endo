@@ -47,8 +47,6 @@ public class UIManager : MonoBehaviour
                         pointerImage.enabled = false;   
                     }
                 }
-                //marker.SetActive(true);
-                //pointer.SetActive(false);
             }
             else
             {
@@ -66,8 +64,6 @@ public class UIManager : MonoBehaviour
                         pointerImage.enabled = false;   
                     }
                 }
-                //marker.SetActive(false);
-                //pointer.SetActive(true);
             }
         }
 

@@ -21,7 +21,7 @@ public class DialogueManager : MonoBehaviour
 
     private void Update()
     {
-        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("BButton")) && sentenceOver)
+        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("AButton")) && sentenceOver)
             DisplayNextSentence();
 
     }
