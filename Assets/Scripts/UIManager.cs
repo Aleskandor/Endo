@@ -36,8 +36,16 @@ public class UIManager : MonoBehaviour
             {
                 if (marker && pointer)
                 {
-                    marker.GetComponent<Image>().enabled = true;
-                    pointer.GetComponent<Image>().enabled = false;
+                    if (marker.TryGetComponent<Image>(out Image markerImage))
+                    {
+                        markerImage.enabled = true;
+                    }
+
+                    
+                    if (pointer.TryGetComponent<Image>(out Image pointerImage))
+                    {
+                        pointerImage.enabled = false;   
+                    }
                 }
                 //marker.SetActive(true);
                 //pointer.SetActive(false);
@@ -46,8 +54,17 @@ public class UIManager : MonoBehaviour
             {
                 if (marker && pointer)
                 {
-                    marker.GetComponent<Image>().enabled = false;
-                    pointer.GetComponent<Image>().enabled = true;
+                    
+                    if (marker.TryGetComponent<Image>(out Image markerImage))
+                    {
+                        markerImage.enabled = false;
+                    }
+
+                    
+                    if (pointer.TryGetComponent<Image>(out Image pointerImage))
+                    {
+                        pointerImage.enabled = false;   
+                    }
                 }
                 //marker.SetActive(false);
                 //pointer.SetActive(true);
@@ -60,8 +77,16 @@ public class UIManager : MonoBehaviour
 
             if (timer <= 0)
             {
-                marker.GetComponent<Image>().enabled = false;
-                pointer.GetComponent<Image>().enabled = false;
+                if (marker.TryGetComponent<Image>(out Image markerImage))
+                {
+                    markerImage.enabled = false;
+                }
+
+
+                if (pointer.TryGetComponent<Image>(out Image pointerImage))
+                {
+                    pointerImage.enabled = false;
+                }
                 //marker.SetActive(false);
                 //pointer.SetActive(false);
             }

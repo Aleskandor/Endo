@@ -9,13 +9,15 @@ public class EndSceneCutScene : MonoBehaviour
     public Transform dogPoint, humanPoint;
     public Transform[] desiredCameraTransform;
     private GameObject sceneChangerGO;
-    private bool humanFinished = false, dogFinished = false, fading = false;
+    public Animator titleAnimator, simonAnimator, antonAnimator, johnAnimator, alexanderAnimator, adrianAnimator;
+    private Animator[] animators; 
+    private bool humanFinished = false, dogFinished = false, fading = false, fadeInText = false;
 
     private Delegate tempDelegate;
     private List<Delegate> delegateList;
     private delegate void Delegate();
     float humanMaxDeltaDistanceFactor = 6f, dogMaxDeltaDistanceFactor = 7f;
-    int counter = 0;
+    int counter = 0, nameCounter = 0;
 
     private float transitionSpeed1, transitionSpeed2;
     private bool cameraMove = false;
@@ -23,6 +25,15 @@ public class EndSceneCutScene : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        animators = new Animator[5];
+        titleAnimator = GameObject.Find("EndoTitle").GetComponent<Animator>();
+
+        animators[0] = GameObject.Find("NamnSimon").GetComponent<Animator>();
+        animators[1] = GameObject.Find("NamnAnton").GetComponent<Animator>();
+        animators[2] = GameObject.Find("NamnJohn").GetComponent<Animator>();
+        animators[3] = GameObject.Find("NamnAlexander").GetComponent<Animator>();
+        animators[4] = GameObject.Find("NamnAdrian").GetComponent<Animator>();
+
         sceneChangerGO = GameObject.Find("SceneChanger");
         delegateList = new List<Delegate>();
         transitionSpeed1 = 0.35f;
@@ -38,13 +49,37 @@ public class EndSceneCutScene : MonoBehaviour
         if (cameraMove)
             MoveCamera();
 
-        if (Input.GetKeyDown(KeyCode.Return) && delegateList.Count == 0)
+        if (fadeInText)
+        {
+            FadeInText();
+        }
+
+        if (delegateList.Count == 0)
         {
             cameraMove = true;
             tempDelegate = new Delegate(Deactivate);
             delegateList.Add(tempDelegate);
             tempDelegate = new Delegate(AllRunToPoint);
             delegateList.Add(tempDelegate);
+        }
+    }
+
+    private void FadeInText()
+    {
+        titleAnimator.SetTrigger("FadeOut");
+    }
+
+    public void FadeInNextName()
+    {
+        if (nameCounter <= animators.Length)
+        {
+            animators[nameCounter].SetTrigger("FadeOut");
+            nameCounter++;
+        }
+        else
+        {
+            fading = true;
+            sceneChangerGO.GetComponent<SceneChanger>().FadeToScene(0);
         }
     }
 
@@ -85,8 +120,8 @@ public class EndSceneCutScene : MonoBehaviour
             }
             if (counter == 1 && Vector3.Distance(Camera.main.transform.position, desiredCameraTransform[counter].position) < 3f && !fading)
             {
-                fading = true;
-                sceneChangerGO.GetComponent<SceneChanger>().FadeToScene(0);
+                //fading = true;
+                //sceneChangerGO.GetComponent<SceneChanger>().FadeToScene(0);
             }
 
             transitionSpeed1 = transitionSpeed2;
@@ -127,6 +162,7 @@ public class EndSceneCutScene : MonoBehaviour
         else
         {
             human.gameObject.GetComponent<Animator>().SetBool("Running", false);
+            fadeInText = true;
             humanFinished = true;
         }
 
