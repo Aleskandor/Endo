@@ -124,6 +124,7 @@ public class FindPrintsDialog : MonoBehaviour
         {
             delegateList.RemoveAt(0);
             lightUp = true;
+            SoundManager.instance.Play("Magic");
         }
     }
 

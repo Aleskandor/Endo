@@ -125,3 +125,12 @@ MonoBehaviour:
     mixerGroup: {fileID: -4212633838738764243, guid: 9996065e280ffa44a98e39f2db6b4c9c,
       type: 2}
     loop: 0
+  - name: Magic
+    clip: {fileID: 8300000, guid: 793588aac87347f47bedd25838c048c6, type: 3}
+    volume: 1
+    originalVolume: 0
+    pitch: 1
+    source: {fileID: 0}
+    mixerGroup: {fileID: -4212633838738764243, guid: 9996065e280ffa44a98e39f2db6b4c9c,
+      type: 2}
+    loop: 0

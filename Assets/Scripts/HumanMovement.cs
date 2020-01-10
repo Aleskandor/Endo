@@ -24,6 +24,7 @@ public class HumanMovement : MonoBehaviour
     private float distanceToClimb;
     private float distanceToWalk;
     private float distanceWalked;
+    private float desiredDistanceFromWall = 1.5f;
 
     private float currentWalkSpeed;
     private float originalWalkSpeed;
@@ -145,7 +146,7 @@ public class HumanMovement : MonoBehaviour
 
         if (Physics.Raycast(transform.position + (Vector3.up * charController.height / 2), transform.forward, out straightHit, lookDist, layerMask))
         {
-            if (straightHit.distance < acceptableDist)
+            if (straightHit.distance < desiredDistanceFromWall)
             {
                 if (Physics.Raycast(transform.position + (transform.forward * 1.5f) + (transform.up * charController.height * 5), -transform.up, out overLedgeHit, lookDist, layerMask))
                 {
@@ -156,6 +157,8 @@ public class HumanMovement : MonoBehaviour
                         distanceToWalk = Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(overLedgeHit.point.x, overLedgeHit.point.z)) + charController.radius;
 
                         tempDelegate = new Delegate(TurnTowardsWall);
+                        delegateList.Add(tempDelegate);
+                        tempDelegate = new Delegate(TriggerBackingAnimation);
                         delegateList.Add(tempDelegate);
                         tempDelegate = new Delegate(MoveAwayFromWall);
                         delegateList.Add(tempDelegate);
@@ -281,12 +284,15 @@ public class HumanMovement : MonoBehaviour
         RaycastHit hit;
         Physics.Raycast(transform.position + (Vector3.up * charController.height / 2), transform.forward, out hit);
 
-        if (hit.distance < 1.5)
+        if (hit.distance < desiredDistanceFromWall)
         {
             charController.Move(-transform.forward * Time.deltaTime);
         }
         else
+        {
+            animator.SetBool("Backing", false);
             delegateList.RemoveAt(0);
+        }
     }
 
     private void ClimbUp()
@@ -325,7 +331,7 @@ public class HumanMovement : MonoBehaviour
         {
             animator.SetBool("Pushing", true);
 
-            pushTargetPos = boxPO.transform.position +( -hit.normal * 4f);
+            pushTargetPos = boxPO.transform.position + ( -hit.normal * 4f);
             charTargetPos = transform.position + (-hit.normal * 4f);
 
             delegateList.RemoveAt(0);
@@ -339,6 +345,12 @@ public class HumanMovement : MonoBehaviour
             boxPO.GetComponent<CharacterController>().Move(Vector3.zero);
             boxPO.GetComponent<PushObject>().StopPlayingSound();
         }
+    }
+
+    private void TriggerBackingAnimation()
+    {
+        animator.SetBool("Backing", true);
+        delegateList.RemoveAt(0); 
     }
 
     private void TriggerClimbUpAnimation()
