@@ -26,6 +26,7 @@ public class FindPrintsDialog : MonoBehaviour
     private bool part1Speech = false;
     private bool part2Speech = false;
     private bool lightUp = false;
+    private bool stop = false;
 
     private float transitionSpeed;
 
@@ -77,10 +78,11 @@ public class FindPrintsDialog : MonoBehaviour
                 over = true;
             }
         }
-        else if (over && DM.speechOver)
+        else if (over && DM.speechOver && !stop)
         {
             Reactivate();
             logManager.GetComponent<QUESTscript>().Kindness();
+            stop = true;
         }
     }
 

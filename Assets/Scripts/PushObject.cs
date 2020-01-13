@@ -10,6 +10,7 @@ public class PushObject : MonoBehaviour
     private BoxCollider boxCollider;
     private Vector3 playerDirection;
     private GameObject childCube;
+    private bool stop = false;
 
     private float gravity;
 
@@ -34,7 +35,7 @@ public class PushObject : MonoBehaviour
         if (!charController.isGrounded && !beingPushed)
             charController.Move(new Vector3(0, gravity * Time.deltaTime, 0));
 
-        if (charController.isGrounded && inHole && !gameObject.isStatic)
+        if (charController.isGrounded && inHole && !gameObject.isStatic && !stop)
         {
             AudioSource ac = GetComponents<AudioSource>()[1];
             ac.Play();
@@ -43,6 +44,7 @@ public class PushObject : MonoBehaviour
             gameObject.layer = 11;
             childCube.layer = 11;
             navMeshSurface.BuildNavMesh();
+            stop = true;
         }
     }
 
