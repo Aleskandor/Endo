@@ -18,7 +18,7 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         timer = 0f;
-
+        Cursor.visible = false;
         screenPos = new Vector3();
     }
 
